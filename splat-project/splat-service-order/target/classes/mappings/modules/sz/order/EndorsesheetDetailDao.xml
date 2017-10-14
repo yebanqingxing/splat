@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.EndorsesheetDetailDao">
+    
+	<sql id="endorsesheetDetailColumns">
+		a.id AS "id",
+		a.endorsesheet_no AS "endorsesheetNo",
+		a.order_no AS "orderNo",
+		a.origin_endorsesheet_no AS "originEndorsesheetNo",
+		a.ori_crs_pnr AS "oriCrsPnr",
+		a.new_crs_pnr AS "newCrsPnr",
+		a.ori_arl_pnr AS "oriArlPnr",
+		a.new_arl_pnr AS "newArlPnr",
+		a.ori_mid_pnr AS "oriMidPnr",
+		a.new_mid_pnr AS "newMidPnr",
+		a.new_order_no AS "newOrderNo",
+		a.endorse_status AS "endorseStatus",
+		a.current_group AS "currentGroup",
+		a.current_operator AS "currentOperator",
+		a.relevant_client AS "relevantClient",
+		a.create_account AS "createAccount",
+		a.create_time AS "createTime",
+		a.next_operation AS "nextOperation",
+		a.endorse_type AS "endorseType",
+		a.pay_status AS "payStatus",
+		a.is_overloan_nego_order AS "isOverloanNegoOrder",
+		a.create_type AS "createType",
+		a.create_account_id AS "createAccountId",
+		a.reception_customer_id AS "receptionCustomerId",
+		a.station_creater_id AS "stationCreaterId",
+		a.first_segment AS "firstSegment",
+		a.endorse_airline AS "endorseAirline",
+		a.order_id AS "orderId",
+		a.remark AS "remark",
+		a.is_international AS "isInternational",
+		a.supplier_service_charge AS "supplierServiceCharge",
+		a.distributor_service_charge AS "distributorServiceCharge",
+		a.supplier_product_no AS "supplierProductNo",
+		a.sale_config AS "saleConfig",
+		a.is_fit AS "isFit",
+		a.supplier_product_name AS "supplierProductName",
+		a.man_remark1 AS "manRemark1",
+		a.man_remark2 AS "manRemark2",
+		a.lastmodifier_orgid AS "lastmodifierOrgid",
+		a.lastmodifier_orgname AS "lastmodifierOrgname",
+		a.lastmodifier_id AS "lastmodifierId",
+		a.lastmodifier_name AS "lastmodifierName",
+		a.lastmodifier_time AS "lastmodifierTime",
+		a.busi_remark AS "busiRemark",
+		a.payment_remark AS "paymentRemark",
+		a.handle_later AS "handleLater",
+		a.last_circulation_time AS "lastCirculationTime",
+		a.is_price_confirmed AS "isPriceConfirmed",
+		a.serial_number AS "serialNumber",
+		a.endorse_detail_type AS "endorseDetailType",
+		a.current_status AS "currentStatus",
+		a.invoice AS "invoice",
+		a.go_main_traveldate AS "goMainTraveldate"
+	</sql>
+	
+	<sql id="endorsesheetDetailJoins">
+	</sql>
+    
+	<select id="get" resultType="EndorsesheetDetail">
+		SELECT 
+			<include refid="endorsesheetDetailColumns"/>
+		FROM tb_endorsesheet_detail a
+		<include refid="endorsesheetDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="EndorsesheetDetail">
+		SELECT DISTINCT
+			<include refid="endorsesheetDetailColumns"/>
+		
+		FROM tb_endorsesheet_detail a
+		
+		 
+		<where>
+			<!-- 操作状态的查询 -->
+			<if test="currentStatus != null and currentStatus != '' ">
+				AND a.current_status = #{currentStatus}
+			</if>
+		<!-- 票号查询 -->
+			<if test="ticketNo != null and ticketNo != '' ">
+				a.refundsheet_no in (
+				SELECT  t.order_no FROM tb_ticketorder_ticket t WHERE t.ticket_no
+				 LIKE 
+					<if test="dbName == 'oracle'">'%'||#{ticketNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{ticketNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{ticketNo},'%')</if>
+					)
+			</if>
+			<if test="endorsesheetNo != null and endorsesheetNo != ''">
+				AND a.endorsesheet_no = #{endorsesheetNo}
+			</if>
+			<if test="newCrsPnr != null and newCrsPnr != ''">
+				AND a.new_crs_pnr = #{newCrsPnr}
+			</if>
+			<if test="endorseStatus != null and endorseStatus != ''">
+				AND a.endorse_status = #{endorseStatus}
+			</if>
+			<if test="minTime != null and minTime != '' ">
+				AND a.create_time >= #{minTime} 
+			</if>
+			<if test="maxTime != null and maxTime != ''">
+				AND a.create_time &lt;= #{maxTime}
+			</if>
+			<if test="payStatus != null and payStatus != ''">
+				AND a.pay_status = #{payStatus}
+			</if>
+			
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND a.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND a.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<select id="findAllList" resultType="EndorsesheetDetail">
+		SELECT 
+			<include refid="endorsesheetDetailColumns"/>
+		FROM tb_endorsesheet_detail a
+		<include refid="endorsesheetDetailJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY   a.create_time DESC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_endorsesheet_detail(
+			endorsesheet_no,
+			order_no,
+			origin_endorsesheet_no,
+			ori_crs_pnr,
+			new_crs_pnr,
+			ori_arl_pnr,
+			new_arl_pnr,
+			ori_mid_pnr,
+			new_mid_pnr,
+			new_order_no,
+			endorse_status,
+			current_group,
+			current_operator,
+			relevant_client,
+			create_account,
+			create_time,
+			next_operation,
+			endorse_type,
+			pay_status,
+			is_overloan_nego_order,
+			create_type,
+			create_account_id,
+			reception_customer_id,
+			station_creater_id,
+			first_segment,
+			endorse_airline,
+			order_id,
+			remark,
+			is_international,
+			supplier_service_charge,
+			distributor_service_charge,
+			supplier_product_no,
+			sale_config,
+			is_fit,
+			supplier_product_name,
+			man_remark1,
+			man_remark2,
+			lastmodifier_orgid,
+			lastmodifier_orgname,
+			lastmodifier_id,
+			lastmodifier_name,
+			lastmodifier_time,
+			busi_remark,
+			payment_remark,
+			handle_later,
+			last_circulation_time,
+			is_price_confirmed,
+			serial_number,
+			endorse_detail_type,
+			current_status,
+			invoice,
+			go_main_traveldate
+		) VALUES (
+			#{endorsesheetNo},
+			#{orderNo},
+			#{originEndorsesheetNo},
+			#{oriCrsPnr},
+			#{newCrsPnr},
+			#{oriArlPnr},
+			#{newArlPnr},
+			#{oriMidPnr},
+			#{newMidPnr},
+			#{newOrderNo},
+			#{endorseStatus},
+			#{currentGroup},
+			#{currentOperator},
+			#{relevantClient},
+			#{createAccount},
+			#{createTime},
+			#{nextOperation},
+			#{endorseType},
+			#{payStatus},
+			#{isOverloanNegoOrder},
+			#{createType},
+			#{createAccountId},
+			#{receptionCustomerId},
+			#{stationCreaterId},
+			#{firstSegment},
+			#{endorseAirline},
+			#{orderId},
+			#{remark},
+			#{isInternational},
+			#{supplierServiceCharge},
+			#{distributorServiceCharge},
+			#{supplierProductNo},
+			#{saleConfig},
+			#{isFit},
+			#{supplierProductName},
+			#{manRemark1},
+			#{manRemark2},
+			#{lastmodifierOrgid},
+			#{lastmodifierOrgname},
+			#{lastmodifierId},
+			#{lastmodifierName},
+			#{lastmodifierTime},
+			#{busiRemark},
+			#{paymentRemark},
+			#{handleLater},
+			#{lastCirculationTime},
+			#{isPriceConfirmed},
+			#{serialNumber},
+			#{endorseDetailType},
+			#{currentStatus},
+			#{invoice},
+			#{goMainTraveldate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_endorsesheet_detail SET 	
+			endorsesheet_no = #{endorsesheetNo},
+			order_no = #{orderNo},
+			origin_endorsesheet_no = #{originEndorsesheetNo},
+			ori_crs_pnr = #{oriCrsPnr},
+			new_crs_pnr = #{newCrsPnr},
+			ori_arl_pnr = #{oriArlPnr},
+			new_arl_pnr = #{newArlPnr},
+			ori_mid_pnr = #{oriMidPnr},
+			new_mid_pnr = #{newMidPnr},
+			new_order_no = #{newOrderNo},
+			endorse_status = #{endorseStatus},
+			current_group = #{currentGroup},
+			current_operator = #{currentOperator},
+			relevant_client = #{relevantClient},
+			create_account = #{createAccount},
+			create_time = #{createTime},
+			next_operation = #{nextOperation},
+			endorse_type = #{endorseType},
+			pay_status = #{payStatus},
+			is_overloan_nego_order = #{isOverloanNegoOrder},
+			create_type = #{createType},
+			create_account_id = #{createAccountId},
+			reception_customer_id = #{receptionCustomerId},
+			station_creater_id = #{stationCreaterId},
+			first_segment = #{firstSegment},
+			endorse_airline = #{endorseAirline},
+			order_id = #{orderId},
+			remark = #{remark},
+			is_international = #{isInternational},
+			supplier_service_charge = #{supplierServiceCharge},
+			distributor_service_charge = #{distributorServiceCharge},
+			supplier_product_no = #{supplierProductNo},
+			sale_config = #{saleConfig},
+			is_fit = #{isFit},
+			supplier_product_name = #{supplierProductName},
+			man_remark1 = #{manRemark1},
+			man_remark2 = #{manRemark2},
+			lastmodifier_orgid = #{lastmodifierOrgid},
+			lastmodifier_orgname = #{lastmodifierOrgname},
+			lastmodifier_id = #{lastmodifierId},
+			lastmodifier_name = #{lastmodifierName},
+			lastmodifier_time = #{lastmodifierTime},
+			busi_remark = #{busiRemark},
+			payment_remark = #{paymentRemark},
+			handle_later = #{handleLater},
+			last_circulation_time = #{lastCirculationTime},
+			is_price_confirmed = #{isPriceConfirmed},
+			serial_number = #{serialNumber},
+			current_status = #{currentStatus},
+			invoice=#{invoice},
+			go_min_traveldate}=#{goMainTraveldate}
+			 WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_endorsesheet_detail
+		WHERE id = #{id}
+	</update>
+	<!-- 根据改签的类型不同查询不同的改签的状态  -->
+	<select id="findEndorseDetailStatusCount"  parameterType="EndorsesheetDetail" resultType="DetailStatusCount">
+		SELECT count(t.endorse_status) count,t.endorse_status endorseStatus 
+		FROM tb_endorsesheet_detail t
+		<where>
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		 GROUP BY t.endorse_status 
+	</select>
+	<!-- 修改订单的状态 -->
+	<update id="updateEndorseStatus" parameterType="map" >
+		UPDATE tb_endorsesheet_detail SET  endorse_status = #{endorseStatus} WHERE endorsesheet_no = #{endorsesheetNo}
+	</update>
+	<!-- 修改支付的状态 -->
+	<update id="updatePayStatus" parameterType="map">
+	UPDATE tb_endorsesheet_detail SET pay_status = #{payStatus} WHERE endorsesheet_no = #{endorsesheetNo}
+	</update>
+
+	
+	<!-- 查询已经修改的订单的信息通过修改以后的订单的订单号 -->
+	<select id="findEndorsesheetDetail" parameterType="string" resultType="EndorsesheetDetail">
+	SELECT 
+	<include refid="endorsesheetDetailColumns"/>
+	FROM  tb_endorsesheet_detail a  WHERE a.endorsesheet_no = #{endorsesheetNo}
+	</select>
+	<!-- 查询支付状态条数 -->
+	<select id="findPayStatusCount" parameterType="EndorsesheetDetail" resultType="PayStatusCount">
+	SELECT count(t.pay_status) count,t.pay_status payStatus 
+		FROM tb_endorsesheet_detail t
+		<where>
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		 GROUP BY t.pay_status 
+	</select>
+	<!-- 查询操作状态以及条数 -->
+	<select id="findCurrentStatusCount" parameterType="EndorsesheetDetail" resultType="CurrentStatus">
+	SELECT count(t.current_status) count,t.current_status currentStatus 
+		FROM tb_endorsesheet_detail t
+		<where>
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		 GROUP BY t.current_status 
+	</select>
+	
+	<update id="updateEndorsesheetDetail" parameterType="EndorsesheetDetail" >
+	UPDATE tb_endorsesheet_detail SET 
+	endorse_total_cost = #{endorseTotalCost},
+	endorse_upgrade_cost = #{endorseUpgradeCost},
+	endorse_reimburse_credentials = #{endorseReimburseCredentials}, 
+	insurance_costs = #{insuranceCosts},
+	endorse_taxes = #{endorseTaxes}
+	WHERE endorsesheet_no = #{endorsesheetNo}
+	
+	</update>
+	<!-- 修改状态 -->
+	<update id="updateCurrnetStatus" parameterType="map">
+	UPDATE tb_endorsesheet_detail SET 
+	current_status = ${currentStatus}
+	WHERE endorsesheet_no = #{endorsesheetNo}
+	</update>
+	<!-- 流水单号 -->
+	<update id="updateRelevantOrderNo" parameterType="map">
+	UPDATE tb_endorsesheet_detail SET 
+	relevant_order_no = ${relevant_order_no}
+	WHERE endorsesheet_no = #{endorsesheet_no}
+	</update>
+</mapper>

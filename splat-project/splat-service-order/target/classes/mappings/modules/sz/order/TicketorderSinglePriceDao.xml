@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderSinglePriceDao">
+    
+	<sql id="ticketorderSinglePriceColumns">
+		a.id AS "id",
+		a.supplier_sale_price AS "supplierSalePrice",
+		a.supplier_tax AS "supplierTax",
+		a.supplier_additional_charge AS "supplierAdditionalCharge",
+		a.supplier_ticket_price AS "supplierTicketPrice",
+		a.supplier_z AS "supplierZ",
+		a.supplier_q AS "supplierQ",
+		a.supplier_commission AS "supplierCommission",
+		a.supplier_settlement_price AS "supplierSettlementPrice",
+		a.supplier_receipt_status AS "supplierReceiptStatus",
+		a.supplier_modify_status AS "supplierModifyStatus",
+		a.distributor_sale_price AS "distributorSalePrice",
+		a.distributor_tax AS "distributorTax",
+		a.distributor_addition_charge AS "distributorAdditionCharge",
+		a.distributor_ticket_price AS "distributorTicketPrice",
+		a.distributor_z AS "distributorZ",
+		a.distributor_q AS "distributorQ",
+		a.distributor_commission AS "distributorCommission",
+		a.distributor_settlement_price AS "distributorSettlementPrice",
+		a.distributor_receipt_status AS "distributorReceiptStatus",
+		a.distributor_modify_status AS "distributorModifyStatus",
+		a.price_ptc AS "pricePtc",
+		a.order_no AS "orderNo",
+		a.order_id AS "orderId",
+		a.supplier_audit_status AS "supplierAuditStatus",
+		a.distributor_audit_status AS "distributorAuditStatus",
+		a.tax_yq AS "taxYq",
+		a.tax_cn AS "taxCn",
+		a.fare_basis_code AS "fareBasisCode",
+		a.baggage AS "baggage",
+		a.passenger_name AS "passengerName",
+		a.passenger_type AS "passengerType"
+	</sql>
+	
+	<sql id="ticketorderSinglePriceJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderSinglePrice">
+		SELECT 
+			<include refid="ticketorderSinglePriceColumns"/>
+		FROM tb_ticketorder_single_price a
+		<include refid="ticketorderSinglePriceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderSinglePrice">
+		SELECT 
+			<include refid="ticketorderSinglePriceColumns"/>
+		FROM tb_ticketorder_single_price a
+		<include refid="ticketorderSinglePriceJoins"/>
+		<where>
+			<if test="orderNo != null and  orderNo != ''">
+				 a.order_no = #{orderNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderSinglePrice">
+		SELECT 
+			<include refid="ticketorderSinglePriceColumns"/>
+		FROM tb_ticketorder_single_price a
+		<include refid="ticketorderSinglePriceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_ticketorder_single_price(
+			supplier_sale_price,
+			supplier_tax,
+			supplier_additional_charge,
+			supplier_ticket_price,
+			supplier_z,
+			supplier_q,
+			supplier_commission,
+			supplier_settlement_price,
+			supplier_receipt_status,
+			supplier_modify_status,
+			distributor_sale_price,
+			distributor_tax,
+			distributor_addition_charge,
+			distributor_ticket_price,
+			distributor_z,
+			distributor_q,
+			distributor_commission,
+			distributor_settlement_price,
+			distributor_receipt_status,
+			distributor_modify_status,
+			price_ptc,
+			order_no,
+			order_id,
+			supplier_audit_status,
+			distributor_audit_status,
+			tax_yq,
+			tax_cn,
+			fare_basis_code,
+			baggage,
+			passenger_name,
+			passenger_type
+		) VALUES (
+			#{supplierSalePrice},
+			#{supplierTax},
+			#{supplierAdditionalCharge},
+			#{supplierTicketPrice},
+			#{supplierZ},
+			#{supplierQ},
+			#{supplierCommission},
+			#{supplierSettlementPrice},
+			#{supplierReceiptStatus},
+			#{supplierModifyStatus},
+			#{distributorSalePrice},
+			#{distributorTax},
+			#{distributorAdditionCharge},
+			#{distributorTicketPrice},
+			#{distributorZ},
+			#{distributorQ},
+			#{distributorCommission},
+			#{distributorSettlementPrice},
+			#{distributorReceiptStatus},
+			#{distributorModifyStatus},
+			#{pricePtc},
+			#{orderNo},
+			#{orderId},
+			#{supplierAuditStatus},
+			#{distributorAuditStatus},
+			#{taxYq},
+			#{taxCn},
+			#{fareBasisCode},
+			#{baggage},
+			#{passengerName},
+			#{passengerType}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_single_price SET 	
+			<if test="supplierSalePrice != null and  supplierSalePrice != ''">
+				supplier_sale_price = #{supplierSalePrice},
+			</if>
+			<if test="supplierTax != null and  supplierTax != ''">
+				supplier_tax = #{supplierTax},
+			</if>
+			<if test="supplierAdditionalCharge != null and  supplierAdditionalCharge != ''">
+				supplier_additional_charge = #{supplierAdditionalCharge},
+			</if>
+			<if test="supplierZ != null and  supplierZ != ''">
+				supplier_z = #{supplierZ},
+			</if>
+			<if test="supplierQ != null and  supplierQ != ''">
+				supplier_q = #{supplierQ},
+			</if>
+			<if test="supplierCommission != null and  supplierCommission != ''">
+				supplier_commission = #{supplierCommission},
+			</if>
+			<if test="supplierSettlementPrice != null and  supplierSettlementPrice != ''">
+				supplier_settlement_price = #{supplierSettlementPrice},
+			</if>
+			<if test="supplierReceiptStatus != null and  supplierReceiptStatus != ''">
+				supplier_receipt_status = #{supplierReceiptStatus},
+			</if>
+			<if test="supplierModifyStatus != null and  supplierModifyStatus != ''">
+				supplier_modify_status = #{supplierModifyStatus},
+			</if>
+			<if test="distributorSalePrice != null and  distributorSalePrice != ''">
+				distributor_sale_price = #{distributorSalePrice},
+			</if>
+			<if test="distributorTax != null and  distributorTax != ''">
+				distributor_tax = #{distributorTax},
+			</if>
+			<if test="distributorAdditionCharge != null and  distributorAdditionCharge != ''">
+				distributor_addition_charge = #{distributorAdditionCharge},
+			</if>
+			<if test="distributorTicketPrice != null and  distributorTicketPrice != ''">
+				distributor_ticket_price = #{distributorTicketPrice},
+			</if>
+			<if test="distributorZ != null and  distributorZ != ''">
+				distributor_z = #{distributorZ},
+			</if>
+			<if test="distributorQ != null and  distributorQ != ''">
+				distributor_q = #{distributorQ},
+			</if>
+			<if test="distributorCommission != null and  distributorCommission != ''">
+				distributor_commission = #{distributorCommission},
+			</if>
+			<if test="distributorSettlementPrice != null and  distributorSettlementPrice != ''">
+				distributor_settlement_price = #{distributorSettlementPrice},
+			</if>
+			<if test="distributorReceiptStatus != null and  distributorReceiptStatus != ''">
+				distributor_receipt_status = #{distributorReceiptStatus},
+			</if>
+			<if test="distributorModifyStatus != null and  distributorModifyStatus != ''">
+				distributor_modify_status = #{distributorModifyStatus},
+			</if>
+			<if test="pricePtc != null and  pricePtc != ''">
+				price_ptc = #{pricePtc},
+			</if>
+			<if test="orderNo != null and  orderNo != ''">
+				order_no = #{orderNo},
+			</if>
+			<if test="orderId != null and  orderId != ''">
+				order_id = #{orderId},
+			</if>
+			<if test="supplierAuditStatus != null and  supplierAuditStatus != ''">
+				supplier_audit_status = #{supplierAuditStatus},
+			</if>
+			<if test="distributorAuditStatus != null and  distributorAuditStatus != ''">
+				distributor_audit_status = #{distributorAuditStatus},
+			</if>
+			<if test="taxYq != null and  taxYq != ''">
+				tax_yq = #{taxYq},
+			</if>
+			<if test="taxCn != null and  taxCn != ''">
+				tax_cn = #{taxCn},
+			</if>
+			<if test="fareBasisCode != null and  fareBasisCode != ''">
+				fare_basis_code = #{fareBasisCode},
+			</if>
+			<if test="passengerName != null and  passengerName != ''">
+				passenger_name = #{passengerName},
+			</if>
+			<if test="passengerType != null and  passengerType != ''">
+				passenger_type = #{passengerType},
+			</if>
+			baggage = #{baggage}
+		WHERE id = #{id} and order_no = #{orderNo}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_single_price
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 通过旅客的id集合查询 -->
+	<select id="findSinglePriceByPssIds" parameterType="list" resultType="TicketorderSinglePrice">
+	SELECT <include refid="ticketorderSinglePriceColumns"/>
+		FROM tb_ticketorder_single_price a   WHERE a.order_id in
+		<foreach collection="list" item="passId" index="index"
+            open="(" close=")" separator=",">
+            #{passId}
+        </foreach>
+	</select>
+	
+	<!-- 通过订单号查询单人旅客   -->
+	<select id="findorderSinglePrice" parameterType="string" resultType="TicketorderSinglePrice">
+		SELECT 
+			<include refid="ticketorderSinglePriceColumns"/>
+		FROM tb_ticketorder_single_price a
+		<include refid="ticketorderSinglePriceJoins"/>
+		WHERE a.order_no = #{orderNo}
+	</select>
+</mapper>

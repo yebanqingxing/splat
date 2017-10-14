@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.EndorsesheetPassengerDao">
+    
+	<sql id="endorsesheetPassengerColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.passenger_name AS "passengerName",
+		a.passenger_index AS "passengerIndex",
+		a.passenger_type AS "passengerType",
+		a.passenger_title AS "passengerTitle",
+		a.cert_type AS "certType",
+		a.cert_no AS "certNo",
+		a.passenger_birthday AS "passengerBirthday",
+		a.doca_r AS "docaR",
+		a.doca_d AS "docaD",
+		a.ticket_no AS "ticketNo",
+		a.single_price_id AS "singlePriceId",
+		a.frequent_card_type AS "frequentCardType",
+		a.frequent_card_no AS "frequentCardNo",
+		a.rvc_sheet_no AS "rvcSheetNo",
+		a.order_id AS "orderId",
+		a.refund_status AS "refundStatus",
+		a.void_status AS "voidStatus",
+		a.endorse_status AS "endorseStatus",
+		a.endorse_office AS "endorseOffice",
+		a.endorse_terminal AS "endorseTerminal",
+		a.endorse_time AS "endorseTime",
+		a.supplier_refund_status AS "supplierRefundStatus",
+		a.supplier_void_status AS "supplierVoidStatus",
+		a.supplier_endorse_status AS "supplierEndorseStatus",
+		a.national AS "national",
+		a.certificate_country AS "certificateCountry",
+		a.expiredtime AS "expiredtime",
+		a.gender AS "gender",
+		a.phone AS "phone",
+		a.ticket_terminal AS "ticketTerminal",
+		a.void_refund_endorse AS "voidRefundEndorse",
+		a.endorse_type AS "endorseType",
+		a.endorse_price_difference AS "endorsePriceDifference",
+		a.endorse_price_taxes AS "endorsePriceTaxes",
+		a.endorse_commission AS "endorseCommission",
+		a.endorse_upgrade_fee AS "endorseUpgradeFee",
+		a.endorse_service_charge AS "endorseServiceCharge",
+		a.endorse_surcharge AS "endorseSurcharge",
+		a.order_passenger_id AS "orderPassengerId"
+ 	</sql>
+	
+	<sql id="endorsesheetPassengerJoins">
+	</sql>
+	
+	<!-- 供应商回填单人价格 -->
+	<update id="updateEndorsePassengerPrice" parameterType="EndorsesheetPassenger">
+	UPDATE tb_endorsesheet_passenger SET 
+		endorse_price_difference = #{endorsePriceDifference},
+		endorse_price_taxes = #{endorsePriceTaxes},
+		endorse_commission = #{endorseCommission},
+		endorse_upgrade_fee = #{endorseUpgradeFee},
+		endorse_service_charge = #{endorseServiceCharge},
+		endorse_surcharge = #{endorseSurcharge}
+	WHERE id = #{id}
+	</update>
+    
+	<select id="get" resultType="EndorsesheetPassenger">
+		SELECT 
+			<include refid="endorsesheetPassengerColumns"/>
+		FROM tb_endorsesheet_passenger a
+		<include refid="endorsesheetPassengerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="EndorsesheetPassenger">
+		SELECT 
+			<include refid="endorsesheetPassengerColumns"/>
+		FROM tb_endorsesheet_passenger a
+		<include refid="endorsesheetPassengerJoins"/>
+		<where>
+			
+			<if test="orderNo != null and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="EndorsesheetPassenger">
+		SELECT 
+			<include refid="endorsesheetPassengerColumns"/>
+		FROM tb_endorsesheet_passenger a
+		<include refid="endorsesheetPassengerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_endorsesheet_passenger(
+			order_no,
+			passenger_name,
+			passenger_index,
+			passenger_type,
+			passenger_title,
+			cert_type,
+			cert_no,
+			passenger_birthday,
+			doca_r,
+			doca_d,
+			ticket_no,
+			single_price_id,
+			frequent_card_type,
+			frequent_card_no,
+			rvc_sheet_no,
+			order_id,
+			refund_status,
+			void_status,
+			endorse_status,
+			endorse_office,
+			endorse_terminal,
+			endorse_time,
+			supplier_refund_status,
+			supplier_void_status,
+			supplier_endorse_status,
+			national,
+			certificate_country,
+			expiredtime,
+			gender,
+			phone,
+			ticket_terminal,
+			endorse_type,
+			order_passenger_id
+		) VALUES (
+			#{orderNo},
+			#{passengerName},
+			#{passengerIndex},
+			#{passengerType},
+			#{passengerTitle},
+			#{certType},
+			#{certNo},
+			#{passengerBirthday},
+			#{docaR},
+			#{docaD},
+			#{ticketNo},
+			#{singlePriceId},
+			#{frequentCardType},
+			#{frequentCardNo},
+			#{rvcSheetNo},
+			#{orderId},
+			#{refundStatus},
+			#{voidStatus},
+			#{endorseStatus},
+			#{endorseOffice},
+			#{endorseTerminal},
+			#{endorseTime},
+			#{supplierRefundStatus},
+			#{supplierVoidStatus},
+			#{supplierEndorseStatus},
+			#{national},
+			#{certificateCountry},
+			#{expiredtime},
+			#{gender},
+			#{phone},
+			#{ticketTerminal},
+			#{endorseType},
+			#{orderPassengerId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_endorsesheet_passenger SET 	
+			order_no = #{orderNo},
+			passenger_name = #{passengerName},
+			passenger_index = #{passengerIndex},
+			passenger_type = #{passengerType},
+			passenger_title = #{passengerTitle},
+			cert_type = #{certType},
+			cert_no = #{certNo},
+			passenger_birthday = #{passengerBirthday},
+			doca_r = #{docaR},
+			doca_d = #{docaD},
+			ticket_no = #{ticketNo},
+			single_price_id = #{singlePriceId},
+			frequent_card_type = #{frequentCardType},
+			frequent_card_no = #{frequentCardNo},
+			rvc_sheet_no = #{rvcSheetNo},
+			order_id = #{orderId},
+			refund_status = #{refundStatus},
+			void_status = #{voidStatus},
+			endorse_status = #{endorseStatus},
+			endorse_office = #{endorseOffice},
+			endorse_terminal = #{endorseTerminal},
+			endorse_time = #{endorseTime},
+			supplier_refund_status = #{supplierRefundStatus},
+			supplier_void_status = #{supplierVoidStatus},
+			supplier_endorse_status = #{supplierEndorseStatus},
+			national = #{national},
+			certificate_country = #{certificateCountry},
+			expiredtime = #{expiredtime},
+			gender = #{gender},
+			phone = #{phone},
+			ticket_terminal = #{ticketTerminal},
+			endorse_type=#{endorseType},
+			order_passenger_id=#{orderPassengerId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_endorsesheet_passenger
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 通过订单号查询所有的旅客 -->
+	<select id="findEndorsePassenger" parameterType="String" resultType="EndorsesheetPassenger">
+	SELECT <include refid="endorsesheetPassengerColumns"/>
+		FROM tb_endorsesheet_passenger a   WHERE A.order_no = #{orderNo}
+	</select>
+	
+	<!-- 修改旅客的退票状态 -->
+	<update id="updateEndorseRefundStatusById" parameterType="map" >
+	UPDATE tb_endorsesheet_passenger SET refund_status = #{refundStatus} WHERE id = #{id}
+	</update>
+	
+	<!-- 修改旅客的废票状态 -->
+	<update id="updateEndorseVoidStatusById" parameterType="map">
+	UPDATE tb_endorsesheet_passenger SET void_status = #{voidStatus} WHERE id = #{id}
+	</update>
+	
+	<!-- 修改旅客的改签状态 -->
+	<update id="updateEndorseEndorseStatusById" parameterType="map">
+	UPDATE tb_endorsesheet_passenger SET endorse_status = #{endorseStatus} WHERE id = #{id}
+	</update>
+	<!-- 通过旅客的id集合查询旅客集合 -->
+	<select id="findEndorsePassengerList" resultType="EndorsesheetPassenger">
+	SELECT <include refid="endorsesheetPassengerColumns"/>
+		FROM tb_endorsesheet_passenger a   WHERE A.id in
+		<foreach collection="list" item="passId" index="index"
+            open="(" close=")" separator=",">
+            #{passId}
+        </foreach>
+	</select>
+	<!-- 用户点击了退废改的时候的状态 -->
+	<update id="updateVoidRefundEndorseStatus" parameterType="map">
+	UPDATE tb_endorsesheet_passenger SET void_refund_endorse = #{voidRefundEndorse} WHERE id = #{id}
+	</update>
+	
+	
+</mapper>

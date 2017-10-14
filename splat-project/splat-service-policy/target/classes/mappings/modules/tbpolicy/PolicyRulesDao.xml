@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.policy.dao.PolicyRulesDao">
+    
+	<sql id="policyRulesColumns">
+		a.id AS "id",
+		a.pr_code AS "prCode",
+		a.policy_name AS "policyName",
+		a.policy_status AS "policyStatus",
+		a.supplier_id AS "supplierId",
+		a.office AS "office",
+		a.passager_pid AS "passagerPid",
+		a.tkt_airline AS "tktAirline",
+		a.passager_count AS "passagerCount",
+		a.travel_type AS "travelType",
+		a.out_org AS "outOrg",
+		a.out_org_ex AS "outOrgEx",
+		a.out_des AS "outDes",
+		a.out_des_ex AS "outDesEx",
+		a.return_des AS "returnDes",
+		a.return_des_ex AS "returnDesEx",
+		a.out_unable_pass AS "outUnablePass",
+		a.out_must_pass AS "outMustPass",
+		a.return_unable_pass AS "returnUnablePass",
+		a.return_must_pass AS "returnMustPass",
+		a.allow_filght_no AS "allowFilghtNo",
+		a.exclude_filght_no AS "excludeFilghtNo",
+		a.cabin AS "cabin",
+		a.rebate AS "rebate",
+		a.billing_fee AS "billingFee",
+		a.agency_fee AS "agencyFee",
+		a.children_reward AS "childrenReward",
+		a.children_rebate AS "childrenRebate",
+		a.children_poundage AS "childrenPoundage",
+		a.children_poundage_choice AS "childrenPoundageChoice",
+		a.children_open_no_com AS "childrenOpenNoCom",
+		a.bady_reward AS "badyReward",
+		a.first_date_start AS "firstDateStart",
+		a.first_date_end AS "firstDateEnd",
+		a.last_date_start AS "lastDateStart",
+		a.last_date_end AS "lastDateEnd",
+		a.tkt_time_start AS "tktTimeStart",
+		a.tkt_time_end AS "tktTimeEnd",
+		a.share_policy AS "sharePolicy",
+		a.policy_remark AS "policyRemark",
+		a.work_time AS "workTime",
+		a.end_time AS "endTime",
+		a.creat_user AS "creatUser",
+		a.update_user AS "updateUser",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="policyRulesJoins">
+	</sql>
+    
+	<select id="get" resultType="PolicyRules">
+		SELECT 
+			<include refid="policyRulesColumns"/>
+		FROM tb_policy_rules a
+		<include refid="policyRulesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	
+	<!-- 通过起点终点去查询政策 
+		冯俊伟
+		2016年3月18日17:55:29
+	-->
+
+	<select id="getPolicyRulesListByQz" resultType="PolicyRules">
+		SELECT
+		<include refid="policyRulesColumns" />
+		FROM tb_policy_rules a
+		<include refid="policyRulesJoins" />
+		where a.out_org= #{0} and a.out_des=#{1}
+	</select>
+	
+	<!-- 根据起点终点、时间、行程类型匹配政策
+		 张权
+		 2016年3月18日18:33:26
+	-->
+	<select id="getPolicyRulesListByQz1" resultType="PolicyRules">
+		SELECT
+		<include refid="policyRulesColumns" />
+		FROM tb_policy_rules a
+		<include refid="policyRulesJoins" />
+		<where>
+		<!-- 政策对应供应商匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test="supplierId != null and supplierId != ''">
+				AND a.supplier_id = #{supplierId}
+			</if>
+			<!-- 政策去程起点匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" outOrg != null and outOrg != ''">
+			 	AND (INSTR(a.out_org,#{outOrg})
+			 	OR INSTR(a.out_org,#{outOrgCityCode})
+			 	OR INSTR(a.out_org,#{outOrgCountryCode})
+			 	OR INSTR(a.out_org,#{outOrgRegionCode})
+			 	OR INSTR(a.out_org,#{outOrgAreaCode}))
+			</if>
+			<!-- 政策去程终点匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" outDes != null and outDes != ''">
+			 	AND (INSTR(a.out_des, #{outDes})
+			 	OR INSTR(a.out_des, #{outDesCityCode})
+			 	OR INSTR(a.out_des, #{outDesCountryCode})
+			 	OR INSTR(a.out_des, #{outDesRegionCode})
+			 	OR INSTR(a.out_des, #{outDesAreaCode}))
+			</if>
+			<!-- 政策回程终点匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" returnDes != null and returnDes != ''">
+				AND (INSTR(a.return_des,#{returnDes})
+				OR INSTR(a.return_des, #{returnDesCityCode})
+			 	OR INSTR(a.return_des, #{returnDesCountryCode})
+			 	OR INSTR(a.return_des, #{returnDesRegionCode})
+			 	OR INSTR(a.return_des, #{returnDesAreaCode}))
+			</if>
+			<!-- 政策航司匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" tktAirline != null and tktAirline != ''">
+				AND INSTR(a.tkt_airline,#{tktAirline})
+			</if>
+			<!-- 旅客舱位匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" cabin != null and cabin != ''">
+				AND INSTR(a.cabin,#{cabin})
+			</if>
+			<!-- 旅客身份匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" passagerPid != null and passagerPid != ''">
+				AND INSTR(a.passager_pid,#{passagerPid})
+			</if>
+			<!-- 旅客行程类型匹配	 张权 	2016年4月24日18:33:26-->
+			<if test=" travelType != null and travelType != ''">
+				 AND (a.travel_Type= #{travelType} OR a.travel_Type='2')
+			</if>
+			<!-- 旅客人数下线匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" passagerCount != null and passagerCount != ''">
+				 AND a.passager_count &gt;= #{passagerCount}
+			</if>
+			<!-- 旅客去程起点时间匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" firstDateStart != null and firstDateStart != ''">
+				 AND a.first_date_start &lt;= #{firstDateStart}
+			</if>
+			<!-- 旅客去程终点时间匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" firstDateEnd != null and firstDateEnd != ''">
+				 AND a.first_date_end &gt;= #{firstDateEnd}
+			</if>
+			<!-- 旅客回程起点时间匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" lastDateStart != null and lastDateStart != ''">
+				 AND a.last_date_start &lt;= #{lastDateStart}
+			</if>
+			<!-- 旅客回程终点时间匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" lastDateEnd != null and lastDateEnd != ''">
+				 AND a.first_date_end &gt;= #{lastDateEnd}
+			</if>
+			<!-- 政策启用状态匹配 	 张权 	2016年4月24日18:33:26-->
+			<if test=" policyStatus != null and policyStatus != ''">
+				AND A.policy_status = #{policyStatus}
+			</if>
+			
+		</where>
+		  
+	</select>
+	
+	
+	
+	
+	<select id="findList" resultType="PolicyRules">
+		SELECT *
+<!-- 			<include refid="policyRulesColumns"/> -->
+		FROM tb_policy_rules a
+<!-- 		<include refid="tbPolicyRulesJoins"/> -->
+		<where>
+			AND a.policy_status != "3"
+			<if test="policyName != null and policyName != ''">
+				AND a.policy_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{policyName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{policyName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{policyName},'%')</if>
+			</if>
+			<if test="policyStatus != null and policyStatus != ''">
+				AND a.policy_status = #{policyStatus}
+			</if>
+			<if test="supplierId != null and supplierId != ''">
+				AND a.supplier_id = #{supplierId}
+			</if>
+			<if test="tktTimeStart != null and tktTimeStart != ''">
+				AND a.tkt_time_start &gt;= #{tktTimeStart}
+			</if>
+			<!-- <if test="outOrg != null and outOrg != ''">
+				AND a.out_org = #{outOrg}
+			</if> -->
+			<if test="outDes != null and outDes != ''">
+				AND a.out_des = #{outDes}
+			</if>
+			<if test="tktTimeEnd != null and tktTimeEnd != ''">
+				AND a.tkt_time_end &lt;= #{tktTimeEnd}
+			</if>
+			<if test="workTime != null and workTime != ''">
+				AND a.work_time &gt;= #{workTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND a.work_time &lt;= #{endTime}
+			</if>
+			<if test="tktAirline!=null and tktAirline!=''">
+				AND a.tkt_airline=#{tktAirline}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id DESC
+			</otherwise>
+		</choose>
+		
+	</select>
+	
+	<select id="findAllList" resultType="PolicyRules">
+		SELECT 
+			<include refid="policyRulesColumns"/>
+		FROM tb_policy_rules a
+		<include refid="policyRulesJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_policy_rules(
+			pr_code,
+			policy_name,
+			policy_status,
+			supplier_id,
+			office,
+			passager_pid,
+			tkt_airline,
+			passager_count,
+			travel_type,
+			out_org,
+			out_org_ex,
+			out_des,
+			out_des_ex,
+			return_des,
+			return_des_ex,
+			out_unable_pass,
+			out_must_pass,
+			return_unable_pass,
+			return_must_pass,
+			allow_filght_no,
+			exclude_filght_no,
+			cabin,
+			rebate,
+			billing_fee,
+			agency_fee,
+			children_reward,
+			children_rebate,
+			children_poundage,
+			children_poundage_choice,
+			children_open_no_com,
+			bady_reward,
+			first_date_start,
+			first_date_end,
+			last_date_start,
+			last_date_end,
+			tkt_time_start,
+			tkt_time_end,
+			share_policy,
+			policy_remark,
+			work_time,
+			end_time,
+			creat_user,
+			update_user,
+			update_date
+		) VALUES (
+			#{prCode},
+			#{policyName},
+			#{policyStatus},
+			#{supplierId},
+			#{office},
+			#{passagerPid},
+			#{tktAirline},
+			#{passagerCount},
+			#{travelType},
+			#{outOrg},
+			#{outOrgEx},
+			#{outDes},
+			#{outDesEx},
+			#{returnDes},
+			#{returnDesEx},
+			#{outUnablePass},
+			#{outMustPass},
+			#{returnUnablePass},
+			#{returnMustPass},
+			#{allowFilghtNo},
+			#{excludeFilghtNo},
+			#{cabin},
+			#{rebate},
+			#{billingFee},
+			#{agencyFee},
+			#{childrenReward},
+			#{childrenRebate},
+			#{childrenPoundage},
+			#{childrenPoundageChoice},
+			#{childrenOpenNoCom},
+			#{badyReward},
+			#{firstDateStart},
+			#{firstDateEnd},
+			#{lastDateStart},
+			#{lastDateEnd},
+			#{tktTimeStart},
+			#{tktTimeEnd},
+			#{sharePolicy},
+			#{policyRemark},
+			#{workTime},
+			#{endTime},
+			#{creatUser},
+			#{updateUser},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_policy_rules SET 	
+			pr_code = #{prCode},
+			policy_name = #{policyName},
+			policy_status = #{policyStatus},
+			supplier_id = #{supplierId},
+			office = #{office},
+			passager_pid = #{passagerPid},
+			tkt_airline = #{tktAirline},
+			passager_count = #{passagerCount},
+			travel_type = #{travelType},
+			out_org = #{outOrg},
+			out_org_ex = #{outOrgEx},
+			out_des = #{outDes},
+			out_des_ex = #{outDesEx},
+			return_des = #{returnDes},
+			return_des_ex = #{returnDesEx},
+			out_unable_pass = #{outUnablePass},
+			out_must_pass = #{outMustPass},
+			return_unable_pass = #{returnUnablePass},
+			return_must_pass = #{returnMustPass},
+			allow_filght_no = #{allowFilghtNo},
+			exclude_filght_no = #{excludeFilghtNo},
+			cabin = #{cabin},
+			rebate = #{rebate},
+			billing_fee = #{billingFee},
+			agency_fee = #{agencyFee},
+			children_reward = #{childrenReward},
+			children_rebate = #{childrenRebate},
+			children_poundage = #{childrenPoundage},
+			children_poundage_choice = #{childrenPoundageChoice},
+			children_open_no_com = #{childrenOpenNoCom},
+			bady_reward = #{badyReward},
+			first_date_start = #{firstDateStart},
+			first_date_end = #{firstDateEnd},
+			last_date_start = #{lastDateStart},
+			last_date_end = #{lastDateEnd},
+			tkt_time_start = #{tktTimeStart},
+			tkt_time_end = #{tktTimeEnd},
+			share_policy = #{sharePolicy},
+			policy_remark = #{policyRemark},
+			work_time = #{workTime},
+			end_time = #{endTime},
+			creat_user = #{creatUser},
+			update_user = #{updateUser},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+<!-- 	<update id="delete"> -->
+<!-- 		UPDATE tb_policy_rules SET policy_status=#{policyStatus} -->
+<!-- 		WHERE id = #{id} -->
+<!-- 	</update> -->
+
+
+	<delete id="delete">
+		DELETE FROM tb_policy_rules  WHERE ID=#{id}
+	</delete>
+
+
+<!-- 插入Excle数据   张权 -->	
+<insert id="saveList">
+		INSERT INTO tb_policy_rules(
+			pr_code,
+			policy_name,
+			policy_status,
+			supplier_id,
+			office,
+			passager_pid,
+			tkt_airline,
+			passager_count,
+			travel_type,
+			out_org,
+			out_org_ex,
+			out_des,
+			out_des_ex,
+			return_des,
+			return_des_ex,
+			out_unable_pass,
+			out_must_pass,
+			return_unable_pass,
+			return_must_pass,
+			allow_filght_no,
+			exclude_filght_no,
+			cabin,
+			rebate,
+			billing_fee,
+			agency_fee,
+			children_reward,
+			children_rebate,
+			children_poundage,
+			children_poundage_choice,
+			children_open_no_com,
+			bady_reward,
+			first_date_start,
+			first_date_end,
+			last_date_start,
+			last_date_end,
+			tkt_time_start,
+			tkt_time_end,
+			share_policy,
+			policy_remark,
+			work_time,
+			end_time,
+			creat_user,
+			update_user,
+			update_date
+		) VALUES
+    	 <foreach collection="list" item="item" index="index" separator=","> 
+	   	 	(
+	   	 	#{item.prCode},
+			#{item.policyName},
+			#{item.policyStatus},
+			#{item.supplierId},
+			#{item.office},
+			#{item.passagerPid},
+			#{item.tktAirline},
+			#{item.passagerCount},
+			#{item.travelType},
+			#{item.outOrg},
+			#{item.outOrgEx},
+			#{item.outDes},
+			#{item.outDesEx},
+			#{item.returnDes},
+			#{item.returnDesEx},
+			#{item.outUnablePass},
+			#{item.outMustPass},
+			#{item.returnUnablePass},
+			#{item.returnMustPass},
+			#{item.allowFilghtNo},
+			#{item.excludeFilghtNo},
+			#{item.cabin},
+			#{item.rebate},
+			#{item.billingFee},
+			#{item.agencyFee},
+			#{item.childrenReward},
+			#{item.childrenRebate},
+			#{item.childrenPoundage},
+			#{item.childrenPoundageChoice},
+			#{item.childrenOpenNoCom},
+			#{item.badyReward},
+			#{item.firstDateStart},
+			#{item.firstDateEnd},
+			#{item.lastDateStart},
+			#{item.lastDateEnd},
+			#{item.tktTimeStart},
+			#{item.tktTimeEnd},
+			#{item.sharePolicy},
+			#{item.policyRemark},
+			#{item.workTime},
+			#{item.endTime},
+			#{item.creatUser},
+			#{item.updateUser},
+			#{item.updateDate}
+		)
+	   </foreach>
+	</insert>
+	
+</mapper>

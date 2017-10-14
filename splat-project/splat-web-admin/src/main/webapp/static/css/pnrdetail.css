@@ -1,0 +1,273 @@
+.addpolicy {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    background-color: #d2f3f6;
+    margin-top: 20px;
+}
+.addpolicy img {
+    float: left;
+    height: 20px;
+    margin: 8px 6px 0;
+}
+.pnrcontet {
+	margin: 20px 0 30px;
+}
+.addpolicy p {
+    float: left;
+    font-size: 16px;
+    color: #292388;
+}
+.orderkli {
+	width: 960px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+.ordercon {
+	width: 100%;
+	border:1px solid #c3984d;
+	border-radius:6px;
+	font-size: 12px;
+	margin-top: 10px;
+}
+.orderconhead {
+	height: 30px;
+	background-color: #f1f1f1;
+	border-radius:6px 6px 0 0;
+}
+.orderconul {
+	margin-left: 40px;
+}
+.orderconul li {
+	float: left;
+	line-height: 30px;
+}
+.orderconbom-left ul {
+	margin: 10px 0;
+}
+.orderconbom-left ul li {
+	float: left;
+	width: 16%;
+	/*text-align: center;*/
+	margin-left: 4%;
+}
+.orderconbom-left ul li span {
+	margin-right: 10px;
+}
+.ordermargin {
+	margin: 0 10px;
+	color: #dbdbdb;
+}
+.liwid span {
+	color: #5d5dec;
+	margin-right: 0 !important;
+}
+.pnrclick {
+	width: 30px;
+	margin-top: -24px;
+	margin-left: 888px;
+}
+.pnrcontethead {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	background-color: #f1f1f1;
+	border-radius: 6px 6px 0 0;
+	font-size: 14px;
+}
+.pnrmarleft {
+	margin-left: 36px;
+	color: #fd3c00;
+}
+.pnrmarrig {
+	margin-right: 26px;
+	color: #e78302;
+}
+.pnrflight {
+	width: 100%;
+	margin-top: 10px;
+}
+.pnrflight ul li {
+	width: 25%;
+	float: left;
+	font-size: 14px;
+}
+.pnrflightul {
+    color: #6a60fb;
+    border-bottom: 1px solid #c67e02;
+    padding-bottom: 6px;
+}
+.pnrflight ul li {
+    width: 25%;
+    float: left;
+    font-size: 14px;
+}
+.licenter {
+    text-align: center;
+}
+.marin {
+    margin-bottom: 30px;
+}	
+.ultwo {
+    margin-top: 14px;
+}
+.pnrflight ul li {
+    width: 25%;
+    float: left;
+    font-size: 14px;
+}
+.transfertwo {
+    color: #f6c058;
+    text-align: center;
+    width: 40%;
+    margin-left: 43%;
+}
+.aircraft {
+	margin-top: 20px;
+}
+.aircrafble {
+	border:1px solid #c3984d;
+	border-radius: 6px;
+	width: 960px;
+	margin: 30px 0 30px 100px;
+}
+.airctable {
+	width: 100%;
+	text-align: center;
+}
+.airctable tr {
+	height: 36px;
+	line-height: 36px;
+}
+.airctable tr th {
+	font-weight: normal;
+	color: #6a60fb;
+	border-bottom: 1px solid #c67e02;
+}
+.aircshow {
+	width: 800px !important;
+}
+.airchide {
+	width: 600px !important;
+}
+.singlecon {
+	margin: 20px 0 20px 100px;
+}
+.singlecon ul li {
+	float: left;
+	margin-right: 20px;
+}
+.singlecon ul li span {
+	margin-right: 3px;
+}
+.airchead {
+	border-bottom: 1px solid #c67e02;
+}
+.airchead ul li {
+	float: left;
+	width: 115px;
+	text-align: center;
+	height: 36px;
+	line-height: 36px;
+	color: #6a60fb;
+}
+.widtable {
+	width: 240px !important;
+	display:block;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+}
+.airchead-left {
+	width: 746px;
+}
+.hidetop ul li {
+	float: left;
+	width: 115px;
+	text-align: center;
+	height: 36px;
+	line-height: 36px;
+}
+.airconbot {
+	margin: 10px 0 20px;
+}
+.airconbot span {
+	float: left;
+	margin-left: 37px;
+}
+.rosize {
+	width: 590px;
+	height: 60px;
+	resize: none;
+}
+.addquery {
+    width: 60px;
+    height: 26px;
+    margin-right: 10px;
+    font-family: "Microsoft YaHei";
+    color: #FFF;
+    border: 1px solid #595959;
+    outline: 0;
+    background-color: #fc9f27;
+    border-radius: 4px;
+}
+.airchead-right {
+	width: 210px;
+	text-align: center;
+	margin-top: 14px;
+}
+.aircontop {
+	margin-top: 10px;
+}
+.rosizehead {
+	width: 900px;
+	margin-left: 125px;
+	margin-top: 20px;
+}
+.rosizehead textarea {
+	width: 100%;
+	height: 100px;
+	resize: none;
+}
+.butbotom {
+	text-align: center;
+	margin: 30px 0;
+}
+.butbotom button {
+	width: 140px;
+	height: 36px;
+	line-height: 36px;
+	background-color: #c41213;
+	border:1px solid #595959;
+	color: #FFF;
+	font-family: "微软雅黑";
+	border-radius: 4px;
+	margin: 0 40px;
+}
+.addche {
+	width: 75px !important;
+}
+.lileft {
+	width: 14% !important;
+	margin-left: 2% !important;
+}
+.leftconul {
+	margin-left: 20px !important;
+}
+.colorli {
+	color: #e78302;
+}
+.ticket {
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.tickqi {
+	vertical-align: middle;
+}
+.backche {
+	background-color: #e7e7e7;
+}
+.tabletext {
+	text-align: center;
+	margin: 15px 0;
+}

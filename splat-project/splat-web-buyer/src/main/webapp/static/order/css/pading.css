@@ -1,0 +1,93 @@
+/*分页*/
+.paging {
+	margin: 40px 0;
+	float:left;
+	position:relative;
+	left:50%;
+}
+.paging ul li {
+	float: left;
+	margin-right: 6px;
+	cursor: pointer;
+}
+.padingback {
+	width: 70px;
+	height: 26px;
+	background-color: #c41213;
+	color: #FFF;
+	line-height: 26px;
+	border-radius: 6px;
+	text-align: center;
+}
+.padingback img {
+	height: 16px;
+	margin-top: -1px;
+}
+.paging p {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background-color: #b5b5b5;
+	text-align: center;
+	line-height: 24px;
+	color: #FFF;
+	margin-top: 2px;
+}
+.dian {
+	line-height: 26px;
+}
+.centerpad {
+	position: relative;
+	left:-50%;
+}
+.lired {
+	line-height: 26px;
+	font-size: 16px;
+}
+.padingmo {
+	width: 50px;
+	height: 26px;
+	background-color: #c41213;
+	color: #FFF;
+	line-height: 26px;
+	border-radius: 6px;
+	text-align: center;
+}
+.search {
+	width: 40px;
+	hyphens: 22px;
+	line-height: 22px;
+	text-align: center;
+	border: 1px solid #c41314;
+	border-radius: 10px;
+	outline: 0;
+	margin-top: 2px;
+}
+.activepading {
+	background-color: #c41213 !important;
+}
+.backimg {
+	width: 15px;
+	height: 15px;
+	background:url(../images/leftclick.png) no-repeat;
+	display: inline-block;
+	margin: 5px 2px 0 5px;
+	line-height: 30px;
+	float: left;
+}
+.blockimg,.block {
+	display: inline-block;
+	float: left;
+}
+.block {
+	margin-left: 5px;
+}
+.backbot {
+	width: 15px;
+	height: 15px;
+	background:url(../images/rightclick.png) no-repeat;
+	display: inline-block;
+	margin: 5px 2px 0 3px;
+	line-height: 30px;
+	float: left;
+}

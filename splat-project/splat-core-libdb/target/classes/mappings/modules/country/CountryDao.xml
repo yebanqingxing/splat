@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.country.dao.CountryDao">
+    
+	<sql id="countryColumns">
+		a.id AS "id",
+		a.country_name_cn AS "countryNameCn",
+		a.country_name_cn_abbr AS "countryNameCnAbbr",
+		a.country_name_en AS "countryNameEn",
+		a.country_name_en_abbr AS "countryNameEnAbbr",
+		a.country_name_pinyin AS "countryNamePinyin",
+		a.country_code AS "countryCode",
+		a.country_code_abbr AS "countryCodeAbbr",
+		a.continent_id AS "continentId",
+		a.continent_name AS "continentName"
+	</sql>
+	
+	<sql id="countryJoins">
+	</sql>
+    
+	<select id="get" resultType="Country">
+		SELECT 
+			<include refid="countryColumns"/>
+		FROM tb_country a
+		<include refid="countryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Country">
+		SELECT 
+			<include refid="countryColumns"/>
+		FROM tb_country a
+		<include refid="countryJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Country">
+		SELECT 
+			<include refid="countryColumns"/>
+		FROM tb_country a
+		<include refid="countryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_country(
+			country_name_cn,
+			country_name_cn_abbr,
+			country_name_en,
+			country_name_en_abbr,
+			country_name_pinyin,
+			country_code,
+			country_code_abbr,
+			continent_id,
+			continent_name
+		) VALUES (
+			#{countryNameCn},
+			#{countryNameCnAbbr},
+			#{countryNameEn},
+			#{countryNameEnAbbr},
+			#{countryNamePinyin},
+			#{countryCode},
+			#{countryCodeAbbr},
+			#{continentId},
+			#{continentName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_country SET 	
+			country_name_cn = #{countryNameCn},
+			country_name_cn_abbr = #{countryNameCnAbbr},
+			country_name_en = #{countryNameEn},
+			country_name_en_abbr = #{countryNameEnAbbr},
+			country_name_pinyin = #{countryNamePinyin},
+			country_code = #{countryCode},
+			country_code_abbr = #{countryCodeAbbr},
+			continent_id = #{continentId},
+			continent_name = #{continentName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_country
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

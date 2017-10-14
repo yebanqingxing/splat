@@ -1,0 +1,187 @@
+.ordernone {
+	display: none;
+}
+.orderlist {
+	margin-top: 16px;
+}
+.orderlist a {
+	color: #706c6c;
+}
+.orderlist p {
+	color: #100d36;
+	cursor: pointer;
+}
+.orderlist p img {
+	height: 12px;
+	margin-left: 4px;
+}
+.orderlist li a {
+	color: #706c6c;
+}
+.query {
+	margin: 20px 0;
+}
+.querycode {
+	width: 200px;
+	height: 30px;
+}
+.query span {
+	line-height: 30px;
+	font-size: 14px;
+}
+.querycode {
+	margin-right: 30px;
+}
+.query-span {
+	margin-left: 80px;
+}
+.addquery {
+	width: 60px;
+	height: 26px;
+	margin-right: 10px;
+	font-family:"Microsoft YaHei";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+}
+.queryinter {
+	margin-bottom: 20px;
+}
+.query span {
+    line-height: 30px;
+    font-size: 14px;
+}
+.query-span {
+    margin-left: 80px;
+}
+.querydate {
+    width: 200px;
+    height: 30px;
+}
+.codeqi {
+    width: 60px;
+    height: 30px;
+    font-family: "Microsoft YaHei";
+    margin-right: 14px;
+}
+.addpolicy {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    background-color: #d2f3f6;
+    margin-top: 20px;
+}
+.addpolicy img {
+    float: left;
+    height: 20px;
+    margin: 8px 6px 0;
+}
+.addpolicy p {
+    float: left;
+    font-size: 16px;
+    color: #292388;
+}
+.interspan {
+	width: 98px;
+	display: inline-block;
+}
+.orderkli {
+	width: 960px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+.orderhead table {
+	width: 100%;
+}
+.orderhead table {
+	border-collapse:separate;
+	border-spacing:1px;
+}
+.orderhead table tr td {
+	font-weight: normal;
+	background-color: #96d5ef;
+	color: #FFF;
+	border-radius: 3px;
+	height: 30px;
+	text-align: center;
+}
+.ordercon {
+	width: 100%;
+	border:1px solid #c3984d;
+	border-radius:6px;
+	font-size: 12px;
+	margin-top: 10px;
+}
+.orderconhead {
+	height: 30px;
+	background-color: #f1f1f1;
+	border-radius:6px 6px 0 0;
+}
+.orderconul {
+	margin-left: 40px;
+}
+.orderconul li {
+	float: left;
+	line-height: 30px;
+}
+.ordermargin {
+	margin: 0 10px;
+	color: #dbdbdb;
+}
+.orderconbom-left {
+	width: 80%;
+}
+.orderconbom-left ul {
+	margin: 10px 0 10px 6%;
+}
+.orderconbom-right {
+	width: 20%;
+}
+.orderconbom-left ul li {
+	float: left;
+	width: 28%;
+}
+.orderconbom-left ul li span {
+	margin-right: 10px;
+}
+.orderwid {
+	width: 44% !important;
+}
+.butwid {
+	width: 80px;
+	height: 30px;
+	display: block;
+	margin: 16px auto;
+}
+.orderretreat {
+	text-align: center;
+}
+.orderretreat table {
+	border-collapse:separate;
+	border-spacing:1px;
+	display: inline-block;
+}
+.orderretreat table tr td {
+	font-weight: normal;
+	background-color: #96d5ef;
+	color: #FFF;
+	border-radius: 3px;
+	height: 30px;
+	text-align: center;
+	padding: 0 5px;
+}
+.orderkli table tr td a {
+	color: #FFF;
+}
+.tableclcik {
+	background-color: #0487be !important;
+}
+.liwid {
+	width: 25% !important;
+}
+.liwid span {
+	color: #5d5dec;
+	margin-right: 0 !important;
+}

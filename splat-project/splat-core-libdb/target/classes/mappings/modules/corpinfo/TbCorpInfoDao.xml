@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.corpinfo.dao.TbCorpInfoDao">
+    
+	<sql id="tbCorpInfoColumns">
+		a.id AS "id",
+		a.corp_id AS "corpId",
+		a.city_id AS "cityId",
+		a.corp_csname AS "corpCsname",
+		a.corp_cname AS "corpCname",
+		a.corp_ename AS "corpEname",
+		a.contact_person AS "contactPerson",
+		a.tel AS "tel",
+		a.fax AS "fax",
+		a.email AS "email",
+		a.zip_code AS "zipCode",
+		a.address AS "address",
+		a.corp_type AS "corpType",
+		a.user_num AS "userNum",
+		a.corp_status AS "corpStatus",
+		a.corp_num AS "corpNum",
+		a.mobil_phone AS "mobilPhone",
+		a.endday AS "endday",
+		a.user_id AS "user.id",
+		a.relate_id AS "relateId",
+		a.logo_gif AS "logoGif",
+		a.logo_bmp AS "logoBmp",
+		a.homepage AS "homepage",
+		a.start_date AS "startDate",
+		a.end_date AS "endDate",
+		a.can_post AS "canPost",
+		a.pay_method AS "payMethod",
+		a.comm_method AS "commMethod",
+		a.comm_rate AS "commRate",
+		a.is_delivery AS "isDelivery",
+		a.comm_type AS "commType",
+		a.comm_rate3 AS "commRate3",
+		a.comm_type3 AS "commType3",
+		a.sms_format AS "smsFormat",
+		a.delivery_method AS "deliveryMethod",
+		a.delivery_by AS "deliveryBy",
+		a.cancel_pnr AS "cancelPnr",
+		a.cancel_book AS "cancelBook",
+		a.credit_total AS "creditTotal",
+		a.credit_used AS "creditUsed",
+		a.sms_user AS "smsUser",
+		a.sms_pass AS "smsPass",
+		a.sms_subid AS "smsSubid",
+		a.sms_rate AS "smsRate",
+		a.sms_fee AS "smsFee",
+		a.hidden_dis AS "hiddenDis",
+		a.agent_query AS "agentQuery",
+		a.custom_line AS "customLine",
+		a.custom_id AS "customId",
+		a.account_id AS "accountId",
+		a.comm_typeo AS "commTypeo",
+		a.comm_rateo AS "commRateo",
+		a.pay_rate AS "payRate",
+		a.pay_rateo AS "payRateo",
+		a.auto_etdz AS "autoEtdz",
+		a.auto_print AS "autoPrint",
+		a.is_agent AS "isAgent",
+		a.display_book AS "displayBook",
+		a.duty_mob AS "dutyMob",
+		a.att_info AS "attInfo",
+		a.sms_sales AS "smsSales",
+		a.sms_total AS "smsTotal",
+		a.sms_feenum AS "smsFeenum",
+		a.corp_level AS "corpLevel",
+		a.corp_tag AS "corpTag",
+		a.comm_fee AS "commFee",
+		a.comm_fee3 AS "commFee3",
+		a.parent_corp AS "parentCorp",
+		a.account_date AS "accountDate",
+		a.bill_date AS "billDate",
+		a.count_end AS "countEnd",
+		a.delay_date AS "delayDate",
+		a.is_ticket AS "isTicket",
+		a.agenter AS "agenter",
+		a.ins_fee AS "insFee",
+		a.pt_rate AS "ptRate",
+		a.pt_fee AS "ptFee",
+		a.pay_version AS "payVersion",
+		a.newpay_date AS "newpayDate",
+		a.pre_bdate AS "preBdate",
+		a.next_bdate AS "nextBdate",
+		a.md5 AS "md5",
+		a.prod_id AS "prodId",
+		a.remark AS "remark",
+		a.alert_credit AS "alertCredit",
+		a.outer_no AS "outerNo",
+		a.debt_total AS "debtTotal",
+		a.debt_used AS "debtUsed",
+		u19.name AS "user.name"
+	</sql>
+	
+	<sql id="tbCorpInfoJoins">
+		LEFT JOIN sys_user u19 ON u19.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="TbCorpInfo">
+		SELECT 
+			<include refid="tbCorpInfoColumns"/>
+		FROM tb_corp_info a
+		<include refid="tbCorpInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TbCorpInfo">
+		SELECT 
+			<include refid="tbCorpInfoColumns"/>
+		FROM tb_corp_info a
+		<include refid="tbCorpInfoJoins"/>
+		<where>
+			
+			<if test="corpId != null and corpId != ''">
+				AND a.corp_id = #{corpId}
+			</if>
+			<if test="corpCsname != null and corpCsname != ''">
+				AND a.corp_csname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{corpCsname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{corpCsname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{corpCsname},'%')</if>
+			</if>
+			<if test="corpCname != null and corpCname != ''">
+				AND a.corp_cname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{corpCname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{corpCname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{corpCname},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TbCorpInfo">
+		SELECT 
+			<include refid="tbCorpInfoColumns"/>
+		FROM tb_corp_info a
+		<include refid="tbCorpInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_corp_info(
+			id,
+			corp_id,
+			city_id,
+			corp_csname,
+			corp_cname,
+			corp_ename,
+			contact_person,
+			tel,
+			fax,
+			email,
+			zip_code,
+			address,
+			corp_type,
+			user_num,
+			corp_status,
+			corp_num,
+			mobil_phone,
+			endday,
+			user_id,
+			relate_id,
+			logo_gif,
+			logo_bmp,
+			homepage,
+			start_date,
+			end_date,
+			can_post,
+			pay_method,
+			comm_method,
+			comm_rate,
+			is_delivery,
+			comm_type,
+			comm_rate3,
+			comm_type3,
+			sms_format,
+			delivery_method,
+			delivery_by,
+			cancel_pnr,
+			cancel_book,
+			credit_total,
+			credit_used,
+			sms_user,
+			sms_pass,
+			sms_subid,
+			sms_rate,
+			sms_fee,
+			hidden_dis,
+			agent_query,
+			custom_line,
+			custom_id,
+			account_id,
+			comm_typeo,
+			comm_rateo,
+			pay_rate,
+			pay_rateo,
+			auto_etdz,
+			auto_print,
+			is_agent,
+			display_book,
+			duty_mob,
+			att_info,
+			sms_sales,
+			sms_total,
+			sms_feenum,
+			corp_level,
+			corp_tag,
+			comm_fee,
+			comm_fee3,
+			parent_corp,
+			account_date,
+			bill_date,
+			count_end,
+			delay_date,
+			is_ticket,
+			agenter,
+			ins_fee,
+			pt_rate,
+			pt_fee,
+			pay_version,
+			newpay_date,
+			pre_bdate,
+			next_bdate,
+			md5,
+			prod_id,
+			remark,
+			alert_credit,
+			outer_no,
+			debt_total,
+			debt_used
+		) VALUES (
+			#{id},
+			#{corpId},
+			#{cityId},
+			#{corpCsname},
+			#{corpCname},
+			#{corpEname},
+			#{contactPerson},
+			#{tel},
+			#{fax},
+			#{email},
+			#{zipCode},
+			#{address},
+			#{corpType},
+			#{userNum},
+			#{corpStatus},
+			#{corpNum},
+			#{mobilPhone},
+			#{endday},
+			#{user.id},
+			#{relateId},
+			#{logoGif},
+			#{logoBmp},
+			#{homepage},
+			#{startDate},
+			#{endDate},
+			#{canPost},
+			#{payMethod},
+			#{commMethod},
+			#{commRate},
+			#{isDelivery},
+			#{commType},
+			#{commRate3},
+			#{commType3},
+			#{smsFormat},
+			#{deliveryMethod},
+			#{deliveryBy},
+			#{cancelPnr},
+			#{cancelBook},
+			#{creditTotal},
+			#{creditUsed},
+			#{smsUser},
+			#{smsPass},
+			#{smsSubid},
+			#{smsRate},
+			#{smsFee},
+			#{hiddenDis},
+			#{agentQuery},
+			#{customLine},
+			#{customId},
+			#{accountId},
+			#{commTypeo},
+			#{commRateo},
+			#{payRate},
+			#{payRateo},
+			#{autoEtdz},
+			#{autoPrint},
+			#{isAgent},
+			#{displayBook},
+			#{dutyMob},
+			#{attInfo},
+			#{smsSales},
+			#{smsTotal},
+			#{smsFeenum},
+			#{corpLevel},
+			#{corpTag},
+			#{commFee},
+			#{commFee3},
+			#{parentCorp},
+			#{accountDate},
+			#{billDate},
+			#{countEnd},
+			#{delayDate},
+			#{isTicket},
+			#{agenter},
+			#{insFee},
+			#{ptRate},
+			#{ptFee},
+			#{payVersion},
+			#{newpayDate},
+			#{preBdate},
+			#{nextBdate},
+			#{md5},
+			#{prodId},
+			#{remark},
+			#{alertCredit},
+			#{outerNo},
+			#{debtTotal},
+			#{debtUsed}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_corp_info SET 	
+			corp_id = #{corpId},
+			city_id = #{cityId},
+			corp_csname = #{corpCsname},
+			corp_cname = #{corpCname},
+			corp_ename = #{corpEname},
+			contact_person = #{contactPerson},
+			tel = #{tel},
+			fax = #{fax},
+			email = #{email},
+			zip_code = #{zipCode},
+			address = #{address},
+			corp_type = #{corpType},
+			user_num = #{userNum},
+			corp_status = #{corpStatus},
+			corp_num = #{corpNum},
+			mobil_phone = #{mobilPhone},
+			endday = #{endday},
+			user_id = #{user.id},
+			relate_id = #{relateId},
+			logo_gif = #{logoGif},
+			logo_bmp = #{logoBmp},
+			homepage = #{homepage},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			can_post = #{canPost},
+			pay_method = #{payMethod},
+			comm_method = #{commMethod},
+			comm_rate = #{commRate},
+			is_delivery = #{isDelivery},
+			comm_type = #{commType},
+			comm_rate3 = #{commRate3},
+			comm_type3 = #{commType3},
+			sms_format = #{smsFormat},
+			delivery_method = #{deliveryMethod},
+			delivery_by = #{deliveryBy},
+			cancel_pnr = #{cancelPnr},
+			cancel_book = #{cancelBook},
+			credit_total = #{creditTotal},
+			credit_used = #{creditUsed},
+			sms_user = #{smsUser},
+			sms_pass = #{smsPass},
+			sms_subid = #{smsSubid},
+			sms_rate = #{smsRate},
+			sms_fee = #{smsFee},
+			hidden_dis = #{hiddenDis},
+			agent_query = #{agentQuery},
+			custom_line = #{customLine},
+			custom_id = #{customId},
+			account_id = #{accountId},
+			comm_typeo = #{commTypeo},
+			comm_rateo = #{commRateo},
+			pay_rate = #{payRate},
+			pay_rateo = #{payRateo},
+			auto_etdz = #{autoEtdz},
+			auto_print = #{autoPrint},
+			is_agent = #{isAgent},
+			display_book = #{displayBook},
+			duty_mob = #{dutyMob},
+			att_info = #{attInfo},
+			sms_sales = #{smsSales},
+			sms_total = #{smsTotal},
+			sms_feenum = #{smsFeenum},
+			corp_level = #{corpLevel},
+			corp_tag = #{corpTag},
+			comm_fee = #{commFee},
+			comm_fee3 = #{commFee3},
+			parent_corp = #{parentCorp},
+			account_date = #{accountDate},
+			bill_date = #{billDate},
+			count_end = #{countEnd},
+			delay_date = #{delayDate},
+			is_ticket = #{isTicket},
+			agenter = #{agenter},
+			ins_fee = #{insFee},
+			pt_rate = #{ptRate},
+			pt_fee = #{ptFee},
+			pay_version = #{payVersion},
+			newpay_date = #{newpayDate},
+			pre_bdate = #{preBdate},
+			next_bdate = #{nextBdate},
+			md5 = #{md5},
+			prod_id = #{prodId},
+			remark = #{remark},
+			alert_credit = #{alertCredit},
+			outer_no = #{outerNo},
+			debt_total = #{debtTotal},
+			debt_used = #{debtUsed}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_corp_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

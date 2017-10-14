@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.RefundsheetPassengerDao">
+    
+	<sql id="refundsheetPassengerColumns">
+		a.id AS "id",
+		a.refundsheet_no AS "refundsheetNo",
+		a.passenger_name AS "passengerName",
+		a.ticket_no AS "ticketNo",
+		a.fist_refund_segment AS "fistRefundSegment",
+		a.supplier_settlement_price AS "supplierSettlementPrice",
+		a.supplier_used_sell_price AS "supplierUsedSellPrice",
+		a.supplier_used_tax AS "supplierUsedTax",
+		a.supplier_refund_charge AS "supplierRefundCharge",
+		a.supplier_other_charge AS "supplierOtherCharge",
+		a.refundsheet_id AS "refundsheetId",
+		a.supplier_audit_status AS "supplierAuditStatus",
+		a.distributor_audit_status AS "distributorAuditStatus",
+		a.order_passenger_id AS "orderPassengerId",
+		a.supplier_refund_smt_price AS "supplierRefundSmtPrice",
+		a.supplier_invoice_status AS "supplierInvoiceStatus",
+		a.supplier_modify_status AS "supplierModifyStatus",
+		a.distributor_settlement_price AS "distributorSettlementPrice",
+		a.supplier_service_charge AS "supplierServiceCharge",
+		a.distributor_used_sell_price AS "distributorUsedSellPrice",
+		a.distributor_used_tax AS "distributorUsedTax",
+		a.distributor_refund_charge AS "distributorRefundCharge",
+		a.distributor_other_charge AS "distributorOtherCharge",
+		a.distributor_service_charge AS "distributorServiceCharge",
+		a.distributor_refund_smt_price AS "distributorRefundSmtPrice",
+		a.distributor_invoice_status AS "distributorInvoiceStatus",
+		a.distributor_modify_status AS "distributorModifyStatus",
+		a.refund_time AS "refundTime",
+		a.refund_terminal AS "refundTerminal",
+		a.refund_office AS "refundOffice",
+		a.passenger_type AS "passengerType",
+		a.passenger_title AS "passengerTitle",
+		a.cert_type AS "certType",
+		a.cert_no AS "certNo",
+		a.gender AS "gender",
+		a.phone AS "phone",
+		a.ticket_terminal AS "ticketTerminal"
+	</sql>
+	
+	<sql id="refundsheetPassengerJoins">
+	</sql>
+    
+	<select id="get" resultType="RefundsheetPassenger">
+		SELECT 
+			<include refid="refundsheetPassengerColumns"/>
+		FROM tb_refundsheet_passenger a
+		<include refid="refundsheetPassengerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RefundsheetPassenger">
+		SELECT 
+			<include refid="refundsheetPassengerColumns"/>
+		FROM tb_refundsheet_passenger a
+		<include refid="refundsheetPassengerJoins"/>
+		<where>
+			
+			<if test="refundsheetNo != null and refundsheetNo != ''">
+				AND a.refundsheet_no = #{refundsheetNo}
+			</if>
+			<if test="passengerName != null and passengerName != ''">
+				AND a.passenger_name = #{passengerName}
+			</if>
+			<if test="beginRefundTime != null and endRefundTime != null and beginRefundTime != '' and endRefundTime != ''">
+				AND a.refund_time BETWEEN #{beginRefundTime} AND #{endRefundTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RefundsheetPassenger">
+		SELECT 
+			<include refid="refundsheetPassengerColumns"/>
+		FROM tb_refundsheet_passenger a
+		<include refid="refundsheetPassengerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_refundsheet_passenger(
+			refundsheet_no,
+			passenger_name,
+			ticket_no,
+			fist_refund_segment,
+			supplier_settlement_price,
+			supplier_used_sell_price,
+			supplier_used_tax,
+			supplier_refund_charge,
+			supplier_other_charge,
+			refundsheet_id,
+			supplier_audit_status,
+			distributor_audit_status,
+			order_passenger_id,
+			supplier_refund_smt_price,
+			supplier_invoice_status,
+			supplier_modify_status,
+			distributor_settlement_price,
+			supplier_service_charge,
+			distributor_used_sell_price,
+			distributor_used_tax,
+			distributor_refund_charge,
+			distributor_other_charge,
+			distributor_service_charge,
+			distributor_refund_smt_price,
+			distributor_invoice_status,
+			distributor_modify_status,
+			refund_time,
+			refund_terminal,
+			refund_office,
+			passenger_type,
+			passenger_title,
+			cert_type,
+			cert_no,
+			gender,
+			phone,
+			ticket_terminal
+		) VALUES (
+			#{refundsheetNo},
+			#{passengerName},
+			#{ticketNo},
+			#{fistRefundSegment},
+			#{supplierSettlementPrice},
+			#{supplierUsedSellPrice},
+			#{supplierUsedTax},
+			#{supplierRefundCharge},
+			#{supplierOtherCharge},
+			#{refundsheetId},
+			#{supplierAuditStatus},
+			#{distributorAuditStatus},
+			#{orderPassengerId},
+			#{supplierRefundSmtPrice},
+			#{supplierInvoiceStatus},
+			#{supplierModifyStatus},
+			#{distributorSettlementPrice},
+			#{supplierServiceCharge},
+			#{distributorUsedSellPrice},
+			#{distributorUsedTax},
+			#{distributorRefundCharge},
+			#{distributorOtherCharge},
+			#{distributorServiceCharge},
+			#{distributorRefundSmtPrice},
+			#{distributorInvoiceStatus},
+			#{distributorModifyStatus},
+			#{refundTime},
+			#{refundTerminal},
+			#{refundOffice},
+			#{passengerType},
+			#{passengerTitle},
+			#{certType},
+			#{certNo},
+			#{gender},
+			#{phone},
+			#{ticketTerminal}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_refundsheet_passenger SET 	
+			fist_refund_segment = #{fistRefundSegment},
+			supplier_settlement_price = #{supplierSettlementPrice},
+			supplier_used_sell_price = #{supplierUsedSellPrice},
+			supplier_used_tax = #{supplierUsedTax},
+			supplier_refund_charge = #{supplierRefundCharge},
+			supplier_other_charge = #{supplierOtherCharge},
+			supplier_audit_status = #{supplierAuditStatus},
+			distributor_audit_status = #{distributorAuditStatus},
+			supplier_refund_smt_price = #{supplierRefundSmtPrice},
+			supplier_invoice_status = #{supplierInvoiceStatus},
+			supplier_modify_status = #{supplierModifyStatus},
+			distributor_settlement_price = #{distributorSettlementPrice},
+			supplier_service_charge = #{supplierServiceCharge},
+			distributor_used_sell_price = #{distributorUsedSellPrice},
+			distributor_used_tax = #{distributorUsedTax},
+			distributor_refund_charge = #{distributorRefundCharge},
+			distributor_other_charge = #{distributorOtherCharge},
+			distributor_service_charge = #{distributorServiceCharge},
+			distributor_refund_smt_price = #{distributorRefundSmtPrice},
+			distributor_invoice_status = #{distributorInvoiceStatus},
+			distributor_modify_status = #{distributorModifyStatus},
+			refund_time = #{refundTime},
+			refund_terminal = #{refundTerminal},
+			refund_office = #{refundOffice},
+			ticket_terminal = #{ticketTerminal}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_refundsheet_passenger
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findRefundsheetPassenger" parameterType="string" resultType="RefundsheetPassenger">
+		SELECT 
+			<include refid="refundsheetPassengerColumns"/>
+		FROM tb_refundsheet_passenger a
+		WHERE a.refundsheet_no = #{refundsheetNo}
+	</select>
+</mapper>

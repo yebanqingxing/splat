@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderMessageDao">
+    
+	<sql id="ticketorderMessageColumns">
+		a.id AS "id",
+		a.order_no AS "order_no",
+		a.message AS "message",
+		a.create_time AS "createTime",
+		a.create_user AS "createUser"
+	</sql>
+	
+	<sql id="ticketorderMessageJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderMessage">
+		SELECT 
+			<include refid="ticketorderMessageColumns"/>
+		FROM tb_ticketorder_message a
+		<include refid="ticketorderMessageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderMessage">
+		SELECT 
+			<include refid="ticketorderMessageColumns"/>
+		FROM tb_ticketorder_message a
+		<include refid="ticketorderMessageJoins"/>
+		<where>
+		<if test="order_no != null and  order_no != ''">
+				 a.order_no = #{order_no}
+			</if>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderMessage">
+		SELECT 
+			<include refid="ticketorderMessageColumns"/>
+		FROM tb_ticketorder_message a
+		<include refid="ticketorderMessageJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_ticketorder_message(
+			order_no,
+			message,
+			create_time,
+			create_user
+		) VALUES (
+			#{order_no},
+			#{message},
+			#{createTime},
+			#{createUser}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_message SET 	
+			order_no = #{order_no},
+			message = #{crsPnr}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_message
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 查询留言通过订单 -->
+	<select id="findTicketorderMessage" parameterType="string" resultType="TicketorderMessage">
+		SELECT 
+			<include refid="ticketorderMessageColumns"/>
+		FROM tb_ticketorder_message a 
+		
+		WHERE a.orderNo = #{orderNo}
+	
+	</select>
+	
+</mapper>

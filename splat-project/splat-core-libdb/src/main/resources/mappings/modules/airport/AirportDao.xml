@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.airport.dao.AirportDao">
+    
+	<sql id="airportColumns">
+		a.id AS "id",
+		a.airport_name_cn AS "airportNameCn",
+		a.airport_name_cn_abbr AS "airportNameCnAbbr",
+		a.airport_name_en AS "airportNameEn",
+		a.airport_name_pinyin AS "airportNamePinyin",
+		a.airport_code AS "airportCode",
+		a.airport_code_abbr AS "airportCodeAbbr",
+		a.city_name_cn AS "cityNameCn",
+		a.city_code AS "cityCode",
+		a.province_name_cn AS "provinceNameCn",
+		a.province_code AS "provinceCode",
+		a.country_name_cn AS "countryNameCn",
+		a.country_code AS "countryCode",
+		a.continent_name_cn AS "continentNameCn",
+		a.continent_code AS "continentCode",
+		a.iata_region_name_cn AS "iataRegionNameCn",
+		a.iata_area_cd AS "iataAreaCd",
+		a.area_name AS "areaName"
+	</sql>
+	
+	<sql id="airportJoins">
+	</sql>
+    
+	<select id="get" resultType="Airport">
+		SELECT 
+			<include refid="airportColumns"/>
+		FROM tb_airport a
+		<include refid="airportJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Airport">
+		SELECT 
+			<include refid="airportColumns"/>
+		FROM tb_airport a
+		<include refid="airportJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Airport">
+		SELECT 
+			<include refid="airportColumns"/>
+		FROM tb_airport a
+		<include refid="airportJoins"/>
+		<where>
+			<if test=" cityCode != null and cityCode != ''">
+				 AND a.city_code= #{cityCode}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_airport(
+			airport_name_cn,
+			airport_name_cn_abbr,
+			airport_name_en,
+			airport_name_pinyin,
+			airport_code,
+			airport_code_abbr,
+			city_name_cn,
+			city_code,
+			province_name_cn,
+			province_code,
+			country_name_cn,
+			country_code,
+			continent_name_cn,
+			continent_code,
+			iata_region_name_cn,
+			iata_area_cd,
+			area_name
+		) VALUES (
+			#{airportNameCn},
+			#{airportNameCnAbbr},
+			#{airportNameEn},
+			#{airportNamePinyin},
+			#{airportCode},
+			#{airportCodeAbbr},
+			#{cityNameCn},
+			#{cityCode},
+			#{provinceNameCn},
+			#{provinceCode},
+			#{countryNameCn},
+			#{countryCode},
+			#{continentNameCn},
+			#{continentCode},
+			#{iataRegionNameCn},
+			#{iataAreaCd},
+			#{areaName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_airport SET 	
+			airport_name_cn = #{airportNameCn},
+			airport_name_cn_abbr = #{airportNameCnAbbr},
+			airport_name_en = #{airportNameEn},
+			airport_name_pinyin = #{airportNamePinyin},
+			airport_code = #{airportCode},
+			airport_code_abbr = #{airportCodeAbbr},
+			city_name_cn = #{cityNameCn},
+			city_code = #{cityCode},
+			province_name_cn = #{provinceNameCn},
+			province_code = #{provinceCode},
+			country_name_cn = #{countryNameCn},
+			country_code = #{countryCode},
+			continent_name_cn = #{continentNameCn},
+			continent_code = #{continentCode},
+			iata_region_name_cn = #{iataRegionNameCn},
+			iata_area_cd = #{iataAreaCd},
+			area_name = #{areaName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_airport
+		WHERE id = #{id}
+	</update>
+	
+		<select id="getAirportByAirportCode" resultType="Airport">
+		SELECT 
+			<include refid="airportColumns"/>
+		FROM tb_airport a
+		<include refid="airportJoins"/>
+		WHERE a.airport_code = #{airportCode}
+	</select>
+	
+</mapper>

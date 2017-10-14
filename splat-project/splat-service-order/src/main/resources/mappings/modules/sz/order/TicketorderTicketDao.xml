@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderTicketDao">
+    
+	<sql id="ticketorderTicketColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.ticket_no AS "ticketNo",
+		a.ticketing_office AS "ticketingOffice",
+		a.printer_no AS "printerNo",
+		a.detr_info AS "detrInfo",
+		a.detr_f_info AS "detrFInfo",
+		a.order_id AS "orderId",
+		a.issued_time AS "issuedTime",
+		a.refund_void_configuration AS "refundVoidConfiguration"
+	</sql>
+	
+	<sql id="ticketorderTicketJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderTicket">
+		SELECT 
+			<include refid="ticketorderTicketColumns"/>
+		FROM tb_ticketorder_ticket a
+		<include refid="ticketorderTicketJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderTicket">
+		SELECT 
+			<include refid="ticketorderTicketColumns"/>
+		FROM tb_ticketorder_ticket a
+		<include refid="ticketorderTicketJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderTicket">
+		SELECT 
+			<include refid="ticketorderTicketColumns"/>
+		FROM tb_ticketorder_ticket a
+		<include refid="ticketorderTicketJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_ticketorder_ticket(
+			order_no,
+			ticket_no,
+			ticketing_office,
+			printer_no,
+			detr_info,
+			detr_f_info,
+			order_id,
+			issued_time,
+			refund_void_configuration
+		) VALUES (
+			#{orderNo},
+			#{ticketNo},
+			#{ticketingOffice},
+			#{printerNo},
+			#{detrInfo},
+			#{detrFInfo},
+			#{orderId},
+			#{issuedTime},
+			#{refundVoidConfiguration}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_ticket SET 	
+			order_no = #{orderNo},
+			ticket_no = #{ticketNo},
+			ticketing_office = #{ticketingOffice},
+			printer_no = #{printerNo},
+			detr_info = #{detrInfo},
+			detr_f_info = #{detrFInfo},
+			order_id = #{orderId},
+			issued_time = #{issuedTime},
+			refund_void_configuration = #{refundVoidConfiguration}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_ticket
+		WHERE id = #{id}
+	</update>
+
+
+	<!-- 通过订单号来查询票号 -->
+	<select id="findTicketList" parameterType="string" resultType="TicketorderTicket">
+	SELECT 
+			<include refid="ticketorderTicketColumns"/>
+		FROM tb_ticketorder_ticket a
+		WHERE a.order_no = #{orderNo}
+	</select>
+	
+</mapper>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.VoidsheetPassengerDao">
+    
+	<sql id="voidsheetPassengerColumns">
+		a.id AS "id",
+		a.voidsheet_no AS "voidsheetNo",
+		a.passenger_name AS "passengerName",
+		a.ticket_no AS "ticketNo",
+		a.first_segment AS "firstSegment",
+		a.supplier_smt_price AS "supplierSmtPrice",
+		a.supplier_void_charge AS "supplierVoidCharge",
+		a.supplier_other_charge AS "supplierOtherCharge",
+		a.supplier_void_smt_fare AS "supplierVoidSmtFare",
+		a.supplier_invoice_status AS "supplierInvoiceStatus",
+		a.supplier_modify_status AS "supplierModifyStatus",
+		a.distributor_smt_price AS "distributorSmtPrice",
+		a.voidsheet_id AS "voidsheetId",
+		a.supplier_audit_status AS "supplierAuditStatus",
+		a.distributor_audit_status AS "distributorAuditStatus",
+		a.order_passenger_id AS "orderPassengerId",
+		a.distributor_void_charge AS "distributorVoidCharge",
+		a.distributor_other_charge AS "distributorOtherCharge",
+		a.distributor_void_smt_fare AS "distributorVoidSmtFare",
+		a.distributor_invoice_status AS "distributorInvoiceStatus",
+		a.distributor_modify_status AS "distributorModifyStatus",
+		a.void_terminal AS "voidTerminal",
+		a.void_office AS "voidOffice",
+		a.void_time AS "voidTime",
+		a.ticket_terminal AS "ticketTerminal",
+		a.gender AS "gender",
+		a.passenger_type AS "passengerType",
+		a.passenger_title AS "passengerTitle",
+		a.cert_type AS "certType",
+		a.cert_no AS "certNo",
+		a.phone AS "phone"
+	</sql>
+	
+	<sql id="voidsheetPassengerJoins">
+	</sql>
+    
+	<select id="get" resultType="VoidsheetPassenger">
+		SELECT 
+			<include refid="voidsheetPassengerColumns"/>
+		FROM tb_voidsheet_passenger a
+		<include refid="voidsheetPassengerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="VoidsheetPassenger">
+		SELECT 
+			<include refid="voidsheetPassengerColumns"/>
+		FROM tb_voidsheet_passenger a
+		<include refid="voidsheetPassengerJoins"/>
+		<where>
+			
+			<if test="voidsheetNo != null and voidsheetNo != ''">
+				AND a.voidsheet_no = #{voidsheetNo}
+			</if>
+			<if test="beginVoidTime != null and endVoidTime != null and beginVoidTime != '' and endVoidTime != ''">
+				AND a.void_time BETWEEN #{beginVoidTime} AND #{endVoidTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="VoidsheetPassenger">
+		SELECT 
+			<include refid="voidsheetPassengerColumns"/>
+		FROM tb_voidsheet_passenger a
+		<include refid="voidsheetPassengerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_voidsheet_passenger(
+			voidsheet_no,
+			passenger_name,
+			ticket_no,
+			first_segment,
+			supplier_smt_price,
+			supplier_void_charge,
+			supplier_other_charge,
+			supplier_void_smt_fare,
+			supplier_invoice_status,
+			supplier_modify_status,
+			distributor_smt_price,
+			voidsheet_id,
+			supplier_audit_status,
+			distributor_audit_status,
+			order_passenger_id,
+			distributor_void_charge,
+			distributor_other_charge,
+			distributor_void_smt_fare,
+			distributor_invoice_status,
+			distributor_modify_status,
+			void_terminal,
+			void_office,
+			void_time,
+			ticket_terminal,
+			gender,
+			passenger_type,
+			passenger_title,
+			cert_type,
+			cert_no,
+			phone
+		) VALUES (
+			#{voidsheetNo},
+			#{passengerName},
+			#{ticketNo},
+			#{firstSegment},
+			#{supplierSmtPrice},
+			#{supplierVoidCharge},
+			#{supplierOtherCharge},
+			#{supplierVoidSmtFare},
+			#{supplierInvoiceStatus},
+			#{supplierModifyStatus},
+			#{distributorSmtPrice},
+			#{voidsheetId},
+			#{supplierAuditStatus},
+			#{distributorAuditStatus},
+			#{orderPassengerId},
+			#{distributorVoidCharge},
+			#{distributorOtherCharge},
+			#{distributorVoidSmtFare},
+			#{distributorInvoiceStatus},
+			#{distributorModifyStatus},
+			#{voidTerminal},
+			#{voidOffice},
+			#{voidTime},
+			#{ticketTerminal},
+			#{gender},
+			#{passengerType},
+			#{passengerTitle},
+			#{certType},
+			#{certNo},
+			#{phone}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_voidsheet_passenger SET 	
+			voidsheet_no = #{voidsheetNo},
+			passenger_name = #{passengerName},
+			ticket_no = #{ticketNo},
+			first_segment = #{firstSegment},
+			supplier_smt_price = #{supplierSmtPrice},
+			supplier_void_charge = #{supplierVoidCharge},
+			supplier_other_charge = #{supplierOtherCharge},
+			supplier_void_smt_fare = #{supplierVoidSmtFare},
+			supplier_invoice_status = #{supplierInvoiceStatus},
+			supplier_modify_status = #{supplierModifyStatus},
+			distributor_smt_price = #{distributorSmtPrice},
+			voidsheet_id = #{voidsheetId},
+			supplier_audit_status = #{supplierAuditStatus},
+			distributor_audit_status = #{distributorAuditStatus},
+			order_passenger_id = #{orderPassengerId},
+			distributor_void_charge = #{distributorVoidCharge},
+			distributor_other_charge = #{distributorOtherCharge},
+			distributor_void_smt_fare = #{distributorVoidSmtFare},
+			distributor_invoice_status = #{distributorInvoiceStatus},
+			distributor_modify_status = #{distributorModifyStatus},
+			void_terminal = #{voidTerminal},
+			void_office = #{voidOffice},
+			void_time = #{voidTime},
+			ticket_terminal = #{ticketTerminal}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_voidsheet_passenger
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findvoidPassenger" parameterType="string" resultType="VoidsheetPassenger">
+	SELECT <include refid="voidsheetPassengerColumns"/>
+	FROM tb_voidsheet_passenger a
+	WHERE a.voidsheet_no = #{voidsheetNo}
+	</select>
+	
+	<update id="updatePassengerPrice" parameterType="VoidsheetPassenger">
+	UPDATE tb_voidsheet_passenger SET 	
+			supplier_void_charge=#{supplierVoidCharge},
+			supplier_other_charge = #{supplierOtherCharge},
+			supplier_smt_price = #{supplierSmtPrice}
+			
+			WHERE id = #{id}
+	</update>
+	
+</mapper>

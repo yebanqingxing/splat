@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.VoidsheetDetailDao">
+    
+	<sql id="voidsheetDetailColumns">
+		a.id AS "id",
+		a.voidsheet_no AS "voidsheetNo",
+		a.order_no AS "orderNo",
+		a.origin_voidsheet_no AS "originVoidsheetNo",
+		a.crs_pnr AS "crsPnr",
+		a.arl_pnr AS "arlPnr",
+		a.mid_pnr AS "midPnr",
+		a.voidsheet_status AS "voidsheetStatus",
+		a.current_group AS "currentGroup",
+		a.current_operator AS "currentOperator",
+		a.relevant_client AS "relevantClient",
+		a.create_account AS "createAccount",
+		a.create_time AS "createTime",
+		a.next_operation AS "nextOperation",
+		a.pay_status AS "payStatus",
+		a.create_type AS "createType",
+		a.reception_customer_id AS "receptionCustomerId",
+		a.create_account_id AS "createAccountId",
+		a.station_creater_id AS "stationCreaterId",
+		a.first_segment AS "firstSegment",
+		a.order_id AS "orderId",
+		a.remark AS "remark",
+		a.supplier_tot_settlement_price AS "supplierTotSettlementPrice",
+		a.distributor_tot_smt_price AS "distributorTotSmtPrice",
+		a.is_fit AS "isFit",
+		a.is_international AS "isInternational",
+		a.supplier_product_no AS "supplierProductNo",
+		a.issue_airline AS "issueAirline",
+		a.sale_config AS "saleConfig",
+		a.order_create_type AS "orderCreateType",
+		a.supplier_product_name AS "supplierProductName",
+		a.last_modify_dept_id AS "lastModifyDeptId",
+		a.last_modify_dept_name AS "lastModifyDeptName",
+		a.last_modify_person_id AS "lastModifyPersonId",
+		a.last_modify_person_name AS "lastModifyPersonName",
+		a.last_circulation_time AS "lastCirculationTime",
+		a.busi_remark AS "busiRemark",
+		a.current_status AS "currentStatus",
+		a.contact_phone AS "contactPhone",
+		a.invoice AS "invoice",
+		a.go_main_traveldate AS "goMainTraveldate"
+	</sql>
+	
+	<sql id="voidsheetDetailJoins">
+	</sql>
+    
+	<select id="get" resultType="VoidsheetDetail">
+		SELECT 
+			<include refid="voidsheetDetailColumns"/>
+		FROM tb_voidsheet_detail a
+		<include refid="voidsheetDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="VoidsheetDetail">
+		SELECT DISTINCT
+			<include refid="voidsheetDetailColumns"/>
+			FROM tb_voidsheet_detail a 
+		<include refid="voidsheetDetailJoins"/>
+		<where>
+		<!-- 操作状态的查询 -->
+			<if test="currentStatus != null and currentStatus != '' ">
+				AND a.current_status = #{currentStatus}
+			</if>
+				<!-- 票号查询 -->
+			<if test="ticketNo != null and ticketNo != '' ">
+				a.voidsheet_no in (
+				SELECT  t.order_no FROM tb_ticketorder_ticket t WHERE t.ticket_no
+				 LIKE 
+					<if test="dbName == 'oracle'">'%'||#{ticketNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{ticketNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{ticketNo},'%')</if>
+					)
+			</if>
+			<!-- 根据订单号查询 -->
+			<if test="voidsheetNo != null and voidsheetNo != ''">
+				AND a.voidsheet_no = #{voidsheetNo}
+			</if>
+			<!-- PNR查询 -->
+			<if test="crsPnr != null and crsPnr != ''">
+				AND a.crs_pnr = #{crsPnr}
+			</if>
+			<!-- 查询订单的状态 -->
+			<if test="voidsheetStatus != null and voidsheetStatus != ''">
+				AND a.voidsheet_status = #{voidsheetStatus}
+			</if>
+			<!-- 根据旅客进行查询 -->
+			<if test="createAccount != null and createAccount != ''">
+				AND a.create_account = #{createAccount}
+			</if>
+			<!-- 根据时间段的查询 -->
+			<if test="beginCreateTime != null   and beginCreateTime != '' ">
+				AND a.create_time >= #{beginCreateTime}
+			</if>
+			<if test="endCreateTime != null and endCreateTime != ''">
+				AND a.create_time &lt;= #{endCreateTime}
+			</if>
+			<!-- 查询支付状态 -->
+			<if test="payStatus != null and payStatus != ''">
+				AND a.pay_status = #{payStatus}
+			</if>
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND a.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND a.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY   a.create_time DESC
+	</select>
+	
+	<select id="findAllList" resultType="VoidsheetDetail">
+		SELECT 
+			<include refid="voidsheetDetailColumns"/>
+		FROM tb_voidsheet_detail a
+		<include refid="voidsheetDetailJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_voidsheet_detail(
+			voidsheet_no,
+			order_no,
+			origin_voidsheet_no,
+			crs_pnr,
+			arl_pnr,
+			mid_pnr,
+			voidsheet_status,
+			current_group,
+			current_operator,
+			relevant_client,
+			create_account,
+			create_time,
+			next_operation,
+			pay_status,
+			create_type,
+			reception_customer_id,
+			create_account_id,
+			station_creater_id,
+			first_segment,
+			order_id,
+			remark,
+			supplier_tot_settlement_price,
+			distributor_tot_smt_price,
+			is_fit,
+			is_international,
+			supplier_product_no,
+			issue_airline,
+			sale_config,
+			order_create_type,
+			supplier_product_name,
+			last_modify_dept_id,
+			last_modify_dept_name,
+			last_modify_person_id,
+			last_modify_person_name,
+			last_circulation_time,
+			busi_remark,
+			current_status,
+			contact_phone,
+			invoice,
+			go_main_traveldate
+		) VALUES (
+			#{voidsheetNo},
+			#{orderNo},
+			#{originVoidsheetNo},
+			#{crsPnr},
+			#{arlPnr},
+			#{midPnr},
+			#{voidsheetStatus},
+			#{currentGroup},
+			#{currentOperator},
+			#{relevantClient},
+			#{createAccount},
+			#{createTime},
+			#{nextOperation},
+			#{payStatus},
+			#{createType},
+			#{receptionCustomerId},
+			#{createAccountId},
+			#{stationCreaterId},
+			#{firstSegment},
+			#{orderId},
+			#{remark},
+			#{supplierTotSettlementPrice},
+			#{distributorTotSmtPrice},
+			#{isFit},
+			#{isInternational},
+			#{supplierProductNo},
+			#{issueAirline},
+			#{saleConfig},
+			#{orderCreateType},
+			#{supplierProductName},
+			#{lastModifyDeptId},
+			#{lastModifyDeptName},
+			#{lastModifyPersonId},
+			#{lastModifyPersonName},
+			#{lastCirculationTime},
+			#{busiRemark},
+			#{currentStatus},
+			#{contactPhone},
+			#{invoice},
+			#{goMainTraveldate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_voidsheet_detail SET 	
+			voidsheet_no = #{voidsheetNo},
+			order_no = #{orderNo},
+			origin_voidsheet_no = #{originVoidsheetNo},
+			crs_pnr = #{crsPnr},
+			arl_pnr = #{arlPnr},
+			mid_pnr = #{midPnr},
+			voidsheet_status = #{voidsheetStatus},
+			current_group = #{currentGroup},
+			current_operator = #{currentOperator},
+			relevant_client = #{relevantClient},
+			create_account = #{createAccount},
+			create_time = #{createTime},
+			next_operation = #{nextOperation},
+			pay_status = #{payStatus},
+			create_type = #{createType},
+			reception_customer_id = #{receptionCustomerId},
+			create_account_id = #{createAccountId},
+			station_creater_id = #{stationCreaterId},
+			first_segment = #{firstSegment},
+			order_id = #{orderId},
+			remark = #{remark},
+			supplier_tot_settlement_price = #{supplierTotSettlementPrice},
+			distributor_tot_smt_price = #{distributorTotSmtPrice},
+			is_fit = #{isFit},
+			is_international = #{isInternational},
+			supplier_product_no = #{supplierProductNo},
+			issue_airline = #{issueAirline},
+			sale_config = #{saleConfig},
+			order_create_type = #{orderCreateType},
+			supplier_product_name = #{supplierProductName},
+			last_modify_dept_id = #{lastModifyDeptId},
+			last_modify_dept_name = #{lastModifyDeptName},
+			last_modify_person_id = #{lastModifyPersonId},
+			last_modify_person_name = #{lastModifyPersonName},
+			last_circulation_time = #{lastCirculationTime},
+			busi_remark = #{busiRemark},
+			current_status = #{currentStatus},
+			invoice=#{invoice},
+			go_main_traveldate=#{goMainTraveldate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_voidsheet_detail
+		WHERE id = #{id}
+	</update>
+	<!-- 修改废票的状态 -->
+	<update id="updateVoidsheetStatus" parameterType="map">
+	UPDATE tb_voidsheet_detail SET voidsheet_status = #{voidsheetStatus} WHERE voidsheet_no = #{voidsheetNo}
+	</update>
+	<!-- 查询状态 以及条数 -->
+	<select id="findVoidsheetStatusCount" parameterType="VoidsheetDetail" resultType="VoidsheetStatusCount">
+	SELECT count(t.voidsheet_status) count,t.voidsheet_status voidsheetStatus 
+	FROM tb_voidsheet_detail t
+	
+	<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.voidsheet_status
+	</select>
+	<!-- 查询支付状态条数 -->
+	<select id="findPayStatusCount" parameterType="VoidsheetDetail" resultType="PayStatusCount">
+	SELECT count(t.pay_status) count,t.pay_status payStatus 
+	FROM tb_voidsheet_detail t
+	
+	<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.pay_status
+	</select>
+	<!-- 查询操作状态 -->
+	<select id="findCurrentStatus" parameterType="VoidsheetDetail" resultType="CurrentStatus">
+	SELECT count(t.current_status) count,t.current_status currentStatus 
+	FROM tb_voidsheet_detail t
+	
+	<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.current_status
+	</select>
+	
+	<select id="findVoidsheetDetail" parameterType="string" resultType="VoidsheetDetail">
+	SELECT 
+			<include refid="voidsheetDetailColumns"/>
+		FROM tb_voidsheet_detail a
+		<include refid="voidsheetDetailJoins"/>
+		WHERE a.voidsheet_no = #{voidsheetNo}
+	</select>
+	
+	<!-- 修改操作状态 -->
+	<update id="updateCurrentStatus" parameterType="map" >
+	UPDATE  tb_voidsheet_detail  SET current_status = #{currentStatus}
+	WHERE voidsheet_no = #{voidsheetNo}
+	</update>
+	
+	<!-- 供应商确认废票后修改订单的金额 -->
+	<update id="updateSupplierTotSettlementPrice" parameterType="map">
+	UPDATE  tb_voidsheet_detail  SET supplier_tot_settlement_price = #{SupplierTotSettlementPrice}
+	WHERE voidsheet_no = #{voidsheetNo}
+	</update>
+	
+	<update id="updatePayStatus" parameterType="map" >
+	UPDATE  tb_voidsheet_detail  SET pay_status = #{payStatus}
+	WHERE voidsheet_no = #{voidsheetNo}
+	</update>
+</mapper>

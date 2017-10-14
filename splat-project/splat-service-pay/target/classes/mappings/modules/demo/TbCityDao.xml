@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.pay.dao.TbCityDao">
+    
+	<sql id="tbCityColumns">
+		a.id AS "id",
+		a.city_name_cn AS "cityNameCn",
+		a.city_name_cn_abbr AS "cityNameCnAbbr",
+		a.city_name_en AS "cityNameEn",
+		a.city_name_pinyin AS "cityNamePinyin",
+		a.city_name_pinyin_name AS "cityNamePinyinName",
+		a.city_code AS "cityCode",
+		a.city_code_abbr AS "cityCodeAbbr",
+		a.province_name_cn AS "provinceNameCn",
+		a.iata_area_cd AS "iataAreaCd",
+		a.iata_region_en_abbr AS "iataRegionEnAbbr",
+		a.iata_region_cn_name AS "iataRegionCnName",
+		a.iata_region_en AS "iataRegionEn"
+	</sql>
+	
+	<sql id="tbCityJoins">
+	</sql>
+    
+	<select id="get" resultType="TbCity">
+		SELECT 
+			<include refid="tbCityColumns"/>
+		FROM tb_city a
+		<include refid="tbCityJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TbCity">
+		SELECT 
+			<include refid="tbCityColumns"/>
+		FROM tb_city a
+		<include refid="tbCityJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TbCity">
+		SELECT 
+			<include refid="tbCityColumns"/>
+		FROM tb_city a
+		<include refid="tbCityJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_city(
+			id,
+			city_name_cn,
+			city_name_cn_abbr,
+			city_name_en,
+			city_name_pinyin,
+			city_name_pinyin_name,
+			city_code,
+			city_code_abbr,
+			province_name_cn,
+			iata_area_cd,
+			iata_region_en_abbr,
+			iata_region_cn_name,
+			iata_region_en
+		) VALUES (
+			#{id},
+			#{cityNameCn},
+			#{cityNameCnAbbr},
+			#{cityNameEn},
+			#{cityNamePinyin},
+			#{cityNamePinyinName},
+			#{cityCode},
+			#{cityCodeAbbr},
+			#{provinceNameCn},
+			#{iataAreaCd},
+			#{iataRegionEnAbbr},
+			#{iataRegionCnName},
+			#{iataRegionEn}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_city SET 	
+			city_name_cn = #{cityNameCn},
+			city_name_cn_abbr = #{cityNameCnAbbr},
+			city_name_en = #{cityNameEn},
+			city_name_pinyin = #{cityNamePinyin},
+			city_name_pinyin_name = #{cityNamePinyinName},
+			city_code = #{cityCode},
+			city_code_abbr = #{cityCodeAbbr},
+			province_name_cn = #{provinceNameCn},
+			iata_area_cd = #{iataAreaCd},
+			iata_region_en_abbr = #{iataRegionEnAbbr},
+			iata_region_cn_name = #{iataRegionCnName},
+			iata_region_en = #{iataRegionEn}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_city
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

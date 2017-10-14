@@ -1,0 +1,76 @@
+@charset "utf-8";
+/* CSS reset */
+*{
+	margin:0;
+	padding: 0;
+}
+body,button,input,select,textarea{font:12px/1.5 arial,tahoma,\5b8b\4f53,sans-serif;}
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+address,cite,em,var{font-style:normal;}
+code,kbd,pre,samp{font-family:courier new,courier,monospace;}
+ul,ol{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+legend{color:#333;}fieldset,img{border:0 none;vertical-align:middle;}
+button,input,select,textarea{font-size:100%;overflow:visible;}
+table{border-collapse:collapse;border-spacing:0;}
+article,aside,details,figcaption,figure,footer,header,menu,nav,section,time,audio,video{display:block;margin:0;padding:0;}
+.clearfix{ *zoom:1;}
+.clearout{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cleartxt{color:transparent;font:0/0 a ;overflow:hidden;}
+img {
+	max-width: 100%;
+	border:none;
+}
+li{list-style: none;}
+body{width: 100%; margin:auto; overflow-x:hidden; line-height:160%;font-family: "Microsoft YaHei", Helvetica, sans-serif,simsun ,"微软雅黑"; font-size: 12px; color:#666; background-color: #fff;}
+.clear:after {
+	clear:both;
+	content:" ";
+	display:block;
+	visibility: hidden;
+	height: 0;
+}
+.fl {
+	float: left !important;
+}
+.fr {
+	float: right !important;
+}
+.none {
+	display: none !important;
+}
+.pnrimport-head {
+	width: 100%;
+	background-color: #d2f3f6;
+	height: 40px;
+}
+.pnrimport-head img {
+	height: 100%;
+	display: block;
+	float: left;
+}
+.pnrimport-head span {
+	font-size: 16px;
+	color: #292388;
+	line-height: 40px;
+	display: block;
+	float: left;
+	margin-left: 2px;
+}
+.redreset {
+	color: #bc0000;
+}
+.checkcon {
+	display: block;
+	margin-left: 20px;
+	margin-top: 6px;
+}
+.checkleft {
+	margin-left: 40px;
+}
+.colorhei {
+	width: 100%;
+	height: 2px;
+	background-color: #28486f;
+}

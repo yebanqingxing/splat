@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.continent.dao.ContinentDao">
+    
+	<sql id="continentColumns">
+		a.id AS "id",
+		a.continent_name_cn AS "continentNameCn",
+		a.continent_name_cn_abbr AS "continentNameCnAbbr",
+		a.continent_name_en AS "continentNameEn",
+		a.continent_name_pinyin AS "continentNamePinyin",
+		a.continent_code AS "continentCode",
+		a.continent_code_abbr AS "continentCodeAbbr"
+	</sql>
+	
+	<sql id="continentJoins">
+	</sql>
+    
+	<select id="get" resultType="Continent">
+		SELECT 
+			<include refid="continentColumns"/>
+		FROM tb_continent a
+		<include refid="continentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Continent">
+		SELECT 
+			<include refid="continentColumns"/>
+		FROM tb_continent a
+		<include refid="continentJoins"/>
+		<where>
+			
+			<if test="continentNameCn != null and continentNameCn != ''">
+				AND a.continent_name_cn = #{continentNameCn}
+			</if>
+			<if test="continentCode != null and continentCode != ''">
+				AND a.continent_code = #{continentCode}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Continent">
+		SELECT 
+			<include refid="continentColumns"/>
+		FROM tb_continent a
+		<include refid="continentJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_continent(
+			continent_name_cn,
+			continent_name_cn_abbr,
+			continent_name_en,
+			continent_name_pinyin,
+			continent_code,
+			continent_code_abbr
+		) VALUES (
+			#{continentNameCn},
+			#{continentNameCnAbbr},
+			#{continentNameEn},
+			#{continentNamePinyin},
+			#{continentCode},
+			#{continentCodeAbbr}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_continent SET 	
+			continent_name_cn = #{continentNameCn},
+			continent_name_cn_abbr = #{continentNameCnAbbr},
+			continent_name_en = #{continentNameEn},
+			continent_name_pinyin = #{continentNamePinyin},
+			continent_code = #{continentCode},
+			continent_code_abbr = #{continentCodeAbbr}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_continent
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

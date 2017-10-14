@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.EndorsesheetAppendixDao">
+    
+	<sql id="endorsesheetAppendixColumns">
+		a.id AS "id",
+		a.endorsesheet_no AS "endorsesheetNo",
+		a.operator_name AS "operatorName",
+		a.upload_time AS "uploadTime",
+		a.relevant_operation AS "relevantOperation",
+		a.file_type AS "fileType",
+		a.file_address AS "fileAddress",
+		a.file_description AS "fileDescription",
+		a.file_remark AS "fileRemark",
+		a.operator_department_id AS "operatorDepartmentId",
+		a.operator_channel_id AS "operatorChannelId",
+		a.orgn_file_name AS "orgnFileName"
+	</sql>
+	
+	<sql id="endorsesheetAppendixJoins">
+	</sql>
+    
+	<select id="get" resultType="EndorsesheetAppendix">
+		SELECT 
+			<include refid="endorsesheetAppendixColumns"/>
+		FROM tb_endorsesheet_appendix a
+		<include refid="endorsesheetAppendixJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="EndorsesheetAppendix">
+		SELECT 
+			<include refid="endorsesheetAppendixColumns"/>
+		FROM tb_endorsesheet_appendix a
+		<include refid="endorsesheetAppendixJoins"/>
+		<where>
+			
+			<if test="endorsesheetNo != null and endorsesheetNo != ''">
+				AND a.endorsesheet_no = #{endorsesheetNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="EndorsesheetAppendix">
+		SELECT 
+			<include refid="endorsesheetAppendixColumns"/>
+		FROM tb_endorsesheet_appendix a
+		<include refid="endorsesheetAppendixJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_endorsesheet_appendix(
+			endorsesheet_no,
+			operator_name,
+			upload_time,
+			relevant_operation,
+			file_type,
+			file_address,
+			file_description,
+			file_remark,
+			operator_department_id,
+			operator_channel_id,
+			orgn_file_name
+		) VALUES (
+			#{endorsesheetNo},
+			#{operatorName},
+			#{uploadTime},
+			#{relevantOperation},
+			#{fileType},
+			#{fileAddress},
+			#{fileDescription},
+			#{fileRemark},
+			#{operatorDepartmentId},
+			#{operatorChannelId},
+			#{orgnFileName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_endorsesheet_appendix SET 	
+			endorsesheet_no = #{endorsesheetNo},
+			operator_name = #{operatorName},
+			upload_time = #{uploadTime},
+			relevant_operation = #{relevantOperation},
+			file_type = #{fileType},
+			file_address = #{fileAddress},
+			file_description = #{fileDescription},
+			file_remark = #{fileRemark},
+			operator_department_id = #{operatorDepartmentId},
+			operator_channel_id = #{operatorChannelId},
+			orgn_file_name = #{orgnFileName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_endorsesheet_appendix
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

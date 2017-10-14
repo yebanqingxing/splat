@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.mileage.dao.MileageDao">
+    
+	<sql id="mileageColumns">
+		a.od AS "od",
+		a.mileage AS "mileage",
+		a.id AS "id"
+	</sql>
+	
+	<sql id="mileageJoins">
+	</sql>
+    
+	<select id="get" resultType="Mileage">
+		SELECT 
+			<include refid="mileageColumns"/>
+		FROM tb_mileage a
+		<include refid="mileageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	
+	<select id="findMileage" resultType="Mileage">
+		SELECT 
+			<include refid="mileageColumns"/>
+		FROM tb_mileage a
+		<include refid="mileageJoins"/>
+		WHERE a.od = #{0}
+	</select>
+	
+	<select id="findList" resultType="Mileage">
+		SELECT 
+			<include refid="mileageColumns"/>
+		FROM tb_mileage a
+		<include refid="mileageJoins"/>
+		<where>
+			<if test="od != null and od != ''">
+				AND a.od = #{od}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Mileage">
+		SELECT 
+			<include refid="mileageColumns"/>
+		FROM tb_mileage a
+		<include refid="mileageJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_mileage(
+			od,
+			mileage,
+			id
+		) VALUES (
+			#{od},
+			#{mileage},
+			#{id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_mileage SET 	
+			od = #{od},
+			mileage = #{mileage}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_mileage
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

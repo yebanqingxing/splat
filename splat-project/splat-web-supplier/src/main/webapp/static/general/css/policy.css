@@ -1,0 +1,147 @@
+.addpolicy {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	background-color: #c41213;
+	margin-top: 20px;
+}
+.addpolicy img {
+	float: left;
+	height: 20px;
+	margin:8px 6px 0;
+}
+.addpolicy p {
+	float: left;
+	font-size: 16px;
+	color: #FFF;
+}
+.policy-effect {
+	margin-top: 20px;
+}
+.effect-content {
+	margin: 20px 0 0 100px;
+}
+.effect-content1 span {
+	line-height: 30px;
+	font-size: 14px;
+}
+.codeeffect {
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+	font-family: "微软雅黑";
+	text-indent: 1em;
+	margin-right: 50px;
+}
+.codeqi {
+	width: 60px;
+	height: 30px;
+	font-family: "微软雅黑";
+	margin-left: 5px;
+}
+.effectp {
+	margin-top: 15px;
+}
+.borderefe {
+	width: 100%;
+    height: 2px;
+    background-color: #28486f;
+    margin-top: 20px;
+}
+.checkeffect {
+	vertical-align:middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+	margin-right: 4px;
+}
+.effectli {
+	margin-bottom: 10px;
+}
+.textcheck {
+	border: none;
+	outline: 0;
+	border-bottom: 1px solid #706c6c;
+	text-align: center;
+	width: 60px;
+	height: 18px;
+}
+.checkradio {
+	display: block;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+.checkradio img {
+	width: 14px;
+	vertical-align:middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+.effectcon1 {
+	border: 1px solid #c3984d;
+	width: 260px;
+	border-radius: 6px;
+	margin-right: 100px;
+	margin-bottom: 20px;
+}
+.effectcon1 p {
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #c4984d;
+	text-indent: 20px;
+}
+.button-check {
+	color: #FFF;
+	background-color: #c41213;
+	border: 1px solid #595959;
+	border-radius: 4px;
+	width: 150px;
+	height: 36px;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 36px;
+	margin: 20px 0 40px;
+}
+.button-check img {
+	float: left;
+	width: 18px;
+	margin: 10px 4px 0 32px;
+}
+.removecode {
+	width: 60px;
+	height: 30px;
+	background-color: #fc9f27;
+	border: 1px solid #595959;
+	font-family: "微软雅黑";
+	color: #FFF;
+	font-size: 14px;
+	border-radius: 4px;
+	margin-left: 16px;
+	outline: 0;
+}
+.areacon {
+	width: 260px;
+	height: 100px;
+	border: 1px solid #595959;
+	resize:none;
+	display: block;
+}
+.headcon {
+	float: left;
+}
+.button-detail {
+	color: #FFF;
+	background-color: #c41213;
+	border: 1px solid #595959;
+	border-radius: 4px;
+	width: 90px;
+	height: 36px;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 36px;
+	margin: 20px 60px 40px 0;
+}
+.button-detail img {
+	float: left;
+	height: 18px;
+	margin:10px 4px 0 15px;
+}

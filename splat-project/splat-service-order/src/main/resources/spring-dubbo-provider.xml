@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+            http://code.alibabatech.com/schema/dubbo  
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 提供方应用信息 -->
+	<dubbo:application name="splat-service-order" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+
+
+
+
+	<!-- 用dubbo协议在20801端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20701" />
+
+	<!-- 监控中心配置，protocol="registry"，表示从注册中心发现监控中心地址 -->
+	<!-- <dubbo:monitor protocol="registry" /> -->
+
+	<!-- 当ProtocolConfig和ServiceConfig某属性没有配置时,采用此缺省值 -->
+	<dubbo:provider timeout="30000" threadpool="fixed" threads="100" accepts="1000" />
+
+	<!-- 和本地bean一样实现服务 -->
+	<!-- 声明需要暴露的服务接口 -->
+	<!-- 订单测试暴露接口 -->
+	<!-- 订单主的接口 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderDetailServiceFacade" ref="ticketorderDetailServiceFacade" />
+    <!-- 订单旅客的接口-->
+    <dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderPassengerFacade" ref="ticketorderPassengerFacade" />
+	<!-- 订单的PNR的接口-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderPnrServiceFacade" ref="ticketorderPnrServiceFacade" />
+    <!-- 订单的航段的接口 -->
+    <dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderSegmentServiceFacade" ref="ticketorderSegmentServiceFacade" />
+    <!-- 订单的历史的接口 -->
+    <dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderHistoryFacade" ref="ticketorderHistoryFacade" />
+	<!-- 退票单附件 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RefundsheetAppendixServiceFacade" ref="refundsheetAppendixServiceFacade" />
+	<!-- 退票单的接口 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RefundsheetDetailServiceFacade" ref="refundsheetDetailServiceFacade" />
+	<!-- 退票单历史 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RefundsheetHistoryServiceFacade" ref="refundsheetHistoryServiceFacade" />
+	<!-- 退票单流转 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RefundsheetCirculationServiceFacade" ref="refundsheetCirculationServiceFacade" />
+	<!-- 退票单人信息-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RefundsheetPassengerServiceFacade" ref="refundsheetPassengerServiceFacade" />
+	<!-- 改签单附件-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.EndorsesheetAppendixServiceFacade" ref="endorsesheetAppendixServiceFacade" />
+	<!-- 改签单流转-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.EndorsesheetCirculationServiceFacade" ref="endorsesheetCirculationServiceFacade" />
+	<!-- 改签单-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.EndorsesheetDetailServiceFacade" ref="endorsesheetDetailServiceFacade" />
+	<!-- 改签历史-->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.EndorsesheetHistoryServiceFacade" ref="endorsesheetHistoryServiceFacade" />	
+	<!-- 改签单旅客 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.EndorsesheetPassengerServiceFacade" ref="endorsesheetPassengerServiceFacade" />	
+	<!-- 废票单流转 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.VoidsheetCirculationServiceFacade" ref="voidsheetCirculationServiceFacade" />	
+	<!-- 废票附件 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.VoidsheetAppendixServiceFacade" ref="voidsheetAppendixServiceFacade" />
+	<!-- 废票单 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.VoidsheetDetailServiceFacade" ref="voidsheetDetailServiceFacade" />
+	<!-- 废票历史 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.VoidsheetHistoryServiceFacade" ref="voidsheetHistoryServiceFacade" />
+	<!-- 废票人信息 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.VoidsheetPassengerServiceFacade" ref="voidsheetPassengerServiceFacade" />
+	<!-- 行程单信息 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.InvoiceServiceFacade" ref="invoiceServiceFacade" />
+
+	<!-- 机票明细 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderSinglePriceServiceFacade" ref="ticketorderSinglePriceServiceFacade" />
+
+	<!-- 行程单派送单 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.DispatchServiceFacade" ref="dispatchServiceFacade" />
+
+	<!-- 收件人 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.RecipientServiceFacade" ref="recipientServiceFacade" />
+
+	<!-- 每个票号对应一条记录 -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderTicketServiceFacade" ref="ticketorderTicketServiceFacade" />
+
+	<!-- 机票留言  -->
+	<dubbo:service retries="0" interface="com.sml.sz.order.service.TicketorderMessageServiceFacade" ref="ticketorderMessageServiceFacade" />
+
+</beans>  

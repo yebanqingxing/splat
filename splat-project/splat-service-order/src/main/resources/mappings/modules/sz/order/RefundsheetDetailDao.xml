@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.RefundsheetDetailDao">
+    
+	<sql id="refundsheetDetailColumns">
+		a.id AS "id",
+		a.refundsheet_no AS "refundsheetNo",
+		a.order_no AS "orderNo",
+		a.bsp_refund_no AS "bspRefundNo",
+		a.crs_pnr AS "crsPnr",
+		a.arl_pnr AS "arlPnr",
+		a.mid_pnr AS "midPnr",
+		a.refundsheet_status AS "refundsheetStatus",
+		a.refund_type AS "refundType",
+		a.is_international AS "isInternational",
+		a.is_fit AS "isFit",
+		a.current_group AS "currentGroup",
+		a.current_operator AS "currentOperator",
+		a.relevant_client AS "relevantClient",
+		a.create_account AS "createAccount",
+		a.create_time AS "createTime",
+		a.next_operation AS "nextOperation",
+		a.origin_refundsheet_no AS "originRefundsheetNo",
+		a.pay_status AS "payStatus",
+		a.create_type AS "createType",
+		a.reception_customer_id AS "receptionCustomerId",
+		a.create_account_id AS "createAccountId",
+		a.station_creater_id AS "stationCreaterId",
+		a.first_segment AS "firstSegment",
+		a.order_id AS "orderId",
+		a.remark AS "remark",
+		a.supplier_tot_settlement_price AS "supplierTotSettlementPrice",
+		a.distributor_tot_smt_price AS "distributorTotSmtPrice",
+		a.supplier_product_no AS "supplierProductNo",
+		a.issue_airline AS "issueAirline",
+		a.sale_config AS "saleConfig",
+		a.supplier_product_name AS "supplierProductName",
+		a.lastmodifier_orgid AS "lastmodifierOrgid",
+		a.lastmodifier_orgname AS "lastmodifierOrgname",
+		a.lastmodifier_id AS "lastmodifierId",
+		a.lastmodifier_name AS "lastmodifierName",
+		a.lastmodifier_time AS "lastmodifierTime",
+		a.issued_time AS "issuedTime",
+		a.handle_later AS "handleLater",
+		a.last_circulation_time AS "lastCirculationTime",
+		a.busi_remark AS "busiRemark",
+		a.current_status AS "currentStatus",
+		a.invoice AS "invoice",
+		a.go_main_traveldate AS "goMainTraveldate",
+		a.passengerIds AS "passengerIds"
+	</sql>
+	
+	<sql id="refundsheetDetailJoins">
+	</sql>
+    
+	<select id="get" resultType="RefundsheetDetail">
+		SELECT 
+			<include refid="refundsheetDetailColumns"/>
+		FROM tb_refundsheet_detail a
+		<include refid="refundsheetDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RefundsheetDetail">
+		SELECT  DISTINCT
+			<include refid="refundsheetDetailColumns"/>
+		FROM tb_refundsheet_detail a 
+		<include refid="refundsheetDetailJoins"/>
+		<where>
+		<!-- 操作状态的查询 -->
+			<if test="currentStatus != null and currentStatus != '' ">
+				AND a.current_status = #{currentStatus}
+			</if>
+			<!-- 订单号的查询 -->
+			<if test="refundsheetNo != null and refundsheetNo != '' ">
+			AND a.refundsheet_no = #{refundsheetNo}
+			</if>
+			<!-- 状态的查询 -->
+			<if test="refundsheetStatus != null and refundsheetStatus != '' ">
+			AND a.refundsheet_status = #{refundsheetStatus}
+			</if>
+			<!-- 票号查询 -->
+			<if test="ticketNo != null and ticketNo != '' ">
+				a.endorsesheet_no in (
+				SELECT  t.order_no FROM tb_ticketorder_ticket t WHERE t.ticket_no
+				 LIKE 
+					<if test="dbName == 'oracle'">'%'||#{ticketNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{ticketNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{ticketNo},'%')</if>
+					)
+			</if>
+			<!-- 旅客查询 -->
+			<if test="createAccount != null and createAccount != ''">
+				AND a.create_account   LIKE 
+					<if test="dbName == 'oracle'">'%'||#{createAccount}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{createAccount}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{createAccount},'%')</if>
+			</if>
+			<if test="createAccount != null and createAccount != ''">
+				OR a.create_accountcn LIKE 
+					<if test="dbName == 'oracle'">'%'||#{createAccount}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{createAccount}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{createAccount},'%')</if>
+			</if>
+			<!-- PNR的查询 -->
+			<if test="crsPnr != null and crsPnr != ''">
+				AND a.crs_pnr = #{crsPnr}
+			</if>
+			<!--订单下单时间查询  -->
+			<if test="beginCreateTime != null  and beginCreateTime != ''">
+				AND a.create_time >= #{beginCreateTime}
+			</if>
+			<if test="endCreateTime != null  and endCreateTime != ''">
+				AND a.create_time &lt;= #{endCreateTime}
+			</if>
+			<!-- 支付状态 -->
+			<if test="payStatus != null and payStatus != ''">
+				AND a.pay_status = #{payStatus}
+			</if>
+			
+				<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND a.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND a.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<select id="findAllList" resultType="RefundsheetDetail">
+		SELECT 
+			<include refid="refundsheetDetailColumns"/>
+		FROM tb_refundsheet_detail a
+		<include refid="refundsheetDetailJoins"/>
+		<where>
+			
+		</where>		
+		ORDER BY a.id desc
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_refundsheet_detail(
+			refundsheet_no,
+			order_no,
+			bsp_refund_no,
+			crs_pnr,
+			arl_pnr,
+			mid_pnr,
+			refundsheet_status,
+			refund_type,
+			is_international,
+			is_fit,
+			current_group,
+			current_operator,
+			relevant_client,
+			create_account,
+			create_time,
+			next_operation,
+			origin_refundsheet_no,
+			pay_status,
+			create_type,
+			reception_customer_id,
+			create_account_id,
+			station_creater_id,
+			first_segment,
+			order_id,
+			remark,
+			supplier_tot_settlement_price,
+			distributor_tot_smt_price,
+			supplier_product_no,
+			issue_airline,
+			sale_config,
+			supplier_product_name,
+			lastmodifier_orgid,
+			lastmodifier_orgname,
+			lastmodifier_id,
+			lastmodifier_name,
+			lastmodifier_time,
+			issued_time,
+			handle_later,
+			last_circulation_time,
+			busi_remark,
+			current_status,
+			invoice,
+			go_main_traveldate,
+			passengerIds
+		) VALUES (
+			#{refundsheetNo},
+			#{orderNo},
+			#{bspRefundNo},
+			#{crsPnr},
+			#{arlPnr},
+			#{midPnr},
+			#{refundsheetStatus},
+			#{refundType},
+			#{isInternational},
+			#{isFit},
+			#{currentGroup},
+			#{currentOperator},
+			#{relevantClient},
+			#{createAccount},
+			#{createTime},
+			#{nextOperation},
+			#{originRefundsheetNo},
+			#{payStatus},
+			#{createType},
+			#{receptionCustomerId},
+			#{createAccountId},
+			#{stationCreaterId},
+			#{firstSegment},
+			#{orderId},
+			#{remark},
+			#{supplierTotSettlementPrice},
+			#{distributorTotSmtPrice},
+			#{supplierProductNo},
+			#{issueAirline},
+			#{saleConfig},
+			#{supplierProductName},
+			#{lastmodifierOrgid},
+			#{lastmodifierOrgname},
+			#{lastmodifierId},
+			#{lastmodifierName},
+			#{lastmodifierTime},
+			#{issuedTime},
+			#{handleLater},
+			#{lastCirculationTime},
+			#{busiRemark},
+			#{currentStatus},
+			#{invoice},
+			#{goMainTraveldate},
+			#{passengerIds} 
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_refundsheet_detail SET 	
+			refundsheet_no = #{refundsheetNo},
+			order_no = #{orderNo},
+			bsp_refund_no = #{bspRefundNo},
+			crs_pnr = #{crsPnr},
+			arl_pnr = #{arlPnr},
+			mid_pnr = #{midPnr},
+			refundsheet_status = #{refundsheetStatus},
+			refund_type = #{refundType},
+			is_international = #{isInternational},
+			is_fit = #{isFit},
+			current_group = #{currentGroup},
+			current_operator = #{currentOperator},
+			relevant_client = #{relevantClient},
+			create_account = #{createAccount},
+			create_time = #{createTime},
+			next_operation = #{nextOperation},
+			origin_refundsheet_no = #{originRefundsheetNo},
+			pay_status = #{payStatus},
+			create_type = #{createType},
+			reception_customer_id = #{receptionCustomerId},
+			create_account_id = #{createAccountId},
+			station_creater_id = #{stationCreaterId},
+			first_segment = #{firstSegment},
+			order_id = #{orderId},
+			remark = #{remark},
+			supplier_tot_settlement_price = #{supplierTotSettlementPrice},
+			distributor_tot_smt_price = #{distributorTotSmtPrice},
+			supplier_product_no = #{supplierProductNo},
+			issue_airline = #{issueAirline},
+			sale_config = #{saleConfig},
+			supplier_product_name = #{supplierProductName},
+			lastmodifier_orgid = #{lastmodifierOrgid},
+			lastmodifier_orgname = #{lastmodifierOrgname},
+			lastmodifier_id = #{lastmodifierId},
+			lastmodifier_name = #{lastmodifierName},
+			lastmodifier_time = #{lastmodifierTime},
+			issued_time = #{issuedTime},
+			handle_later = #{handleLater},
+			last_circulation_time = #{lastCirculationTime},
+			busi_remark = #{busiRemark},
+			current_status = #{currentStatus},
+			invoice=#{invoice},
+			go_main_traveldate=#{goMainTraveldate},
+			passengerIds=#{passengerIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_refundsheet_detail
+		WHERE id = #{id}
+	</update>
+	<!-- 修改订单状态 -->
+	<update id="updateRefundsheetStatus" parameterType="map" >
+	UPDATE tb_refundsheet_detail SET 	
+	refundsheet_no = #{refundsheetNo},
+	
+	<if test="refundsheetStatus != null  and refundsheetStatus != ''">
+		 refundsheet_status = #{refundsheetStatus},
+	</if>
+	<if test="currentStatus != null  and currentStatus != ''">
+		 current_status = #{currentStatus},
+	</if>
+	 WHERE 
+	refundsheet_no = #{refundsheetNo}
+	</update>
+	
+	
+	<!-- 查看退票订单状态的条数 -->
+	<select id="findRefundsheetStatusCount" parameterType="RefundsheetDetail" resultType="RefundsheetStatusCount">
+	SELECT count(t.refundsheet_status) count,t.refundsheet_status refundsheetStatus
+	 FROM tb_refundsheet_detail t 
+	 <where>
+	 	<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.refundsheet_status
+	</select>
+	<!-- 通过改期单的订单号去查询改签单的信息 -->
+	<select id="findRefundsheetDetail" parameterType="string" resultType="RefundsheetDetail">
+		SELECT 
+			<include refid="refundsheetDetailColumns"/>
+		FROM tb_refundsheet_detail a
+		WHERE a.refundsheet_no = #{refundsheetNo}
+	</select>
+	
+	<!-- 查询改签单的所有的支付状态 -->
+	<select id="findPayStatusCount" parameterType="RefundsheetDetail" resultType="PayStatusCount">
+	SELECT count(t.pay_status) count,t.pay_status payStatus
+	 FROM tb_refundsheet_detail t 
+	 <where>
+	 	<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.pay_status
+	</select>
+	<!-- 查看所有的操作状态  -->
+	<select id="findCurrentStatusCount" parameterType="RefundsheetDetail" resultType="CurrentStatus">
+	SELECT count(t.current_status) count,t.current_status currentStatus
+	 FROM tb_refundsheet_detail t 
+	 <where>
+	 	<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+	</where>
+	 GROUP BY t.current_status
+	</select>
+	
+</mapper>

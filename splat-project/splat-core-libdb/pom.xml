@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sml.sz</groupId>
+		<artifactId>splat-project</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>splat-core-libdb</artifactId>
+	<name>splat-core-libdb</name>
+	<url>http://maven.apache.org</url>
+	<description>splat 基础服务核心包，所有的业务功能的代码都在里面。代码风格和基类继承splat-framework</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<!-- alibaba druid connection pool -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+
+		<!-- jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>${oracle.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>${mssql.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- AOP相关包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.1</version>
+		</dependency>
+		
+		<!-- splat config begin -->
+		<!--  系统公共配置 -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-config</artifactId>
+		</dependency> 
+		<!-- splat config end 公共配置 -->
+		
+		<!-- splat framework begin -->
+		<!--  系统核心框架包 -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-framework</artifactId>
+		</dependency>
+		<!-- splat framework end -->
+	</dependencies>
+</project>

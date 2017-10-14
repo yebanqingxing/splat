@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.InvoiceDao">
+    
+	<sql id="invoiceColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.invoice_type AS "invoiceType",
+		a.open_money AS "openMoney",
+		a.certificate_money AS "certificateMoney",
+		a.invoice_name AS "invoiceName",
+		a.taxpoint AS "taxpoint"
+	</sql>
+	
+	<sql id="invoiceJoins">
+	</sql>
+    
+	<select id="get" resultType="Invoice">
+		SELECT 
+			<include refid="invoiceColumns"/>
+		FROM tb_invoice a
+		<include refid="invoiceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Invoice">
+		SELECT 
+			<include refid="invoiceColumns"/>
+		FROM tb_invoice a
+		<include refid="invoiceJoins"/>
+		<where>
+			
+			<if test="orderNo != null and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Invoice">
+		SELECT 
+			<include refid="invoiceColumns"/>
+		FROM tb_invoice a
+		<include refid="invoiceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_invoice(
+			order_no,
+			invoice_type,
+			open_money,
+			certificate_money,
+			invoice_name,
+			taxpoint
+		) VALUES (
+			#{orderNo},
+			#{invoiceType},
+			#{openMoney},
+			#{certificateMoney},
+			#{invoiceName},
+			#{taxpoint}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_invoice SET 	
+			order_no = #{orderNo},
+			<if test="invoiceType != null and  invoiceType != ''">
+				invoice_type = #{invoiceType},
+			</if>
+			open_money = #{openMoney},
+			certificate_money = #{certificateMoney},
+			<if test="invoiceName != null and  invoiceName != ''">
+				invoice_name = #{invoiceName},
+			</if>
+			taxpoint = #{taxpoint}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_invoice
+		WHERE id = #{id}
+	</update>
+	<select id="findInvoiceByOrderNo" parameterType="string" resultType="Invoice">
+		SELECT 
+			<include refid="invoiceColumns"/>
+		FROM tb_invoice a
+		WHERE a.order_no = #{orderNo}
+	</select>
+</mapper>

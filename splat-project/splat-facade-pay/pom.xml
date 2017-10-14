@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sml.sz</groupId>
+		<artifactId>splat-project</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>splat-facade-pay</artifactId>
+	<packaging>jar</packaging>
+	<name>splat-facade-pay</name>
+	<url>http://maven.apache.org</url>
+	<description>splat的 支付 Dubbo服务接口包，提供相关的Dubbo服务入口</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<!-- splat framework begin -->
+		<!--  系统核心框架包 -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-framework</artifactId>
+		</dependency>
+		<!-- splat framework end -->
+	</dependencies>
+</project>

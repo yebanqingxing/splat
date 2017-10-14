@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>详细修改</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/policy.css">
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/addpolicy.js"></script>
+</head>
+<body>
+<div class="addpolicy">
+	<img src="../images/xiudeil.png">
+	<p>详细修改</p>
+</div>
+<!-- 作用域 -->
+<div class="policy-effect clear">
+	<div class="effect-head clear">
+		<p>作用域：</p>
+		<img src="../images/right.jpg">
+	</div>
+	<div class="clear"></div>
+	<div class="effect-content">
+		<div class="effect-content1">
+			<span>总则编码：</span>
+			<input type="text" value="" id="codeeffect" name="codeeffect" class="codeeffect">
+			<span>状态：</span>
+			<select class="codeqi">
+				<option value="启用">启用</option>
+				<option value="禁用">禁用</option>
+			</select>
+			<button class="removecode">修改</button>
+			<button class="removecode">关闭</button>
+		</div>
+		<div class="effect-content1 clear" style="margin-top: 20px;">
+			<span class="headcon">杭司二字码：</span>
+			<textarea class="areacon"></textarea>
+		</div>
+		<p class="redreset effectp">&lowast;出票航空公司：CX/KA，MU/FM的SPA行程默认为同航空公司行程，计奖及计算相同</p>
+	</div>
+</div>
+<div class="borderefe"></div>
+<!-- 无奖励情况 -->
+<div class="policy-effect clear">
+	<div class="effect-head clear">
+		<p>无奖励情况：</p>
+		<img src="../images/right.jpg">
+	</div>
+	<div class="clear"></div>
+	<div class="effect-content">
+		<div class="effectli">
+			<label>
+				<input type="checkbox" id="effectil" class="checkeffect">
+				<span>IT票无奖励</span>
+			</label>
+		</div>
+		<div class="effectli">
+			<label>
+				<input type="checkbox" id="effectil" class="checkeffect">
+				<span>OPEN票无奖励</span>
+			</label>
+		</div>
+		<div class="effectli">
+			<label>
+				<input type="checkbox" id="effectil" class="checkeffect">
+				<span>含<input type="text" value="" class="textcheck">票价基本无奖励</span>
+			</label>
+		</div>
+		<div class="effectli">
+			<label>
+				<input type="checkbox" id="effectil" class="checkeffect">
+				<span>票价低于<input type="text" value="" class="textcheck">无奖励</span>
+			</label>
+		</div>
+	</div>
+</div>
+<div class="borderefe"></div>
+<!-- OD设置 -->
+<div class="policy-effect clear">
+	<div class="effect-head clear">
+		<p>OD设置：</p>
+		<img src="../images/right.jpg">
+	</div>
+	<div class="clear"></div>
+	<div class="effect-content">
+		<div class="effectcon1 fl">
+			<p>去程起点：</p>
+			<div class="effectli">
+				<label class="checkradio">
+					<img src="../images/radio1.png">
+					<span>出票航第一个航段的起点</span>
+				</label>
+				<label class="checkradio">
+					<img src="../images/radio2.png">
+					<span>出票航实际承运第一个航段起点</span>
+				</label>
+				<label class="checkradio">
+					<img src="../images/radio2.png">
+					<span>第一个国际段的起点</span>
+				</label>
+			</div>
+		</div>
+		<div class="effectcon1 fl">
+			<p>去程终点：</p>
+			<div class="effectli">
+				<label class="checkradio">
+					<img src="../images/radio1.png">
+					<span>出票航飞到的最远点（里程）</span>
+				</label>
+				<label class="checkradio">
+					<img src="../images/radio2.png">
+					<span>跨大区（或子区或国际）段的终点<br />
+					<span class="redreset" style="margin-left: 14px;">（我们按照里程最远点为折射点）</span></span>
+				</label>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="effectcon1">
+			<p>回程终点：</p>
+			<div class="effectli">
+				<label class="checkradio">
+					<img src="../images/radio1.png">
+					<span>出票航最后一个航段的终点</span>
+				</label>
+				<label class="checkradio">
+					<img src="../images/radio2.png">
+					<span>出票航承运的最后一个航段终点</span>
+				</label>
+				<label class="checkradio">
+					<img src="../images/radio2.png">
+					<span>最后一个国际段的终点</span>
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="borderefe"></div>
+<!-- 采购价计算方式 -->
+<div class="policy-effect clear">
+	<div class="effect-head clear">
+		<p>采购价计算方式：</p>
+		<img src="../images/right.jpg">
+	</div>
+	<div class="clear"></div>
+	<div class="effect-content">
+		<div class="redreset" style="margin-bottom: 10px;">&lowast;当配上有效政策时，销售价计算方式如下：</div>
+		<div class="effectcon1">
+			<p style="color: #6a60fb;">计算方式：</p>
+			<div class="effectli">
+				<label class="checkcon">
+					<input type="checkbox" id="checkli" name="checkli" class="checkeffect">
+					<span>Add On计奖</span>
+				</label>
+				<label class="checkcon checkleft">
+					<input type="checkbox" name="checkli" class="checkeffect">
+					<span>国内Add On航段计奖</span>
+				</label>
+				<label class="checkcon checkleft">
+					<input type="checkbox" name="checkli" class="checkeffect">
+					<span>国际Add On航段计奖</span>
+				</label>
+				<label class="checkcon">
+					<input type="checkbox" class="checkeffect">
+					<span>SPA计奖</span>
+				</label>
+				<label class="checkcon">
+					<input type="checkbox" class="checkeffect">
+					<span>Q值计奖</span>
+				</label>
+			</div>
+		</div>
+		<div style="margin-bottom: 10px;"><span class="redreset">&lowast;</span>采购价计算公式 = 计奖部分&lowast;（1-代理费率）&lowast;（1-返点）+ 无奖励的部分&lowast;（1-代理费率）+ 税款 + 手续费</div>
+		<div class="clear">
+			<div class="button-detail fl">
+				<img src="../images/removedeil.png">
+				<p>关闭</p>
+			</div>
+			<div class="button-detail fl">
+				<img src="../images/xiudeil.png">
+				<p>修改</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+.addpolicy {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	background-color: #d2f3f6;
+	margin-top: 20px;
+}
+.addpolicy img {
+	float: left;
+	height: 20px;
+	margin:8px 6px 0;
+}
+.addpolicy p {
+	float: left;
+	font-size: 16px;
+	color: #292388;
+}
+/*閲囪喘鍟嗘煡璇�*/
+.query {
+	margin: 20px 0;
+}
+.querycode {
+	width: 180px;
+	height: 30px;
+}
+.query span {
+	line-height: 30px;
+	font-size: 14px;
+}
+.querycode {
+	margin-right: 30px;
+	background-color: #FFF;
+	border:1px solid #595959;
+	font-family: "寰蒋闆呴粦";
+}
+.query-span {
+	margin-left: 80px;
+}
+.addquery {
+	width: 60px;
+	height: 26px;
+	margin: 0 10px;
+	font-family:"Microsoft YaHei";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+}
+.codetable {
+	width: 800px;
+	margin: 40px auto 0;
+}
+.tablehead {
+	font-family:"Microsoft YaHei";
+	border-color: #bfe5f5;
+	font-size: 14px;
+	width: 100%;
+}
+.tablehead tbody {
+	border-color: #bfe5f5;
+}
+.tablehead tr {
+	height: 36px;
+	border-color: #bfe5f5;
+}
+.tablehead tr td {
+	text-align: center;
+	border-color: #bfe5f5;
+	padding: 0 5px;
+}
+.leftbox{
+	text-align: left !important;
+}
+.tablehead tr td button {
+	height: 26px;
+	margin: 0 3px;
+	font-family:"Microsoft YaHei";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+	padding: 0 6px;
+}
+.tablehead tr th {
+	background-color: #96d5ef;
+	color: #FFF;
+	font-weight: normal;
+	border-color: #bfe5f5;
+}
+.selectquery {
+	width: 100px;
+	height: 32px;
+}
+/*閲囪喘鍟嗘坊鍔�*/
+.addcontent {
+	width: 960px;
+	border:1px solid #a67d4d;
+	border-radius: 10px;
+	margin: 30px auto;
+	border-radius:8px !important;
+}
+.addconrow {
+	margin-top: 10px;
+}
+.addconrow span {
+	width: 90px;
+	display: inline-block;
+	margin-left: 20px;
+	float: left;
+	line-height: 34px;
+}
+.addiv {
+	display: inline-block;
+}
+.addiv p {
+	text-indent: 10px;
+	height: 20px;
+	font-size: 12px;
+	line-height: 20px;
+}
+.widadd {
+	width: 170px;
+}
+.widban {
+	width: 85px;
+}
+.addconbei {
+	width: 487px;
+	height: 70px;
+	resize: none;
+}
+.operbut {
+	text-align: center;
+	margin: 20px 0;
+}
+.operbut button {
+	width: 100px;
+	margin: 0 60px;
+}
+.role {
+	width:900px;
+	border: 1px solid #a67d4d;
+	margin: 30px auto 0;
+	border-radius: 6px;
+}
+.role-head {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background-color: #eeeeee;
+	color: #ff7901;
+}
+.roleli ul li,.role-con ul li {
+	width: 300px;
+	float: left;
+}
+.roleli ul li img {
+	width: 12px;
+	margin-left: 40px;
+}
+.role-con {
+	margin-bottom: 30px;
+}
+.role-con ul li p {
+	margin-left: 70px;
+}
+.roleclick {
+	margin-left: 57px !important;
+}
+.roleshow {
+	margin-left: 15px;
+}
+.leftsize {
+	margin-left: 184px;
+	font-size: 12px;
+}
+.valbox {
+	vertical-align: middle;
+}
+.butbox {
+	width: 120px;
+	height: 40px;
+	background-color: #ff7901;
+	border-radius: 6px;
+	border: 1px solid #595959;
+	line-height: 40px;
+	color: #FFF;
+	font-size: 18px;
+	text-align: center;
+	margin: 30px auto 0;
+	cursor: pointer;
+}
+.backtd {
+	background-color: #e8f6fb !important;
+}
+.backbutval {
+	width: 60px;
+	height: 26px;
+	background-color: #cd0102;
+	border-radius: 6px;
+	border: 1px solid #595959;
+	line-height: 26px;
+	color: #FFF;
+	text-align: center;
+	margin: 30px 0 0 20px;
+	cursor: pointer;
+}
+.cenbut {
+	text-align: center;
+	margin: 20px 0;
+}
+.cenbut button {
+	margin: 0 60px;
+}
+.reason {
+	display: none;
+}
+.reason textarea {
+	width: 350px;
+	height: 60px;
+	font-family: "寰蒋闆呴粦";
+	color: #c8c7c7;
+	border: 1px solid #595959;
+	resize: none;
+}
+.imgreson {
+	margin-left: 183px;
+	position: relative;
+	margin-top: 5px;
+}
+.imgreson img {
+	margin-bottom: -1px;
+	width: 20px;
+}
+.number{
+	margin-bottom:18px;
+}
+.select2-container .select2-choice>.select2-chosen{
+	line-height: 26px;
+}

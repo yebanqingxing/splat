@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.airline.dao.AirlineDao">
+    
+	<sql id="airlineColumns">
+		a.id AS "id",
+		a.airline_name_cn AS "airlineNameCn",
+		a.airline_name_cn_abbr AS "airlineNameCnAbbr",
+		a.airline_code AS "airlineCode",
+		a.airline_name_tc AS "airlineNameTc",
+		a.airline_name_en AS "airlineNameEn",
+		a.airline_name_en_abbr AS "airlineNameEnAbbr",
+		a.airline_billing_code AS "airlineBillingCode",
+		a.airline_ics AS "airlineIcs",
+		a.airline_crs AS "airlineCrs",
+		a.airline_location_id AS "airlineLocationId",
+		a.airline_location AS "airlineLocation",
+		a.airline_site AS "airlineSite",
+		a.airline_contact AS "airlineContact",
+		a.airline_alliance AS "airlineAlliance",
+		a.airline_star_alliance AS "airlineStarAlliance",
+		a.airline_group AS "airlineGroup",
+		a.airline_frequent_card AS "airlineFrequentCard"
+	</sql>
+	
+	<sql id="airlineJoins">
+	</sql>
+    
+	<select id="get" resultType="Airline">
+		SELECT 
+			<include refid="airlineColumns"/>
+		FROM tb_airline a
+		<include refid="airlineJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+		<select id="getAirByAirCode" resultType="Airline">
+		SELECT 
+			<include refid="airlineColumns"/>
+		FROM tb_airline a
+		<include refid="airlineJoins"/>
+		WHERE a.airline_code = #{airCode}
+	</select>
+	
+	<select id="findList" resultType="Airline">
+		SELECT 
+			<include refid="airlineColumns"/>
+		FROM tb_airline a
+		<include refid="airlineJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Airline">
+		SELECT 
+			<include refid="airlineColumns"/>
+		FROM tb_airline a
+		<include refid="airlineJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_airline(
+			id,
+			airline_name_cn,
+			airline_name_cn_abbr,
+			airline_code,
+			airline_name_tc,
+			airline_name_en,
+			airline_name_en_abbr,
+			airline_billing_code,
+			airline_ics,
+			airline_crs,
+			airline_location_id,
+			airline_location,
+			airline_site,
+			airline_contact,
+			airline_alliance,
+			airline_star_alliance,
+			airline_group,
+			airline_frequent_card
+		) VALUES (
+			#{id},
+			#{airlineNameCn},
+			#{airlineNameCnAbbr},
+			#{airlineCode},
+			#{airlineNameTc},
+			#{airlineNameEn},
+			#{airlineNameEnAbbr},
+			#{airlineBillingCode},
+			#{airlineIcs},
+			#{airlineCrs},
+			#{airlineLocationId},
+			#{airlineLocation},
+			#{airlineSite},
+			#{airlineContact},
+			#{airlineAlliance},
+			#{airlineStarAlliance},
+			#{airlineGroup},
+			#{airlineFrequentCard}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_airline SET 	
+			airline_name_cn = #{airlineNameCn},
+			airline_name_cn_abbr = #{airlineNameCnAbbr},
+			airline_code = #{airlineCode},
+			airline_name_tc = #{airlineNameTc},
+			airline_name_en = #{airlineNameEn},
+			airline_name_en_abbr = #{airlineNameEnAbbr},
+			airline_billing_code = #{airlineBillingCode},
+			airline_ics = #{airlineIcs},
+			airline_crs = #{airlineCrs},
+			airline_location_id = #{airlineLocationId},
+			airline_location = #{airlineLocation},
+			airline_site = #{airlineSite},
+			airline_contact = #{airlineContact},
+			airline_alliance = #{airlineAlliance},
+			airline_star_alliance = #{airlineStarAlliance},
+			airline_group = #{airlineGroup},
+			airline_frequent_card = #{airlineFrequentCard}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_airline
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

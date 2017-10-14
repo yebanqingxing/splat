@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderDetailDao">
+    
+	<sql id="tbTicketorderDetailColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.origin_order_no AS "originOrderNo",
+		a.crs_pnr AS "crsPnr",
+		a.arl_pnr AS "arlPnr",
+		a.mid_pnr AS "midPnr",
+		a.create_account AS "createAccount",
+		a.is_international AS "isInternational",
+		a.is_fit AS "isFit",
+		a.order_status AS "orderStatus",
+		a.pay_status AS "payStatus",
+		a.issue_airline AS "issueAirline",
+		a.create_time AS "createTime",
+		a.relevant_client AS "relevantClient",
+		a.relevant_order_no AS "relevantOrderNo",
+		a.first_segment AS "firstSegment",
+		a.first_departure_time AS "firstDepartureTime",
+		a.create_type AS "createType",
+		a.remark AS "remark",
+		a.current_group AS "currentGroup",
+		a.current_operator AS "currentOperator",
+		a.next_operation AS "nextOperation",
+		a.supplier_name AS "supplierName",
+		a.supplier_product_no AS "supplierProductNo",
+		a.sale_config AS "saleConfig",
+		a.rvc_rules AS "rvcRules",
+		a.pnr_status AS "pnrStatus",
+		a.ticket_status AS "ticketStatus",
+		a.origin_destination_options AS "originDestinationOptions",
+		a.create_account_id AS "createAccountId",
+		a.reception_customer_id AS "receptionCustomerId",
+		a.station_creater_id AS "stationCreaterId",
+		a.is_overloan_order AS "isOverloanOrder",
+		a.is_policy_nego_order AS "isPolicyNegoOrder",
+		a.go_main_flight AS "goMainFlight",
+		a.back_main_flight AS "backMainFlight",
+		a.go_main_segment AS "goMainSegment",
+		a.back_main_segment AS "backMainSegment",
+		a.go_main_cabin AS "goMainCabin",
+		a.back_main_cabin AS "backMainCabin",
+		a.go_main_traveldate AS "goMainTraveldate",
+		a.back_main_traveldate AS "backMainTraveldate",
+		a.supplier_service_charge AS "supplierServiceCharge",
+		a.distributor_service_charge AS "distributorServiceCharge",
+		a.relation_order_no AS "relationOrderNo",
+		a.plateform_order_no AS "plateformOrderNo",
+		a.trip_type AS "tripType",
+		a.is_auto_book AS "isAutoBook",
+		a.book_result AS "bookResult",
+		a.book_remark AS "bookRemark",
+		a.is_auto_cancel AS "isAutoCancel",
+		a.cancel_result AS "cancelResult",
+		a.cancel_remark AS "cancelRemark",
+		a.is_auto_issue AS "isAutoIssue",
+		a.issue_result AS "issueResult",
+		a.issue_remark AS "issueRemark",
+		a.order_source AS "orderSource",
+		a.new_pnr AS "newPnr",
+		a.contact_name AS "contactName",
+		a.contact_phone AS "contactPhone",
+		a.serial_number AS "serialNumber",
+		a.man_remark1 AS "manRemark1",
+		a.man_remark2 AS "manRemark2",
+		a.lastmodifier_orgid AS "lastmodifierOrgid",
+		a.lastmodifier_orgname AS "lastmodifierOrgname",
+		a.lastmodifier_id AS "lastmodifierId",
+		a.lastmodifier_name AS "lastmodifierName",
+		a.lastmodifier_time AS "lastmodifierTime",
+		a.busi_remark AS "busiRemark",
+		a.payment_remark AS "paymentRemark",
+		a.handle_later AS "handleLater",
+		a.last_circulation_time AS "lastCirculationTime",
+		a.is_price_confirmed AS "isPriceConfirmed",
+		a.operation_source AS "operationSource",
+		a.split_type AS "splitType",
+		a.approve_rule_id AS "approveRuleId",
+		a.approve_rule_remark AS "approveRuleRemark",
+		a.travel_type AS "travelType",
+		a.create_accountcn AS "createAccountcn",
+		a.duty_price AS "dutyPrice",
+		a.settlement_price AS "settlementPrice",
+		a.pz_price AS "pzPrice",
+		a.total_price AS "totalPrice",
+		a.current_status  AS "currentStatus",
+		a.tax_price AS "taxPrice",
+		a.passengers AS "passengers",
+		a.invoice  AS  "invoice"
+	</sql>
+	
+	<sql id="tbTicketorderDetailJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderDetail">
+		SELECT 
+			<include refid="tbTicketorderDetailColumns"/>
+		FROM tb_ticketorder_detail a
+		<include refid="tbTicketorderDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderDetail">
+		SELECT DISTINCT
+			<include refid="tbTicketorderDetailColumns"/>
+			
+		FROM tb_ticketorder_detail a 
+		
+		<include refid="tbTicketorderDetailJoins"/>
+		<where>
+			
+		<!-- 查询pnr -->
+			<if test="crsPnr != null and crsPnr != '' ">
+				AND a.crs_pnr  LIKE 
+					<if test="dbName == 'oracle'">'%'||#{crsPnr}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{crsPnr}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{crsPnr},'%')</if>
+			</if>
+			<!-- 查询票号 -->
+			<if test="ticketNo != null and ticketNo != '' ">
+				a.order_no in (
+				SELECT  t.order_no FROM tb_ticketorder_ticket t WHERE t.ticket_no
+				 LIKE 
+					<if test="dbName == 'oracle'">'%'||#{ticketNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{ticketNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{ticketNo},'%')</if>
+					)
+			</if>
+			<!-- 查询类型 -->
+			<if test="tripType != null and tripType != ''">
+				AND a.trip_type = #{tripType}
+			</if>
+			<!-- 订单号 -->
+			<if test="orderNo != null and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+			<!--  订单状态 -->
+			<if test="orderStatus != null and orderStatus != ''">
+				AND a.order_status = #{orderStatus}
+			</if>
+			<!-- 支付状态 -->
+			<if test="payStatus != null and payStatus != ''">
+				AND a.pay_status = #{payStatus}
+			</if>
+			<!-- 查询时间 -->
+			<if test="minTime != null and minTime != ''">
+				AND a.create_time >= #{minTime}
+			</if>
+			<!-- 操作状态的查询 -->
+			<if test="currentStatus != null and currentStatus != '' ">
+				AND
+				<if test="currentStatus == 7"> (</if>
+				 a.current_status = #{currentStatus}
+				<if test=" currentStatus == 7 ">
+				OR a.current_status = 6 )
+				</if>
+			</if>
+			<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND a.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND a.supplier_product_no = #{supplierProductNo}
+				
+				<if test="currentStatus == null || currentStatus == ''">
+			   AND a.current_status >= 0
+				</if>
+			</if>
+			<if test="maxTime != null and  maxTime != ''">
+				AND a.create_time &lt;= #{maxTime}
+			</if>
+			<if test="passengers != null and passengers != ''">
+				AND a.passengers   LIKE 
+					<if test="dbName == 'oracle'">'%'||#{passengers}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{passengers}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{passengers},'%')</if>
+			</if>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		ORDER BY   a.create_time DESC
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderDetail">
+		SELECT 
+			<include refid="tbTicketorderDetailColumns"/>
+		FROM tb_ticketorder_detail a
+		<include refid="tbTicketorderDetailJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  >
+		INSERT INTO tb_ticketorder_detail(
+			order_no,
+			origin_order_no,
+			crs_pnr,
+			arl_pnr,
+			mid_pnr,
+			create_account,
+			is_international,
+			is_fit,
+			order_status,
+			pay_status,
+			issue_airline,
+			create_time,
+			relevant_client,
+			relevant_order_no,
+			first_segment,
+			first_departure_time,
+			create_type,
+			remark,
+			current_group,
+			current_operator,
+			next_operation,
+			supplier_name,
+			supplier_product_no,
+			sale_config,
+			rvc_rules,
+			pnr_status,
+			ticket_status,
+			origin_destination_options,
+			create_account_id,
+			reception_customer_id,
+			station_creater_id,
+			is_overloan_order,
+			is_policy_nego_order,
+			go_main_flight,
+			back_main_flight,
+			go_main_segment,
+			back_main_segment,
+			go_main_cabin,
+			back_main_cabin,
+			go_main_traveldate,
+			back_main_traveldate,
+			supplier_service_charge,
+			distributor_service_charge,
+			relation_order_no,
+			plateform_order_no,
+			trip_type,
+			is_auto_book,
+			book_result,
+			book_remark,
+			is_auto_cancel,
+			cancel_result,
+			cancel_remark,
+			is_auto_issue,
+			issue_result,
+			issue_remark,
+			order_source,
+			new_pnr,
+			contact_name,
+			contact_phone,
+			serial_number,
+			man_remark1,
+			man_remark2,
+			lastmodifier_orgid,
+			lastmodifier_orgname,
+			lastmodifier_id,
+			lastmodifier_name,
+			lastmodifier_time,
+			busi_remark,
+			payment_remark,
+			handle_later,
+			last_circulation_time,
+			is_price_confirmed,
+			operation_source,
+			split_type,
+			approve_rule_id,
+			approve_rule_remark,
+			travel_type,
+			current_status,
+			duty_price,
+		    settlement_price,
+		    pz_price,
+		    total_price,
+		    passengers,
+		    invoice
+		) VALUES (
+			#{orderNo},
+			#{originOrderNo},
+			#{crsPnr},
+			#{arlPnr},
+			#{midPnr},
+			#{createAccount},
+			#{isInternational},
+			#{isFit},
+			#{orderStatus},
+			#{payStatus},
+			#{issueAirline},
+			#{createTime},
+			#{relevantClient},
+			#{relevantOrderNo},
+			#{firstSegment},
+			#{firstDepartureTime},
+			#{createType},
+			#{remark},
+			#{currentGroup},
+			#{currentOperator},
+			#{nextOperation},
+			#{supplierName},
+			#{supplierProductNo},
+			#{saleConfig},
+			#{rvcRules},
+			#{pnrStatus},
+			#{ticketStatus},
+			#{originDestinationOptions},
+			#{createAccountId},
+			#{receptionCustomerId},
+			#{stationCreaterId},
+			#{isOverloanOrder},
+			#{isPolicyNegoOrder},
+			#{goMainFlight},
+			#{backMainFlight},
+			#{goMainSegment},
+			#{backMainSegment},
+			#{goMainCabin},
+			#{backMainCabin},
+			#{goMainTraveldate},
+			#{backMainTraveldate},
+			#{supplierServiceCharge},
+			#{distributorServiceCharge},
+			#{relationOrderNo},
+			#{plateformOrderNo},
+			#{tripType},
+			#{isAutoBook},
+			#{bookResult},
+			#{bookRemark},
+			#{isAutoCancel},
+			#{cancelResult},
+			#{cancelRemark},
+			#{isAutoIssue},
+			#{issueResult},
+			#{issueRemark},
+			#{orderSource},
+			#{newPnr},
+			#{contactName},
+			#{contactPhone},
+			#{serialNumber},
+			#{manRemark1},
+			#{manRemark2},
+			#{lastmodifierOrgid},
+			#{lastmodifierOrgname},
+			#{lastmodifierId},
+			#{lastmodifierName},
+			#{lastmodifierTime},
+			#{busiRemark},
+			#{paymentRemark},
+			#{handleLater},
+			#{lastCirculationTime},
+			#{isPriceConfirmed},
+			#{operationSource},
+			#{splitType},
+			#{approveRuleId},
+			#{approveRuleRemark},
+			#{travelType},
+			#{currentStatus},
+			#{dutyPrice},
+			#{settlementPrice},
+			#{pzPrice},
+			#{totalPrice},
+			#{passengers},
+			#{invoice}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_detail SET 	
+			origin_order_no = #{originOrderNo},
+			crs_pnr = #{crsPnr},
+			arl_pnr = #{arlPnr},
+			mid_pnr = #{midPnr},
+			create_account = #{createAccount},
+			is_international = #{isInternational},
+			is_fit = #{isFit},
+			order_status = #{orderStatus},
+			pay_status = #{payStatus},
+			issue_airline = #{issueAirline},
+			create_time = #{createTime},
+			relevant_client = #{relevantClient},
+			relevant_order_no = #{relevantOrderNo},
+			first_segment = #{firstSegment},
+			first_departure_time = #{firstDepartureTime},
+			create_type = #{createType},
+			remark = #{remark},
+			current_group = #{currentGroup},
+			current_operator = #{currentOperator},
+			next_operation = #{nextOperation},
+			supplier_name = #{supplierName},
+			supplier_product_no = #{supplierProductNo},
+			sale_config = #{saleConfig},
+			rvc_rules = #{rvcRules},
+			pnr_status = #{pnrStatus},
+			ticket_status = #{ticketStatus},
+			origin_destination_options = #{originDestinationOptions},
+			create_account_id = #{createAccountId},
+			reception_customer_id = #{receptionCustomerId},
+			station_creater_id = #{stationCreaterId},
+			is_overloan_order = #{isOverloanOrder},
+			is_policy_nego_order = #{isPolicyNegoOrder},
+			go_main_flight = #{goMainFlight},
+			back_main_flight = #{backMainFlight},
+			go_main_segment = #{goMainSegment},
+			back_main_segment = #{backMainSegment},
+			go_main_cabin = #{goMainCabin},
+			back_main_cabin = #{backMainCabin},
+			go_main_traveldate = #{goMainTraveldate},
+			back_main_traveldate = #{backMainTraveldate},
+			supplier_service_charge = #{supplierServiceCharge},
+			distributor_service_charge = #{distributorServiceCharge},
+			relation_order_no = #{relationOrderNo},
+			plateform_order_no = #{plateformOrderNo},
+			trip_type = #{tripType},
+			is_auto_book = #{isAutoBook},
+			book_result = #{bookResult},
+			book_remark = #{bookRemark},
+			is_auto_cancel = #{isAutoCancel},
+			cancel_result = #{cancelResult},
+			cancel_remark = #{cancelRemark},
+			is_auto_issue = #{isAutoIssue},
+			issue_result = #{issueResult},
+			issue_remark = #{issueRemark},
+			order_source = #{orderSource},
+			new_pnr = #{newPnr},
+			contact_name = #{contactName},
+			contact_phone = #{contactPhone},
+			serial_number = #{serialNumber},
+			man_remark1 = #{manRemark1},
+			man_remark2 = #{manRemark2},
+			lastmodifier_orgid = #{lastmodifierOrgid},
+			lastmodifier_orgname = #{lastmodifierOrgname},
+			lastmodifier_id = #{lastmodifierId},
+			lastmodifier_name = #{lastmodifierName},
+			lastmodifier_time = #{lastmodifierTime},
+			busi_remark = #{busiRemark},
+			payment_remark = #{paymentRemark},
+			handle_later = #{handleLater},
+			last_circulation_time = #{lastCirculationTime},
+			is_price_confirmed = #{isPriceConfirmed},
+			operation_source = #{operationSource},
+			split_type = #{splitType},
+			approve_rule_id = #{approveRuleId},
+			approve_rule_remark = #{approveRuleRemark},
+			travel_type = #{travelType},
+			current_status=#{currentStatus},
+			duty_price=#{dutyPrice},
+		    settlement_price=#{settlementPrice},
+		    pz_price=#{pzPrice},
+		    total_price=#{totalPrice},
+		    passengers=#{passengers},
+		    invoice=#{invoice}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_detail
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 查询支付状态  -->
+	<select id="findPayStatusByOrderNo" parameterType="String"  resultType="String">
+	SELECT a.pay_status FROM tb_ticketorder_detail a WHERE a.order_no = #{value}
+	</select>
+	
+	 <!-- 修改支付状态 -->
+	<update id="updatePayStatus" parameterType="map" >
+	UPDATE tb_ticketorder_detail SET
+	 pay_status = #{payStatus} 
+	  WHERE order_no=#{orderNo}
+	</update>
+	
+	<!-- 查看支付状态的条数 -->
+	<select id="findPayStatusCount" parameterType="TicketorderDetail" resultType="PayStatusCount">
+		SELECT COUNT(t.pay_status) count,t.pay_status FROM tb_ticketorder_detail t 
+		<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+		GROUP BY t.pay_status  
+	</select>
+	
+	<!-- 查看订单状态的条数 -->
+	<select id="findOrderStatusCount" parameterType="TicketorderDetail" resultType="OrderStatusCount">
+	SELECT count(t.order_status) count,t.order_status orderStatus FROM tb_ticketorder_detail t
+	<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+	 GROUP BY t.order_status
+	</select>
+	
+	<!-- 修改订单状态 -->
+	<update id="updateOrderStatus" parameterType="map">
+	UPDATE tb_ticketorder_detail SET order_status = #{orderStatus} WHERE order_no=#{orderNo}
+	</update>
+	<!-- 修改订单价格 -->
+	<update id="updateOrderPrice" parameterType="map">
+	UPDATE tb_ticketorder_detail SET 
+			duty_price = #{dutyPrice},
+			settlement_price = #{settlementPrice},
+			pz_price = #{pzPrice},
+			total_price = #{totalPrice} WHERE order_no=#{orderNo}
+	</update>
+	<!-- 修改操作状态 -->
+	<update id="updateCurrentStatus" parameterType="map">
+	UPDATE tb_ticketorder_detail SET current_status = #{currentStatus} WHERE order_no=#{orderNo}
+	</update>
+	
+	<select id="findorderDetailByOrderNo" parameterType="string" resultType="TicketorderDetail">
+	SELECT 
+			<include refid="tbTicketorderDetailColumns"/>
+		FROM tb_ticketorder_detail a WHERE a.order_no = #{orderNo}
+	</select>
+		
+	<update id="updateRelevantOrderNo" parameterType="map" >
+		UPDATE tb_ticketorder_detail SET relevant_order_no = #{relevantoOrderNo} 
+		WHERE order_no = #{orderNo}
+	</update>
+	
+	<update id="updateIssueResult" parameterType="map">
+		UPDATE tb_ticketorder_detail SET issue_result = #{issueResult} 
+		WHERE order_no = #{orderNo}
+	 </update>
+	 <!-- 查询操作状态的条数 -->
+	 <select id="findCurrentStatus" parameterType="TicketorderDetail" resultType="CurrentStatus">
+	 SELECT count(t.current_status) count,t.current_status currentStatus FROM tb_ticketorder_detail t
+	<where>
+		<!-- 采购商ID查询 -->
+			<if test="receptionCustomerId != null and receptionCustomerId != ''">
+				AND t.reception_customer_id = #{receptionCustomerId}
+			</if>
+			<!-- 供应商ID查询 -->
+			<if test="supplierProductNo != null and supplierProductNo != ''">
+				AND t.supplier_product_no = #{supplierProductNo}
+			</if>
+		</where>
+	 GROUP BY t.current_status
+	 </select>
+</mapper>

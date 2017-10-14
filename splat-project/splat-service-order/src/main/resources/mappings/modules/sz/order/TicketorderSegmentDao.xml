@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderSegmentDao">
+    
+	<sql id="ticketorderSegmentColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.marketing_airline AS "marketingAirline",
+		a.operating_airline AS "operatingAirline",
+		a.marketing_flight_no AS "marketingFlightNo",
+		a.operating_flight_no AS "operatingFlightNo",
+		a.is_code_share AS "isCodeShare",
+		a.departure_code AS "departureCode",
+		a.departure_time AS "departureTime",
+		a.arrive_code AS "arriveCode",
+		a.arrive_time AS "arriveTime",
+		a.segment_index AS "segmentIndex",
+		a.class_code AS "classCode",
+		a.sub_class_code AS "subClassCode",
+		a.segment_status AS "segmentStatus",
+		a.class_grade AS "classGrade",
+		a.plane_type AS "planeType",
+		a.order_id AS "orderId",
+		a.od_index AS "odIndex",
+		a.departure_address AS "departureAddress",
+		a.arrive_address AS "arriveAddress",
+		a.duration AS "duration"
+	</sql>
+	
+	<sql id="ticketorderSegmentJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderSegment">
+		SELECT 
+			<include refid="ticketorderSegmentColumns"/>
+		FROM tb_ticketorder_segment a
+		<include refid="ticketorderSegmentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderSegment">
+		SELECT 
+			<include refid="ticketorderSegmentColumns"/>
+		FROM tb_ticketorder_segment a
+		<include refid="ticketorderSegmentJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderSegment">
+		SELECT 
+			<include refid="ticketorderSegmentColumns"/>
+		FROM tb_ticketorder_segment a
+		<include refid="ticketorderSegmentJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_ticketorder_segment(
+			
+			order_no,
+			marketing_airline,
+			operating_airline,
+			marketing_flight_no,
+			operating_flight_no,
+			is_code_share,
+			departure_code,
+			departure_time,
+			arrive_code,
+			arrive_time,
+			segment_index,
+			class_code,
+			sub_class_code,
+			segment_status,
+			class_grade,
+			plane_type,
+			order_id,
+			od_index,
+			departure_address,
+			arrive_address,
+			duration
+		) VALUES (
+			
+			#{orderNo},
+			#{marketingAirline},
+			#{operatingAirline},
+			#{marketingFlightNo},
+			#{operatingFlightNo},
+			#{isCodeShare},
+			#{departureCode},
+			#{departureTime},
+			#{arriveCode},
+			#{arriveTime},
+			#{segmentIndex},
+			#{classCode},
+			#{subClassCode},
+			#{segmentStatus},
+			#{classGrade},
+			#{planeType},
+			#{orderId},
+			#{odIndex},
+			#{departureAddress},
+			#{arriveAddress},
+			#{duration}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_segment SET 	
+			order_no = #{orderNo},
+			marketing_airline = #{marketingAirline},
+			operating_airline = #{operatingAirline},
+			marketing_flight_no = #{marketingFlightNo},
+			operating_flight_no = #{operatingFlightNo},
+			is_code_share = #{isCodeShare},
+			departure_code = #{departureCode},
+			departure_time = #{departureTime},
+			arrive_code = #{arriveCode},
+			arrive_time = #{arriveTime},
+			segment_index = #{segmentIndex},
+			class_code = #{classCode},
+			sub_class_code = #{subClassCode},
+			segment_status = #{segmentStatus},
+			class_grade = #{classGrade},
+			plane_type = #{planeType},
+			order_id = #{orderId},
+			od_index = #{odIndex},
+			departure_address = #{departureAddress},
+			arrive_address = #{arriveAddress},
+			duration = #{duration}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_segment
+		WHERE id = #{id}
+	</update>
+	<select id="findSegmentByOrderNo" parameterType="String" resultType="TicketorderSegment">
+		SELECT 
+			<include refid="ticketorderSegmentColumns"/>
+		FROM tb_ticketorder_segment a
+		
+		WHERE a.order_no = #{orderNo}
+	</select>
+	
+	<select id="findSegmentByIdList" resultType="TicketorderSegment">
+		SELECT <include refid="ticketorderSegmentColumns"/>
+		FROM tb_ticketorder_segment a WHERE a.id in 
+		<foreach collection="list" item="segId" index="index"
+            open="(" close=")" separator=",">
+            #{segId}
+        </foreach>
+	</select>
+	
+	<insert id="saveSegment" parameterType="TicketorderSegment">
+	INSERT INTO tb_ticketorder_segment(
+			order_no,
+			marketing_airline,
+			operating_airline,
+			marketing_flight_no,
+			operating_flight_no,
+			is_code_share,
+			departure_code,
+			departure_time,
+			arrive_code,
+			arrive_time,
+			segment_index,
+			class_code,
+			sub_class_code,
+			segment_status,
+			class_grade,
+			plane_type,
+			order_id,
+			od_index,
+			departure_address,
+            arrive_address,
+            duration
+		) VALUES (
+			
+			#{orderNo},
+			#{marketingAirline},
+			#{operatingAirline},
+			#{marketingFlightNo},
+			#{operatingFlightNo},
+			#{isCodeShare},
+			#{departureCode},
+			#{departureTime},
+			#{arriveCode},
+			#{arriveTime},
+			#{segmentIndex},
+			#{classCode},
+			#{subClassCode},
+			#{segmentStatus},
+			#{classGrade},
+			#{planeType},
+			#{orderId},
+			#{odIndex},
+			#{departureAddress},
+            #{arriveAddress},
+            #{duration}
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.RecipientDao">
+    
+	<sql id="recipientColumns">
+		a.id AS "id",
+		a.recipient_no AS "recipientNo",
+		a.recipient_name AS "recipientName",
+		a.card AS "card",
+		a.mobile AS "mobile",
+		a.phone AS "phone",
+		a.send_timer AS "sendTimer",
+		a.remark AS "remark",
+		a.buyer_id AS "buyerId",
+		a.operator_id AS "operatorId",
+		a.order_no AS "orderNo",
+		a.mail_number AS "mailNumber",
+		a.recipient_money AS "recipientMoney",
+		a.address AS "address",
+		a.order_no AS "orderNo"
+	</sql>
+	
+	<sql id="recipientJoins">
+	</sql>
+    
+	<select id="get" resultType="Recipient">
+		SELECT 
+			<include refid="recipientColumns"/>
+		FROM tb_recipient a
+		<include refid="recipientJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Recipient">
+		SELECT 
+			<include refid="recipientColumns"/>
+		FROM tb_recipient a
+		<include refid="recipientJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Recipient">
+		SELECT 
+			<include refid="recipientColumns"/>
+		FROM tb_recipient a
+		<include refid="recipientJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_recipient(
+			recipient_no,
+			recipient_name,
+			card,
+			mobile,
+			phone,
+			send_timer,
+			remark,
+			buyer_id,
+			operator_id,
+			mail_number, 
+		    recipient_money,
+		    address,
+		    order_no
+		) VALUES (
+			#{recipientNo},
+			#{recipientName},
+			#{card},
+			#{mobile},
+			#{phone},
+			#{sendTimer},
+			#{remark},
+			#{buyerId},
+			#{operatorId},
+			#{mailNumber},
+			#{recipientMoney},
+			#{address},
+			#{orderNo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_recipient SET 	
+			recipient_no = #{recipientNo},
+			recipient_name = #{recipientName},
+			card = #{card},
+			mobile = #{mobile},
+			phone = #{phone},
+			send_timer = #{sendTimer},
+			remark = #{remark},
+			buyer_id = #{buyerId},
+			operator_id = #{operatorId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_recipient
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 通过订单号查询收件人 -->
+	<select id="findRecipientList" parameterType="string"  resultType="Recipient">
+		SELECT 
+			<include refid="recipientColumns"/>
+		FROM tb_recipient a
+		<include refid="recipientJoins"/>
+		WHERE a.order_no = #{orderNo}
+	</select>
+</mapper>

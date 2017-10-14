@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.VoidsheetCirculationDao">
+    
+	<sql id="voidsheetCirculationColumns">
+		a.id AS "id",
+		a.voidsheet_no AS "voidsheetNo",
+		a.cir_rule_id AS "cirRuleId",
+		a.ori_group AS "oriGroup",
+		a.dest_group AS "destGroup",
+		a.next_operation AS "nextOperation",
+		a.operation_time AS "operationTime",
+		a.operator_name AS "operatorName",
+		a.previous_operation AS "previousOperation",
+		a.operator_id AS "operatorId"
+	</sql>
+	
+	<sql id="voidsheetCirculationJoins">
+	</sql>
+    
+	<select id="get" resultType="VoidsheetCirculation">
+		SELECT 
+			<include refid="voidsheetCirculationColumns"/>
+		FROM tb_voidsheet_circulation a
+		<include refid="voidsheetCirculationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="VoidsheetCirculation">
+		SELECT 
+			<include refid="voidsheetCirculationColumns"/>
+		FROM tb_voidsheet_circulation a
+		<include refid="voidsheetCirculationJoins"/>
+		<where>
+			
+			<if test="voidsheetNo != null and voidsheetNo != ''">
+				AND a.voidsheet_no = #{voidsheetNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="VoidsheetCirculation">
+		SELECT 
+			<include refid="voidsheetCirculationColumns"/>
+		FROM tb_voidsheet_circulation a
+		<include refid="voidsheetCirculationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_voidsheet_circulation(
+			voidsheet_no,
+			cir_rule_id,
+			ori_group,
+			dest_group,
+			next_operation,
+			operation_time,
+			operator_name,
+			previous_operation,
+			operator_id
+		) VALUES (
+			#{voidsheetNo},
+			#{cirRuleId},
+			#{oriGroup},
+			#{destGroup},
+			#{nextOperation},
+			#{operationTime},
+			#{operatorName},
+			#{previousOperation},
+			#{operatorId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_voidsheet_circulation SET 	
+			voidsheet_no = #{voidsheetNo},
+			cir_rule_id = #{cirRuleId},
+			ori_group = #{oriGroup},
+			dest_group = #{destGroup},
+			next_operation = #{nextOperation},
+			operation_time = #{operationTime},
+			operator_name = #{operatorName},
+			previous_operation = #{previousOperation},
+			operator_id = #{operatorId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_voidsheet_circulation
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

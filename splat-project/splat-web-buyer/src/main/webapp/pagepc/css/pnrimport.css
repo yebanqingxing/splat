@@ -1,0 +1,198 @@
+.pnrimport {
+	margin-top: 20px;
+}
+.pnrimport-content {
+	margin-top: 20px;
+	margin-left: 10%;
+}
+.thatsok {
+	margin-bottom: 16px;
+	width: 100%;
+}
+.thatsok-left {
+	line-height: 32px;
+	color: #706c6c;
+	font-size:14px;
+	width: 120px;
+}
+.thatsok-input {
+	width: 200px;
+	height: 32px;
+	border: 1px solid #595959;
+	line-height: 32px;
+	text-indent: 1em;
+}
+.thatok-right {
+	line-height: 40px;
+	margin-left: 20px;
+	float: left;
+	color: #706c6c;
+}
+.thatok-right span:first-child {
+	color: #bc0000;
+	margin-right: 4px;
+}
+.thatsok-line {
+	width: 400px;
+	height: 200px;
+	border: 1px solid #595959;
+	resize:none;
+}
+.thatok-button {
+	width: 70px;
+	border: 1px solid #5e595a;
+	background: #fc9f27;
+	height: 30px;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color: #FFF;
+	border-radius: 4px;
+}
+.thatok-infor {
+	color: #6a60fb;
+	cursor: pointer;
+	font-size: 14px;
+	margin-bottom: 20px;
+}
+.thatok-con div {
+	margin-top: 2px;
+	display: block;
+	margin-bottom: 10px;
+}
+.thatok-con div label {
+	line-height: 30px;
+}
+.thatok-con div span {
+	vertical-align:middle;
+}
+.adult {
+	vertical-align:middle;
+	margin-top: 1px;
+}
+.adultinput {
+	width: 150px;
+	height: 26px;
+	border: 1px solid #595959;
+	margin-left: 5px;
+	line-height: 26px;
+}
+.redlabel {
+	color: #bc0000;
+	margin-left: 6px;
+}
+.select-con {
+	width: 60px;
+	height: 26px;
+	color: #706c6c;
+	font-family: "微软雅黑";
+	border: 1px solid #595959;
+	float: left;
+}
+.select1 {
+	margin-top: 4px !important;
+}
+.addremove {
+	width: 80px;
+	height: 26px;
+	border: 1px solid #595959;
+	background-color: #fdfdfd;
+	color: #706c6c;
+	display: block;
+	font-family: "微软雅黑";
+	margin-top: 4px;
+	margin-bottom: 10px;
+}
+.thatsoknone  {
+	display: none;
+}
+.pnrborder {
+	width: 100%;
+	height: 2px;
+	background-color: #28486f;
+}
+.pnrflight {
+	width: 84%;
+	margin: 20px auto;
+}
+.pnrflight ul li {
+	width: 25%;
+	float: left;
+	font-size: 14px;
+}
+.licenter {
+	text-align: center;
+}
+.pnrflightul {
+	color: #6a60fb;
+	border-bottom: 1px solid #c67e02;
+	padding-bottom: 6px;
+}
+.ultwo {
+	margin-top: 14px;
+}
+.policycon {
+	width: 90%;
+	margin-left: 8%;
+}
+.policycon ul li {
+	float: left;
+	width: 10%;
+	font-size: 14px;
+	text-align: center;
+}
+.lichcontent {
+	width: 100%;
+	border: 1px solid #a67d4d;
+	border-radius: 8px;
+	margin-bottom: 16px;
+}
+.lichcontent ul {
+	margin-top: 15px;
+}
+.policyhead {
+	margin: 10px 0;
+}
+.policyhead li{
+	color: #6a60fb;
+}
+.price {
+	color: #ff9d1e;
+}
+.liwid {
+	width: 30% !important;
+	text-indent: 16px;
+	text-align: left !important;
+}
+.lichbuton {
+	margin-right: 10px;
+}
+.liche {
+	line-height: 30px;
+	text-indent: 16px;
+	font-size: 14px;
+}
+.lichbottom {
+	padding: 14px 0;
+}
+.marbottom {
+	margin-bottom: 40px;
+}
+.pnrone {
+	line-height: 42px;
+}
+.transfer {
+	color: #fe8135;
+}
+.transfertwo {
+	color: #f6c058;
+	text-align: center;
+	width: 40%;
+	margin-left: 43%;
+}
+.transfertwo span {
+	margin-right: 5px;
+	color: #bc0000;
+}
+.marin {
+	margin-bottom: 30px;
+}

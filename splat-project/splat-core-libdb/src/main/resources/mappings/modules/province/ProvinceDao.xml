@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.province.dao.ProvinceDao">
+    
+	<sql id="provinceColumns">
+		a.id AS "id",
+		a.province_name_cn AS "provinceNameCn",
+		a.province_name_cn_abbr AS "provinceNameCnAbbr",
+		a.province_name_en AS "provinceNameEn",
+		a.province_name_pinyin AS "provinceNamePinyin",
+		a.province_code AS "provinceCode",
+		a.province_code_abbr AS "provinceCodeAbbr",
+		a.country_name_cn AS "countryNameCn"
+	</sql>
+	
+	<sql id="provinceJoins">
+	</sql>
+    
+	<select id="get" resultType="Province">
+		SELECT 
+			<include refid="provinceColumns"/>
+		FROM tb_province a
+		<include refid="provinceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Province">
+		SELECT 
+			<include refid="provinceColumns"/>
+		FROM tb_province a
+		<include refid="provinceJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Province">
+		SELECT 
+			<include refid="provinceColumns"/>
+		FROM tb_province a
+		<include refid="provinceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_province(
+			province_name_cn,
+			province_name_cn_abbr,
+			province_name_en,
+			province_name_pinyin,
+			province_code,
+			province_code_abbr,
+			country_name_cn
+		) VALUES (
+			#{provinceNameCn},
+			#{provinceNameCnAbbr},
+			#{provinceNameEn},
+			#{provinceNamePinyin},
+			#{provinceCode},
+			#{provinceCodeAbbr},
+			#{countryNameCn}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_province SET 	
+			province_name_cn = #{provinceNameCn},
+			province_name_cn_abbr = #{provinceNameCnAbbr},
+			province_name_en = #{provinceNameEn},
+			province_name_pinyin = #{provinceNamePinyin},
+			province_code = #{provinceCode},
+			province_code_abbr = #{provinceCodeAbbr},
+			country_name_cn = #{countryNameCn}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_province
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

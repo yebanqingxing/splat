@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.general.dao.GeneralRulesDao">
+    
+	<sql id="tbGeneralRulesColumns">
+		a.gr_id AS "grId",
+		a.supplier_id AS "supplierId",
+		a.create_user_id AS "createUserId",
+		a.general_status AS "generalStatus",
+		a.no_it_reward AS "noItReward",
+		a.no_open_reward AS "noOpenReward",
+		a.no_low_reward AS "noLowReward",
+		a.no_low_price AS "noLowPrice",
+		a.no_involve_reward AS "noInvolveReward",
+		a.no_involve_price AS "noInvolvePrice",
+		a.go_origin_choice AS "goOriginChoice",
+		a.go_destination_choice AS "goDestinationChoice",
+		a.back_destination_choice AS "backDestinationChoice",
+		a.data_choice AS "dataChoice",
+		a.add_on_choice AS "addOnChoice",
+		a.add_on_internal_choice AS "addOnInternalChoice",
+		a.add_on_world__choice AS "addOnWorldChoice",
+		a.spa_choice AS "spaChoice",
+		a.q_choice AS "qChoice",
+		a.effect_date AS "effectDate",
+		a.create_date AS "createDate",
+		a.formula_id AS "formulaId",
+		a.poundage AS "poundage",
+		a.update_user AS "updateUser",
+		a.update_date AS "updateDate",
+		a.air_code AS "airCode"
+	</sql>
+	
+	<sql id="tbGeneralRulesJoins">
+	</sql>
+    
+	<select id="get" resultType="GeneralRules">
+		SELECT *
+<!-- 			<include refid="tbGeneralRulesColumns"/> -->
+		FROM tb_general_rules a
+		<include refid="tbGeneralRulesJoins"/>
+		WHERE a.gr_id = #{grId}
+	</select>
+	
+	<select id="findList" resultType="GeneralRules">
+	SELECT 
+			<include refid="tbGeneralRulesColumns"/>
+		FROM tb_general_rules a
+<!-- 		<include refid="tbGeneralRulesJoins"/> -->
+		<where>
+			<if test="grId != null and grId != ''">
+				AND a.gr_id = #{grId}
+			</if>
+			<if test="airCode != null and airCode != ''">
+				AND INSTR(a.air_code, #{airCode})
+			</if>
+			<if test="supplierId != null and supplierId != ''">
+				AND a.SUPPLIER_ID = #{supplierId}
+			</if>
+			<if test="generalStatus != null and generalStatus != ''">
+				AND a.general_status = #{generalStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="GeneralRules">
+		SELECT 
+			<include refid="tbGeneralRulesColumns"/>
+		FROM tb_general_rules a
+		<include refid="tbGeneralRulesJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_general_rules(
+			gr_id,
+			supplier_id,
+			create_user_id,
+			general_status,
+			no_it_reward,
+			no_open_reward,
+			no_low_reward,
+			no_low_price,
+			no_involve_reward,
+			no_involve_price,
+			go_origin_choice,
+			go_destination_choice,
+			back_destination_choice,
+			data_choice,
+			add_on_choice,
+			add_on_internal_choice,
+			add_on_world__choice,
+			spa_choice,
+			q_choice,
+			effect_date,
+			create_date,
+			formula_id,
+			poundage,
+			update_user,
+			update_date,
+			air_code
+		) VALUES (
+			#{id},
+			#{supplierId},
+			#{createUserId},
+			#{generalStatus},
+			#{noItReward},
+			#{noOpenReward},
+			#{noLowReward},
+			#{noLowPrice},
+			#{noInvolveReward},
+			#{noInvolvePrice},
+			#{goOriginChoice},
+			#{goDestinationChoice},
+			#{backDestinationChoice},
+			#{dataChoice},
+			#{addOnChoice},
+			#{addOnInternalChoice},
+			#{addOnWorldChoice},
+			#{spaChoice},
+			#{qChoice},
+			#{effectDate},
+			#{createDate},
+			#{formulaId},
+			#{poundage},
+			#{updateUser},
+			#{updateDate},
+			#{airCode}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_general_rules SET 	
+			supplier_id = #{supplierId},
+			create_user_id = #{createUserId},
+			general_status = #{generalStatus},
+			no_it_reward = #{noItReward},
+			no_open_reward = #{noOpenReward},
+			no_low_reward = #{noLowReward},
+			no_low_price = #{noLowPrice},
+			no_involve_reward = #{noInvolveReward},
+			no_involve_price = #{noInvolvePrice},
+			go_origin_choice = #{goOriginChoice},
+			go_destination_choice = #{goDestinationChoice},
+			back_destination_choice = #{backDestinationChoice},
+			data_choice = #{dataChoice},
+			add_on_choice = #{addOnChoice},
+			add_on_internal_choice = #{addOnInternalChoice},
+			add_on_world__choice = #{addOnWorldChoice},
+			spa_choice = #{spaChoice},
+			q_choice = #{qChoice},
+			effect_date = #{effectDate},
+			formula_id = #{formulaId},
+			poundage = #{poundage},
+			update_user = #{updateUser},
+			update_date = #{updateDate},
+			air_code = #{airCode}
+		WHERE gr_id = #{grId}
+	</update>
+	
+	<update id="delete">
+		UPDATE tb_general_rules SET 	
+			general_status = 1
+		WHERE gr_id = #{grId}
+	</update>
+	
+	<insert id="saveList">
+		INSERT INTO tb_general_rules(
+			gr_id,
+			supplier_id,
+			create_user_id,
+			general_status,
+			no_it_reward,
+			no_open_reward,
+			no_low_reward,
+			no_low_price,
+			no_involve_reward,
+			no_involve_price,
+			go_origin_choice,
+			go_destination_choice,
+			back_destination_choice,
+			data_choice,
+			add_on_choice,
+			add_on_internal_choice,
+			add_on_world__choice,
+			spa_choice,
+			q_choice,
+			effect_date,
+			create_date,
+			formula_id,
+			poundage,
+			update_user,
+			update_date,
+			air_code)
+			VALUES
+    	 <foreach collection="list" item="item" index="index" separator=","> 
+	   	 	(#{item.grId},
+			#{item.supplierId},
+			#{item.createUserId},
+			#{item.generalStatus},
+			#{item.noItReward},
+			#{item.noOpenReward},
+			#{item.noLowReward},
+			#{item.noLowPrice},
+			#{item.noInvolveReward},
+			#{item.noInvolvePrice},
+			#{item.goOriginChoice},
+			#{item.goDestinationChoice},
+			#{item.backDestinationChoice},
+			#{item.dataChoice},
+			#{item.addOnChoice},
+			#{item.addOnInternalChoice},
+			#{item.addOnWorldChoice},
+			#{item.spaChoice},
+			#{item.qChoice},
+			#{item.effectDate},
+			#{item.createDate},
+			#{item.formulaId},
+			#{item.poundage},
+			#{item.updateUser},
+			#{item.updateDate},
+			#{item.airCode})
+	   </foreach>
+	</insert>
+	
+	
+</mapper>

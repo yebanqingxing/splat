@@ -1,0 +1,47 @@
+.modify_mar {
+	margin-top: 20px;
+}
+.modify {
+	margin: 30px 0 0 60px;
+}
+.modify1 {
+	font-size: 14px;
+	margin-bottom: 24px;
+}
+.modifyinput {
+	width: 292px;
+	height: 30px;
+	border: 1px solid #595959;
+	line-height: 30px;
+	display: block;
+}
+.modify1-left {
+	width: 90px;
+	line-height: 30px;
+}
+.remove {
+	line-height: 30px;
+	margin-left: 10px;
+}
+.modify1-right p {
+	font-size: 12px;
+	margin-top: 4px;
+}
+.modifybutton {
+	width: 200px;
+	height: 36px;
+	background-color: #fc9f27;
+	border: 1px solid #595959;
+	border-radius: 6px;
+	margin-left: 132px;
+	font-size: 18px;
+	color: #FFF;
+	font-family: "微软雅黑";
+}
+.table-bordered,.table-bordered tr td,.flip-content tr th{
+	background:#FFF !important;
+	text-align:center;
+}
+.breadcrumb {
+	background:#FFF !important;
+}

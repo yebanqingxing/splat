@@ -1,0 +1,80 @@
+.addpolicy {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	background-color: #c41213;
+	margin-top: 20px;
+}
+.addpolicy img {
+	float: left;
+	height: 20px;
+	margin:8px 6px 0;
+}
+.addpolicy p {
+	float: left;
+	font-size: 16px;
+	color: #FFF;
+}
+.query {
+	margin: 20px 0;
+}
+.querycode {
+	width: 200px;
+	height: 30px;
+}
+.query span {
+	line-height: 30px;
+	font-size: 14px;
+}
+.querycode {
+	margin-right: 30px;
+}
+.query-span {
+	margin-left: 80px;
+}
+.addquery {
+	width: 60px;
+	height: 26px;
+	margin-right: 10px;
+	font-family: "微软雅黑";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+}
+.codetable {
+	width: 800px;
+	margin: 40px auto 0;
+}
+.tablehead {
+	font-family: "微软雅黑";
+	border-color: #bfe5f5;
+	font-size: 14px;
+	width: 100%;
+}
+.tablehead tbody {
+	border-color: #bfe5f5;
+}
+.tablehead tr {
+	height: 36px;
+}
+.tablehead tr td {
+	text-align: center;
+}
+.tablehead tr td button {
+	height: 26px;
+	margin: 0 3px;
+	font-family: "微软雅黑";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+	padding: 0 6px;
+}
+.tablehead tr th {
+	background-color: #96d5ef;
+	color: #FFF;
+	font-weight: normal;
+}

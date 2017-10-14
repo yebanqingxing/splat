@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>国际政策管理</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/iframe.js"></script>
+</head>
+<body>
+	<!-- head -->
+	<div class="head-mian">
+		<img src="../images/head_back.jpg">
+		<div class="head-content">
+			<div class="logo">
+				<img src="../images/head_logo.png">
+			</div>
+		</div>
+		<div class="head-connav clear">
+			<ul class="head-nav fl" style="margin-left: 251px;">
+				<li><a href="javascript:void(0);">国际机票产品</a></li>
+				<li><a href="javascript:void(0);">国际订单管理</a></li>
+				<li><a href="javascript:void(0);" class="active">国际政策管理</a></li>
+				<li><a href="javascript:void(0);">下级代理权限</a></li>
+				<li><a href="javascript:void(0);">操作员管理</a></li>
+				<li><a href="javascript:void(0);">我的管理</a></li>
+				<li><a href="javascript:void(0);">报表</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="bottom-back1"></div>
+	<div class="bottom-back2"></div>
+	<div class="pnr-content">
+		<div class="pnr-content-left">
+			<ul>
+				<li><a href="javascript:void(0);" class="pnr-fast">国际总则维护</a></li>
+				<li><a href="policyadd.html" class="pnr-last clickulli" target="rightFrame">添加总则</a></li>
+				<li><a href="policydetails.html" class="pnr-last" target="rightFrame">详情信息</a></li>
+				<li><a href="policymodify.html" class="pnr-last" target="rightFrame">详情修改</a></li>
+				<li><a href="policyquery.html" class="pnr-last" target="rightFrame">总则查询</a></li>
+				<li><a href="policyhistory.html" class="pnr-last" target="rightFrame">查询历史总则</a></li>
+				<li><a href="javascript:void(0);" class="pnr-last">总则导入</a></li>
+				<li><a href="javascript:void(0);" class="pnr-last">查询导出</a></li>
+				<li><a href="javascript:void(0);" class="pnr-fast">国际政策维护</a></li>
+				<li><a href="interquery.html" class="pnr-last" target="rightFrame">政策查询</a></li>
+				<li><a href="interadd.html" class="pnr-last" target="rightFrame">政策添加</a></li>
+				<li><a href="interdetails.html" class="pnr-last" target="rightFrame">政策详情</a></li>
+				<li><a href="intermodify.html" class="pnr-last" target="rightFrame">政策修改</a></li>
+				<li><a href="intercopy.html" class="pnr-last" target="rightFrame">政策复制</a></li>
+				<li><a href="interhistory.html" class="pnr-last" target="rightFrame">政策历史查询</a></li>
+				<li><a href="javascript:void(0);" class="pnr-last">政策明细导入</a></li>
+				<li><a href="javascript:void(0);" class="pnr-last">政策明细导出</a></li>
+			</ul>
+		</div>
+		<div class="pnr-content-right">
+			<iframe scrolling="no" frameborder="0" marginheight="0" marginwidth="0" id="iframepage" width="100%" height="100%" name="rightFrame" src="policyadd.html" onLoad="iFrameHeight()"></iframe>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<div class="fotter clear">
+		<span><a href="javascript:void(0);">关于我们</a> | <a href="javascript:void(0);">商务合作</a> | <a href="javascript:void(0);">媒体报道</a> | <a href="javascript:void(0);">友情链接</a> | <a href="javascript:void(0);">联系我们</a> | <a href="javascript:void(0);">责任声明</a><br />XXX公司 ©2016 ****.com All Rights Reserved</span>
+	</div>
+	<script type="text/javascript">
+		function iFrameHeight() {   
+			var ifm= document.getElementById("iframepage");   
+			var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;   
+			if(ifm != null && subWeb != null) {
+			   ifm.height = subWeb.body.scrollHeight;
+			//    ifm.width = subWeb.body.scrollWidth;
+			}   
+		}    
+		var winhei = $(document).height();
+		var pnrhei = $(".head-mian").height() + 7;
+		var hei = winhei - pnrhei;
+		$(".pnr-content-right").css("minHeight",hei);
+		
+		function reinitIframe(){
+			var iframe = document.getElementById("iframepage");
+			try{
+				iframe.height =  iframe.contentWindow.document.documentElement.scrollHeight;
+
+			}catch (ex){}
+
+		}
+		window.setInterval("reinitIframe()", 200);
+		var $wid = $(window).width() - 205;
+		$(".pnr-content-right").width($wid);
+	</script>
+</body>
+</html>

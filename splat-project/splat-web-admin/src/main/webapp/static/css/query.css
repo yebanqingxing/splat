@@ -1,0 +1,205 @@
+.addpolicy {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	background-color: #c41213;
+	margin-top: 20px;
+}
+.addpolicy img {
+	float: left;
+	height: 20px;
+	margin:8px 6px 0;
+}
+.addpolicy p {
+	float: left;
+	font-size: 16px;
+	color: #FFF;
+}
+.query {
+	margin: 20px 0;
+}
+.querycode {
+	width: 200px;
+	height: 30px;
+}
+.query span {
+	line-height: 30px;
+	font-size: 14px;
+}
+.querycode {
+	margin-right: 30px;
+}
+.query-span {
+	margin-left: 80px;
+}
+.addquery {
+	width: 60px;
+	height: 26px;
+	margin-right: 10px;
+	font-family:"Microsoft YaHei";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px !important;
+}
+.codetable {
+	width: 800px;
+	margin: 40px auto 0;
+}
+.tablehead {
+	font-family:"Microsoft YaHei";
+	border-color: #bfe5f5;
+	font-size: 14px;
+	width: 100%;
+}
+.tablehead tbody {
+	border-color: #bfe5f5;
+}
+.tablehead tr {
+	height: 36px;
+	border-color: #bfe5f5;
+}
+.tablehead tr td {
+	text-align: center;
+	border-color: #bfe5f5;
+}
+.tablehead tr td button {
+	height: 26px;
+	margin: 0 3px;
+	font-family:"Microsoft YaHei";
+	color: #FFF;
+	border: 1px solid #595959;
+	outline: 0;
+	background-color: #fc9f27;
+	border-radius: 4px;
+	padding: 0 6px;
+}
+.tablehead tr th {
+	background-color: #96d5ef;
+	color: #FFF;
+	font-weight: normal;
+	border-color: #bfe5f5;
+}
+.querydate {
+	width: 80px;
+	height: 30px;
+}
+.queryinter {
+	margin-bottom: 20px;
+}
+.interspan {
+	width: 98px;
+	display: inline-block;
+}
+.codeqi {
+	width: 60px;
+    height: 30px;
+    font-family:"Microsoft YaHei";
+    margin-right: 14px;
+}
+.addimg {
+	width: 14px;
+	height: 14px;
+	margin-top: -3px;
+}
+.spanadd {
+	color: #c41213;
+}
+.interno {
+	cursor: pointer;
+	margin-left: 80px;
+	/*display: inline-block;*/
+}
+.passnger {
+	margin-top: 20px;
+}
+.checkeffect {
+	vertical-align:middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+.intertrip {
+	margin-top: 20px;
+}
+.interborder {
+	border: 1px solid #c3984d;
+	width: 800px;
+	margin-left: 80px;
+	margin-bottom: 20px;
+	border-radius: 6px;
+}
+.interhead {
+	color: #6a60fb;
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+.interblock {
+	display: inline-block;
+	float: left;
+	line-height: 16px;
+}
+.intermargin {
+	margin-top: 0px;
+}
+.marbor {
+	margin-top: 10px;
+}
+.checkradio {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+.checkradio img {
+    width: 14px;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-bottom: 1px;
+}
+.interdio {
+	margin-left: 80px;
+}
+.textcheck {
+	border: none;
+	outline: 0;
+	border-bottom: 1px solid #706c6c;
+	text-align: center;
+	width: 60px;
+	height: 18px;
+}
+.marginri {
+	margin-right: 10px;
+}
+.interleft {
+	margin-top: 10px;
+	margin-left: 80px;
+}
+.interarae {
+	width: 350px;
+	height: 150px;
+	resize:none;
+}
+.interban {
+	margin-left: 80px;
+}
+.button-detail {
+    color: #FFF;
+    background-color: #c41213;
+    border: 1px solid #595959;
+    border-radius: 4px;
+    width: 90px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 36px;
+    margin: 20px 60px 40px 80px;
+}
+.button-detail img {
+    float: left;
+    height: 18px;
+    margin: 10px 4px 0 15px;
+}
+.widblk {
+	width: 158px;
+	display: inline-block;
+}

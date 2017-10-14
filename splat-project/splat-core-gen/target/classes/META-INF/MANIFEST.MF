@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: 夜半
+Build-Jdk: 1.7.0_21
+Specification-Title: splat-core-gen
+Specification-Version: 1.0.0
+Implementation-Title: splat-core-gen
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: com.sml.sz
+Created-By: Maven Integration for Eclipse
+

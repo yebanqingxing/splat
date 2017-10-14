@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.RefundsheetHistoryDao">
+    
+	<sql id="refundsheetHistoryColumns">
+		a.id AS "id",
+		a.refundsheet_no AS "refundsheetNo",
+		a.operation_time AS "operationTime",
+		a.operator_name AS "operatorName",
+		a.previous_operation AS "previousOperation",
+		a.operation_data_pre AS "operationDataPre",
+		a.operation_data_after AS "operationDataAfter",
+		a.remark AS "remark",
+		a.operator_department_id AS "operatorDepartmentId",
+		a.operator_channel_id AS "operatorChannelId",
+		a.operator_id AS "operatorId"
+	</sql>
+	
+	<sql id="refundsheetHistoryJoins">
+	</sql>
+    
+	<select id="get" resultType="RefundsheetHistory">
+		SELECT 
+			<include refid="refundsheetHistoryColumns"/>
+		FROM tb_refundsheet_history a
+		<include refid="refundsheetHistoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RefundsheetHistory">
+		SELECT 
+			<include refid="refundsheetHistoryColumns"/>
+		FROM tb_refundsheet_history a
+		<include refid="refundsheetHistoryJoins"/>
+		<where>
+			
+			<if test="refundsheetNo != null and refundsheetNo != ''">
+				AND a.refundsheet_no = #{refundsheetNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RefundsheetHistory">
+		SELECT 
+			<include refid="refundsheetHistoryColumns"/>
+		FROM tb_refundsheet_history a
+		<include refid="refundsheetHistoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_refundsheet_history(
+			refundsheet_no,
+			operation_time,
+			operator_name,
+			previous_operation,
+			operation_data_pre,
+			operation_data_after,
+			remark,
+			operator_department_id,
+			operator_channel_id,
+			operator_id
+		) VALUES (
+			#{refundsheetNo},
+			#{operationTime},
+			#{operatorName},
+			#{previousOperation},
+			#{operationDataPre},
+			#{operationDataAfter},
+			#{remark},
+			#{operatorDepartmentId},
+			#{operatorChannelId},
+			#{operatorId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_refundsheet_history SET 	
+			refundsheet_no = #{refundsheetNo},
+			operation_time = #{operationTime},
+			operator_name = #{operatorName},
+			previous_operation = #{previousOperation},
+			operation_data_pre = #{operationDataPre},
+			operation_data_after = #{operationDataAfter},
+			remark = #{remark},
+			operator_department_id = #{operatorDepartmentId},
+			operator_channel_id = #{operatorChannelId},
+			operator_id = #{operatorId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_refundsheet_history
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findRefundsheetHistory" parameterType="string" resultType="RefundsheetHistory">
+	SELECT 
+			<include refid="refundsheetHistoryColumns"/>
+		FROM tb_refundsheet_history a
+		<include refid="refundsheetHistoryJoins"/>
+		WHERE a.refundsheet_no = #{refundsheetNo}
+	</select>
+	
+</mapper>

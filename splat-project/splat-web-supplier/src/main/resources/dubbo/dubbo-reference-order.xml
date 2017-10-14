@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">       
+
+<!--  我的收藏子系统对外服务接口 -->
+<!-- 订单主表 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderDetailServiceFacade" id="ticketorderDetailServiceFacade" check="false" />
+<!--   订单的旅客表 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderPassengerFacade" id="ticketorderPassengerFacade" check="false" />
+<!--  订单的Pnr导入 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderPnrServiceFacade" id="ticketorderPnrServiceFacade" check="false" />
+<!-- 机票订单历史 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderHistoryFacade" id="ticketorderHistoryFacade" check="false" />
+<!-- 机票订单航段表 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderSegmentServiceFacade" id="ticketorderSegmentServiceFacade" check="false" />
+<!-- 退票单附件  -->
+<dubbo:reference interface="com.sml.sz.order.service.RefundsheetAppendixServiceFacade" id="refundsheetAppendixServiceFacade" check="false" />
+<!-- 退票单 -->
+<dubbo:reference interface="com.sml.sz.order.service.RefundsheetDetailServiceFacade" id="refundsheetDetailServiceFacade" check="false" />
+<!-- 退票单历史 -->
+<dubbo:reference interface="com.sml.sz.order.service.RefundsheetHistoryServiceFacade" id="refundsheetHistoryServiceFacade" check="false" />
+<!-- 退票单流转 -->
+<dubbo:reference interface="com.sml.sz.order.service.RefundsheetCirculationServiceFacade" id="refundsheetCirculationServiceFacade" check="false" />
+<!-- 退票单人信息-->
+<dubbo:reference interface="com.sml.sz.order.service.RefundsheetPassengerServiceFacade" id="refundsheetPassengerServiceFacade" check="false" />
+<!-- 改签单附件-->
+<dubbo:reference interface="com.sml.sz.order.service.EndorsesheetAppendixServiceFacade" id="endorsesheetAppendixServiceFacade" check="false" />
+<!-- 改签单流转-->
+<dubbo:reference interface="com.sml.sz.order.service.EndorsesheetCirculationServiceFacade" id="endorsesheetCirculationServiceFacade" check="false" />
+<!-- 改签单 -->
+<dubbo:reference interface="com.sml.sz.order.service.EndorsesheetDetailServiceFacade" id="endorsesheetDetailServiceFacade" check="false" />
+<!-- 改签单历史 -->
+<dubbo:reference interface="com.sml.sz.order.service.EndorsesheetHistoryServiceFacade" id="endorsesheetHistoryServiceFacade" check="false" />
+<!-- 改签单旅客 -->
+<dubbo:reference interface="com.sml.sz.order.service.EndorsesheetPassengerServiceFacade" id="endorsesheetPassengerServiceFacade" check="false" />
+<!-- 废票单流转 -->
+<dubbo:reference interface="com.sml.sz.order.service.VoidsheetCirculationServiceFacade" id="voidsheetCirculationServiceFacade" check="false" />
+<!-- 废票附件 -->
+<dubbo:reference interface="com.sml.sz.order.service.VoidsheetAppendixServiceFacade" id="voidsheetAppendixServiceFacade" check="false" />
+<!-- 废票单 -->
+<dubbo:reference interface="com.sml.sz.order.service.VoidsheetDetailServiceFacade" id="voidsheetDetailServiceFacade" check="false" />
+<!-- 废票历史 -->
+<dubbo:reference interface="com.sml.sz.order.service.VoidsheetHistoryServiceFacade" id="voidsheetHistoryServiceFacade" check="false" />
+<!-- 废票单人信息 -->
+<dubbo:reference interface="com.sml.sz.order.service.VoidsheetPassengerServiceFacade" id="voidsheetPassengerServiceFacade" check="false" />
+<!-- 行程单信息 -->
+<dubbo:reference interface="com.sml.sz.order.service.InvoiceServiceFacade" id="invoiceServiceFacade" check="false" />
+<!-- 机票明细 -->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderSinglePriceServiceFacade" id="ticketorderSinglePriceServiceFacade" check="false" />
+
+
+<!-- 行程单-->
+<dubbo:reference interface="com.sml.sz.order.service.DispatchServiceFacade" id="dispatchServiceFacade" check="false" />
+<!-- 收件人-->
+<dubbo:reference interface="com.sml.sz.order.service.RecipientServiceFacade" id="recipientServiceFacade" check="false" />
+<!-- 机票的service-->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderTicketServiceFacade" id="ticketorderTicketServiceFacade" check="false" />
+<!-- 留言-->
+<dubbo:reference interface="com.sml.sz.order.service.TicketorderMessageServiceFacade" id="ticketorderMessageServiceFacade" check="false" />
+
+
+</beans>  

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.DispatchDao">
+    
+	<sql id="dispatchColumns">
+		a.id AS "id",
+		a.dispatch_no AS "dispatchNo",
+		a.create_time AS "createTime",
+		a.pnr号 AS "pnr号",
+		a.order_no AS "orderNo",
+		a.proposer AS "proposer",
+		a.dispatch_name AS "dispatchName",
+		a.open_money AS "openMoney",
+		a.certificate_money AS "certificateMoney",
+		a.taxpoint AS "taxpoint",
+		a.ticket_no AS "ticketNo",
+		a.dispatch_status AS "dispatchStatus",
+		a.invoice_status AS "invoiceStatus",
+		a.isplatfrom AS "isplatfrom",
+		a.dispatch_time AS "dispatchTime"
+	</sql>
+	
+	<sql id="dispatchJoins">
+	</sql>
+    
+	<select id="get" resultType="Dispatch">
+		SELECT 
+			<include refid="dispatchColumns"/>
+		FROM tb_dispatch a
+		<include refid="dispatchJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Dispatch">
+		SELECT 
+			<include refid="dispatchColumns"/>
+		FROM tb_dispatch a
+		<include refid="dispatchJoins"/>
+		<where>
+			
+			<if test="dispatchNo != null and dispatchNo != ''">
+				AND a.dispatch_no = #{dispatchNo}
+			</if>
+			<if test="beginCreateTime != null and endCreateTime != null and beginCreateTime != '' and endCreateTime != ''">
+				AND a.create_time BETWEEN #{beginCreateTime} AND #{endCreateTime}
+			</if>
+			<if test="pnr号 != null and pnr号 != ''">
+				AND a.pnr号 = #{pnr号}
+			</if>
+			<if test="orderNo != null and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+			<if test="proposer != null and proposer != ''">
+				AND a.proposer = #{proposer}
+			</if>
+			<if test="beginDispatchTime != null and endDispatchTime != null and beginDispatchTime != '' and endDispatchTime != ''">
+				AND a.dispatch_time BETWEEN #{beginDispatchTime} AND #{endDispatchTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Dispatch">
+		SELECT 
+			<include refid="dispatchColumns"/>
+		FROM tb_dispatch a
+		<include refid="dispatchJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_dispatch(
+			dispatch_no,
+			create_time,
+			pnr号,
+			order_no,
+			proposer,
+			dispatch_name,
+			open_money,
+			certificate_money,
+			taxpoint,
+			ticket_no,
+			dispatch_status,
+			invoice_status,
+			isplatfrom,
+			dispatch_time
+		) VALUES (
+			#{dispatchNo},
+			#{createTime},
+			#{pnr号},
+			#{orderNo},
+			#{proposer},
+			#{dispatchName},
+			#{openMoney},
+			#{certificateMoney},
+			#{taxpoint},
+			#{ticketNo},
+			#{dispatchStatus},
+			#{invoiceStatus},
+			#{isplatfrom},
+			#{dispatchTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_dispatch SET 	
+			dispatch_no = #{dispatchNo},
+			create_time = #{createTime},
+			pnr号 = #{pnr号},
+			order_no = #{orderNo},
+			proposer = #{proposer},
+			dispatch_name = #{dispatchName},
+			open_money = #{openMoney},
+			certificate_money = #{certificateMoney},
+			taxpoint = #{taxpoint},
+			ticket_no = #{ticketNo},
+			dispatch_status = #{dispatchStatus},
+			invoice_status = #{invoiceStatus},
+			isplatfrom = #{isplatfrom},
+			dispatch_time = #{dispatchTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_dispatch
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

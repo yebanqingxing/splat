@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sml.sz</groupId>
+		<artifactId>splat-project</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>splat-service-order</artifactId>
+	<packaging>war</packaging>
+	<name>splat-service-order Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<description>splat的 订单 Dubbo服务接口提供者</description>
+	
+	<dependencies>
+		<!-- alibaba druid connection pool -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+
+		<!-- jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>${oracle.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>${mssql.driver.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- AOP相关包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<!-- dubbo 需要的jar start -->
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.2.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- zookeeper jar -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.3</version>
+		</dependency>
+		<!-- dubbo 需要的jar end -->
+
+		<!-- Dubbo服务接口（订单） -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-facade-order</artifactId>
+		</dependency>
+		
+		<!-- splat config begin -->
+		<!--  系统公共配置 -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-config</artifactId>
+		</dependency> 
+		<!-- splat config end 公共配置 -->
+		
+		<!-- splat framework begin -->
+		<!--  系统核心框架包 -->
+		<dependency>
+			<groupId>com.sml.sz</groupId>
+			<artifactId>splat-framework</artifactId>
+		</dependency>
+		<!-- splat framework end -->
+
+	</dependencies>
+	<build>
+		<finalName>splat-service-order</finalName>
+	</build>
+</project>

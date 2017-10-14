@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderPassengerDao">
+    
+	<sql id="ticketorderPassengerColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.passenger_name AS "passengerName",
+		a.passenger_index AS "passengerIndex",
+		a.passenger_type AS "passengerType",
+		a.passenger_title AS "passengerTitle",
+		a.cert_type AS "certType",
+		a.cert_no AS "certNo",
+		a.passenger_birthday AS "passengerBirthday",
+		a.doca_r AS "docaR",
+		a.doca_d AS "docaD",
+		a.ticket_no AS "ticketNo",
+		a.single_price_id AS "singlePriceId",
+		a.frequent_card_type AS "frequentCardType",
+		a.frequent_card_no AS "frequentCardNo",
+		a.rvc_sheet_no AS "rvcSheetNo",
+		a.order_id AS "orderId",
+		a.refund_status AS "refundStatus",
+		a.void_status AS "voidStatus",
+		a.endorse_status AS "endorseStatus",
+		a.supplier_refund_status AS "supplierRefundStatus",
+		a.supplier_void_status AS "supplierVoidStatus",
+		a.supplier_endorse_status AS "supplierEndorseStatus",
+		a.ticket_issue_terminal AS "ticketIssueTerminal",
+		a.ticket_issue_office AS "ticketIssueOffice",
+		a.issue_time AS "issueTime",
+		a.national AS "national",
+		a.certificate_country AS "certificateCountry",
+		a.expiredtime AS "expiredtime",
+		a.gender AS "gender",
+		a.phone AS "phone",
+		a.pnr_name AS "pnrName",
+		a.invoice AS "invoice",
+		a.void_refund_endorse AS "voidRefundEndorse"
+	</sql>
+	
+	<sql id="ticketorderPassengerJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderPassenger">
+		SELECT 
+			<include refid="ticketorderPassengerColumns"/>
+		FROM tb_ticketorder_passenger a
+		<include refid="ticketorderPassengerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderPassenger">
+		SELECT 
+			<include refid="ticketorderPassengerColumns"/>
+		FROM tb_ticketorder_passenger a
+		<include refid="ticketorderPassengerJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderPassenger">
+		SELECT 
+			<include refid="ticketorderPassengerColumns"/>
+		FROM tb_ticketorder_passenger a
+		<include refid="ticketorderPassengerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO tb_ticketorder_passenger(
+			
+			order_no,
+			passenger_name,
+			passenger_index,
+			passenger_type,
+			passenger_title,
+			cert_type,
+			cert_no,
+			passenger_birthday,
+			doca_r,
+			doca_d,
+			ticket_no,
+			single_price_id,
+			frequent_card_type,
+			frequent_card_no,
+			rvc_sheet_no,
+			order_id,
+			refund_status,
+			void_status,
+			endorse_status,
+			supplier_refund_status,
+			supplier_void_status,
+			supplier_endorse_status,
+			ticket_issue_terminal,
+			ticket_issue_office,
+			issue_time,
+			national,
+			certificate_country,
+			expiredtime,
+			gender,
+			phone,
+			pnr_name,
+			invoice
+		) VALUES (
+			
+			#{orderNo},
+			#{passengerName},
+			#{passengerIndex},
+			#{passengerType},
+			#{passengerTitle},
+			#{certType},
+			#{certNo},
+			#{passengerBirthday},
+			#{docaR},
+			#{docaD},
+			#{ticketNo},
+			#{singlePriceId},
+			#{frequentCardType},
+			#{frequentCardNo},
+			#{rvcSheetNo},
+			#{orderId},
+			#{refundStatus},
+			#{voidStatus},
+			#{endorseStatus},
+			#{supplierRefundStatus},
+			#{supplierVoidStatus},
+			#{supplierEndorseStatus},
+			#{ticketIssueTerminal},
+			#{ticketIssueOffice},
+			#{issueTime},
+			#{national},
+			#{certificateCountry},
+			#{expiredtime},
+			#{gender},
+			#{phone},
+			#{pnrName},
+			#{invoice}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_passenger SET 	
+			order_no = #{orderNo},
+			passenger_name = #{passengerName},
+			passenger_index = #{passengerIndex},
+			passenger_type = #{passengerType},
+			passenger_title = #{passengerTitle},
+			cert_type = #{certType},
+			cert_no = #{certNo},
+			passenger_birthday = #{passengerBirthday},
+			doca_r = #{docaR},
+			doca_d = #{docaD},
+			ticket_no = #{ticketNo},
+			single_price_id = #{singlePriceId},
+			frequent_card_type = #{frequentCardType},
+			frequent_card_no = #{frequentCardNo},
+			rvc_sheet_no = #{rvcSheetNo},
+			order_id = #{orderId},
+			refund_status = #{refundStatus},
+			void_status = #{voidStatus},
+			endorse_status = #{endorseStatus},
+			supplier_refund_status = #{supplierRefundStatus},
+			supplier_void_status = #{supplierVoidStatus},
+			supplier_endorse_status = #{supplierEndorseStatus},
+			ticket_issue_terminal = #{ticketIssueTerminal},
+			ticket_issue_office = #{ticketIssueOffice},
+			issue_time = #{issueTime},
+			national = #{national},
+			certificate_country = #{certificateCountry},
+			expiredtime = #{expiredtime},
+			gender = #{gender},
+			phone = #{phone},
+			pnr_name = #{pnrName},
+			invoice = #{invoice}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_passenger
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 通过订单号查询所有的旅客 -->
+	<select id="findTicketorderPassenger" parameterType="String" resultType="TicketorderPassenger">
+	SELECT <include refid="ticketorderPassengerColumns"/>
+		FROM tb_ticketorder_passenger a   WHERE A.order_no = #{orderNo}
+	</select>
+	
+	<!-- 修改旅客的退票状态 -->
+	<update id="updateRefundStatusById" parameterType="map" >
+	UPDATE tb_ticketorder_passenger SET refund_status = #{refundStatus} WHERE id = #{id}
+	</update>
+	
+	<!-- 修改旅客的废票状态 -->
+	<update id="updateVoidStatusById" parameterType="map">
+	UPDATE tb_ticketorder_passenger SET void_status = #{voidStatus} WHERE id = #{id}
+	</update>
+	
+	<!-- 修改旅客的改签状态 -->
+	<update id="updateEndorseStatusById" parameterType="map">
+	UPDATE tb_ticketorder_passenger SET endorse_status = #{endorseStatus} WHERE id = #{id}
+	</update>
+	<!-- 通过旅客的id集合查询旅客集合 -->
+	<select id="findPassengerList" resultType="TicketorderPassenger">
+	SELECT <include refid="ticketorderPassengerColumns"/>
+		FROM tb_ticketorder_passenger a   WHERE A.id in
+		<foreach collection="list" item="passId" index="index"
+            open="(" close=")" separator=",">
+            #{passId}
+        </foreach>
+	</select>
+	<!-- 用户点击了退废改的时候的状态 -->
+	<update id="updateVoidRefundEndorseStatus" parameterType="map">
+	UPDATE tb_ticketorder_passenger  SET void_refund_endorse = #{voidRefundEndorse} WHERE id = #{id}
+	</update>
+	<!-- 回填票号执行的操作 -->
+	<update id="updateTicketorderTicket" parameterType="map">
+	UPDATE tb_ticketorder_passenger  SET ticket_no = #{ticketNo} WHERE id = #{id}
+	</update>
+</mapper>

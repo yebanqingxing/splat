@@ -1,0 +1,48 @@
+.pnr-content-left {
+	text-align: left !important;
+}
+.addmargintop {
+	margin-top: 20px;
+}
+.nav_add {
+	width: 90%;
+	margin: 0 auto;
+}
+.nav_add p {
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+	color: #26206e;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.nav_add p img {
+	margin-top: -1px;
+	height: 14px;
+	margin-right: 6px;
+	margin-left: 10px;
+}
+.nav_add ul li {
+	margin-left: 44px;
+}
+.nav_add ul li a {
+	color: #757272;
+}
+.addclickli {
+	color: #fb5a30 !important;
+}
+.addnavbor {
+	width: 100%;
+	height: 1px;
+	background-color: #dcdcdc;
+	margin: 10px 0 5px;
+}
+.addnavback {
+	background-color: #e4fbfd;
+}
+.addnone {
+	display: none;
+}
+.nav_add ul {
+	margin:0 !important;
+}

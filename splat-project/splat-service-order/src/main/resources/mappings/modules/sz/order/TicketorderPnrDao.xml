@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.TicketorderPnrDao">
+    
+	<sql id="ticketorderPnrColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.crs_pnr AS "crsPnr",
+		a.arl_pnr AS "arlPnr",
+		a.mid_pnr AS "midPnr",
+		a.booking_time AS "bookingTime",
+		a.pnr_status AS "pnrStatus",
+		a.booking_office AS "bookingOffice",
+		a.record_time AS "recordTime",
+		a.ticketing_office AS "ticketingOffice",
+		a.pnr_text AS "pnrText",
+		a.sale_price_elements AS "salePriceElements",
+		a.tax_elements AS "taxElements",
+		a.commission_elements AS "commissionElements",
+		a.tc_elements AS "tcElements",
+		a.ei_elements AS "eiElements",
+		a.fare_basis_elements AS "fareBasisElements",
+		a.ticketing_config AS "ticketingConfig",
+		a.fc_elements AS "fcElements",
+		a.order_id AS "orderId",
+		a.pnr_text_append AS "pnrTextAppend",
+		a.osi_ctct AS "osiCtct",
+		a.pnr_info AS "pnrInfo"
+	</sql>
+	
+	<sql id="ticketorderPnrJoins">
+	</sql>
+    
+	<select id="get" resultType="TicketorderPnr">
+		SELECT 
+			<include refid="ticketorderPnrColumns"/>
+		FROM tb_ticketorder_pnr a
+		<include refid="ticketorderPnrJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TicketorderPnr">
+		SELECT 
+			<include refid="ticketorderPnrColumns"/>
+		FROM tb_ticketorder_pnr a
+		<include refid="ticketorderPnrJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TicketorderPnr">
+		SELECT 
+			<include refid="ticketorderPnrColumns"/>
+		FROM tb_ticketorder_pnr a
+		<include refid="ticketorderPnrJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_ticketorder_pnr(
+			order_no,
+			crs_pnr,
+			arl_pnr,
+			mid_pnr,
+			booking_time,
+			pnr_status,
+			booking_office,
+			record_time,
+			ticketing_office,
+			pnr_text,
+			sale_price_elements,
+			tax_elements,
+			commission_elements,
+			tc_elements,
+			ei_elements,
+			fare_basis_elements,
+			ticketing_config,
+			fc_elements,
+			order_id,
+			pnr_text_append,
+			osi_ctct,
+			pnr_info
+		) VALUES (
+			#{orderNo},
+			#{crsPnr},
+			#{arlPnr},
+			#{midPnr},
+			#{bookingTime},
+			#{pnrStatus},
+			#{bookingOffice},
+			#{recordTime},
+			#{ticketingOffice},
+			#{pnrText},
+			#{salePriceElements},
+			#{taxElements},
+			#{commissionElements},
+			#{tcElements},
+			#{eiElements},
+			#{fareBasisElements},
+			#{ticketingConfig},
+			#{fcElements},
+			#{orderId},
+			#{pnrTextAppend},
+			#{osiCtct},
+			#{pnrInfo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_ticketorder_pnr SET 	
+			order_no = #{orderNo},
+			crs_pnr = #{crsPnr},
+			arl_pnr = #{arlPnr},
+			mid_pnr = #{midPnr},
+			booking_time = #{bookingTime},
+			pnr_status = #{pnrStatus},
+			booking_office = #{bookingOffice},
+			record_time = #{recordTime},
+			ticketing_office = #{ticketingOffice},
+			pnr_text = #{pnrText},
+			sale_price_elements = #{salePriceElements},
+			tax_elements = #{taxElements},
+			commission_elements = #{commissionElements},
+			tc_elements = #{tcElements},
+			ei_elements = #{eiElements},
+			fare_basis_elements = #{fareBasisElements},
+			ticketing_config = #{ticketingConfig},
+			fc_elements = #{fcElements},
+			order_id = #{orderId},
+			pnr_text_append = #{pnrTextAppend},
+			osi_ctct = #{osiCtct},
+			pnr_info = #{pnrInfo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_ticketorder_pnr
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sml.sz.order.dao.VoidsheetHistoryDao">
+    
+	<sql id="voidsheetHistoryColumns">
+		a.id AS "id",
+		a.voidsheet_no AS "voidsheetNo",
+		a.operation_time AS "operationTime",
+		a.operator_name AS "operatorName",
+		a.previous_operation AS "previousOperation",
+		a.operation_data_pre AS "operationDataPre",
+		a.operation_data_after AS "operationDataAfter",
+		a.remark AS "remark",
+		a.operator_department_id AS "operatorDepartmentId",
+		a.operator_channel_id AS "operatorChannelId",
+		a.operator_id AS "operatorId"
+	</sql>
+	
+	<sql id="voidsheetHistoryJoins">
+	</sql>
+    
+	<select id="get" resultType="VoidsheetHistory">
+		SELECT 
+			<include refid="voidsheetHistoryColumns"/>
+		FROM tb_voidsheet_history a
+		<include refid="voidsheetHistoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="VoidsheetHistory">
+		SELECT 
+			<include refid="voidsheetHistoryColumns"/>
+		FROM tb_voidsheet_history a
+		<include refid="voidsheetHistoryJoins"/>
+		<where>
+			
+			<if test="voidsheetNo != null and voidsheetNo != ''">
+				AND a.voidsheet_no = #{voidsheetNo}
+			</if>
+			<if test="beginOperationTime != null and endOperationTime != null and beginOperationTime != '' and endOperationTime != ''">
+				AND a.operation_time BETWEEN #{beginOperationTime} AND #{endOperationTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="VoidsheetHistory">
+		SELECT 
+			<include refid="voidsheetHistoryColumns"/>
+		FROM tb_voidsheet_history a
+		<include refid="voidsheetHistoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tb_voidsheet_history(
+			voidsheet_no,
+			operation_time,
+			operator_name,
+			previous_operation,
+			operation_data_pre,
+			operation_data_after,
+			remark,
+			operator_department_id,
+			operator_channel_id,
+			operator_id
+		) VALUES (
+			#{voidsheetNo},
+			#{operationTime},
+			#{operatorName},
+			#{previousOperation},
+			#{operationDataPre},
+			#{operationDataAfter},
+			#{remark},
+			#{operatorDepartmentId},
+			#{operatorChannelId},
+			#{operatorId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_voidsheet_history SET 	
+			voidsheet_no = #{voidsheetNo},
+			operation_time = #{operationTime},
+			operator_name = #{operatorName},
+			previous_operation = #{previousOperation},
+			operation_data_pre = #{operationDataPre},
+			operation_data_after = #{operationDataAfter},
+			remark = #{remark},
+			operator_department_id = #{operatorDepartmentId},
+			operator_channel_id = #{operatorChannelId},
+			operator_id = #{operatorId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM tb_voidsheet_history
+		WHERE id = #{id}
+	</update>
+	<select id="findVoidsheetHistory" parameterType="string" resultType="VoidsheetHistory">
+	SELECT 
+			<include refid="voidsheetHistoryColumns"/>
+		FROM tb_voidsheet_history a
+		<include refid="voidsheetHistoryJoins"/>
+		WHERE a.voidsheet_no = #{voidsheetNo}
+	
+	</select>
+</mapper>
